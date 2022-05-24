@@ -1,5 +1,8 @@
 Backlog:
 - Написать readme.md с инструкцией по развертыванию
 - Подключить doctrine:fixtures
+- Подключить serializer, normalizer + factory
+- Подключить App\Service\EventDispatcher
 - Подключить iwd:query-bundle(и реализовать заодно в рамках отдельного пакета)
 - Подключить phpunit, настроить запуск тестов по команде
+- Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
