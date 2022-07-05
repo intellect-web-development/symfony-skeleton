@@ -6,3 +6,4 @@ Backlog:
 - Подключить iwd:query-bundle(и реализовать заодно в рамках отдельного пакета)
 - Подключить phpunit, настроить запуск тестов по команде
 - Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
+- В Makefile добавить команду, удаляющую каталог .local
