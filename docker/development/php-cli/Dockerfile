@@ -1,4 +1,4 @@
-FROM php:8.0.6-cli-alpine
+FROM php:8.1.3-cli-alpine
 
 RUN apk add --no-cache autoconf g++ make \
     && pecl install xdebug \
