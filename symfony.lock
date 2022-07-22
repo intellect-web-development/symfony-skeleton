@@ -288,5 +288,8 @@
     },
     "symfony/yaml": {
         "version": "v6.0.3"
+    },
+    "webmozart/assert": {
+        "version": "1.11.0"
     }
 }
