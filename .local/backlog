@@ -1,9 +1,10 @@
 Backlog:
 - Написать readme.md с инструкцией по развертыванию
+- Переделать service.yaml с /Entity, /Repository -> /Model
 - Подключить doctrine:fixtures
 - Подключить serializer, normalizer + factory
 - Подключить App\Service\EventDispatcher
-- Подключить iwd:query-bundle(и реализовать заодно в рамках отдельного пакета)
+- Подключить intellect-web-development/symfony-presentation-bundle
 - Подключить phpunit, настроить запуск тестов по команде
 - Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
-- В Makefile добавить команду, удаляющую каталог .local
+
