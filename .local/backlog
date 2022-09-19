@@ -1,8 +1,7 @@
 Backlog:
 - Написать readme.md с инструкцией по развертыванию
-- Переделать service.yaml с /Entity, /Repository -> /Model
 - Подключить doctrine:fixtures
-- Подключить serializer, normalizer + factory
+- Подключить normalizer + factory
 - Подключить App\Service\EventDispatcher
 - Подключить intellect-web-development/symfony-presentation-bundle
 - Подключить phpunit, настроить запуск тестов по команде
