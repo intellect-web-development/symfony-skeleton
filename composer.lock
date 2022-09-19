@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6dc0ee09df00183004ab75f34c1e4ea",
+    "content-hash": "c9ebe9ed881c11496bb336aa52981e32",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1785,6 +1785,63 @@
                 }
             ],
             "time": "2022-03-20T21:55:58+00:00"
+        },
+        {
+            "name": "intellect-web-development/symfony-presentation-bundle",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
+                "reference": "655a076311ba1cbd91a5cc4492cdea2f82a45992"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/655a076311ba1cbd91a5cc4492cdea2f82a45992",
+                "reference": "655a076311ba1cbd91a5cc4492cdea2f82a45992",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=8.0",
+                "zircote/swagger-php": "^3.2"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.13",
+                "overtrue/phplint": "^3.0",
+                "phpmetrics/phpmetrics": "^2.7",
+                "phpstan/phpstan": "^0.12.81",
+                "phpunit/phpunit": "^9.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/config": "^6.1",
+                "symfony/dependency-injection": "^6.1",
+                "symfony/http-kernel": "^6.1",
+                "symfony/serializer": "^6.1",
+                "symfony/validator": "^6.1",
+                "vimeo/psalm": "^4.6"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\PresentationBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alexander.erin",
+                    "email": "sanyaerin@mail.ru"
+                }
+            ],
+            "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
+            "support": {
+                "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
+                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.0.4"
+            },
+            "time": "2022-09-18T20:33:14+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -5217,6 +5274,79 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zircote/swagger-php",
+            "version": "3.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zircote/swagger-php.git",
+                "reference": "5016342f966fca29dda84455de066c5c90d37941"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/5016342f966fca29dda84455de066c5c90d37941",
+                "reference": "5016342f966fca29dda84455de066c5c90d37941",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.7",
+                "ext-json": "*",
+                "php": ">=7.2",
+                "psr/log": "^1.1 || ^2.0 || ^3.0",
+                "symfony/finder": ">=2.2",
+                "symfony/yaml": ">=3.3"
+            },
+            "require-dev": {
+                "composer/package-versions-deprecated": "1.11.99.2",
+                "friendsofphp/php-cs-fixer": "^2.17 || ^3.0",
+                "phpunit/phpunit": ">=8.5.14"
+            },
+            "bin": [
+                "bin/openapi"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "OpenApi\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Allen",
+                    "email": "zircote@gmail.com"
+                },
+                {
+                    "name": "Bob Fanger",
+                    "email": "bfanger@gmail.com",
+                    "homepage": "https://bfanger.nl"
+                },
+                {
+                    "name": "Martin Rademacher",
+                    "email": "mano@radebatz.net",
+                    "homepage": "https://radebatz.net"
+                }
+            ],
+            "description": "swagger-php - Generate interactive documentation for your RESTful API using phpdoc annotations",
+            "homepage": "https://github.com/zircote/swagger-php/",
+            "keywords": [
+                "api",
+                "json",
+                "rest",
+                "service discovery"
+            ],
+            "support": {
+                "issues": "https://github.com/zircote/swagger-php/issues",
+                "source": "https://github.com/zircote/swagger-php/tree/3.3.6"
+            },
+            "time": "2022-05-21T01:52:14+00:00"
         }
     ],
     "packages-dev": [

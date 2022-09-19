@@ -8,3 +8,4 @@ Backlog:
 - Подключить phpunit, настроить запуск тестов по команде
 - Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
 
+composer require --dev roave/security-advisories:dev-latest
