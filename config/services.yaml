@@ -17,9 +17,13 @@ services:
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Model/'
+            - '../src/DependencyInjection'
             - '../src/Kernel.php'
+            - '../src/Tests'
+
+    App\Http\:
+        resource: '../src/Http/'
+        tags: [ 'controller.service_arguments' ]
 
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
