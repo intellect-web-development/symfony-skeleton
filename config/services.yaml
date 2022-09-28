@@ -25,6 +25,11 @@ services:
         resource: '../src/Http/'
         tags: [ 'controller.service_arguments' ]
 
+    App\Model\Flusher: ~
+
+    App\Model\EventDispatcher:
+        class: App\Service\Dispatcher\MessengerEventDispatcher
+
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
 
