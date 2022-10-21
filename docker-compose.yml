@@ -10,8 +10,6 @@ services:
       dockerfile: development/nginx/Dockerfile
     volumes:
       - ./:/app
-    ports:
-      - "8079:80"
     networks:
       - internal-network
 
@@ -37,8 +35,6 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     image: postgres:13-alpine
-    ports:
-      - "54323:5432"
     restart: always
     environment:
       POSTGRES_DB: application-db

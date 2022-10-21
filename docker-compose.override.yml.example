@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  nginx:
+    ports:
+      - "8079:80"
+
+  app-postgres-db:
+    ports:
+      - "54323:5432"
