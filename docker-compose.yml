@@ -19,6 +19,8 @@ services:
       dockerfile: development/php-fpm/Dockerfile
     volumes:
       - ./:/app
+      - app_cache:/var/cache/app
+      - app_log:/var/log/app
     networks:
       - internal-network
 
@@ -28,6 +30,8 @@ services:
       dockerfile: development/php-cli/Dockerfile
     volumes:
       - ./:/app
+      - app_cache:/var/cache/app
+      - app_log:/var/log/app
     networks:
       - internal-network
 
@@ -45,3 +49,13 @@ services:
 
 volumes:
   db:
+  app_cache:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  app_log:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
