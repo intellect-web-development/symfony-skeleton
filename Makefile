@@ -1,11 +1,10 @@
 up: docker-up
 first-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up first-init-app
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
-before-deploy: php-lint php-cs php-stan test
+before-deploy: php-lint php-cs php-stan psalm test
 init-app: env-init composer-install database-create-test migrations-up fixtures
 first-init-app: env-init composer-install database-create-test # make-migration migrations-up fixtures
 recreate-database: database-drop database-create database-create-test
-#todo: подключить псалм
 
 stub-composer-operation:
 	docker compose run --rm app-php-cli composer require ...
@@ -83,6 +82,9 @@ php-lint:
 php-cs:
 	docker compose run --rm app-php-cli ./vendor/bin/php-cs-fixer fix -v --using-cache=no
 	docker compose run --rm app-php-cli ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
+
+psalm:
+	docker compose run --rm app-php-cli ./vendor/bin/psalm --no-cache $(ARGS)
 
 composer-install:
 	docker compose run --rm app-php-cli composer install
