@@ -5,9 +5,10 @@ before-deploy: php-lint php-cs php-stan test
 init-app: env-init composer-install database-create-test migrations-up fixtures
 first-init-app: env-init composer-install database-create-test # make-migration migrations-up fixtures
 recreate-database: database-drop database-create database-create-test
-#todo: подключить псалм, тесты
+#todo: подключить псалм
+
 stub-composer-operation:
-	docker compose run --rm app-php-cli composer ...
+	docker compose run --rm app-php-cli composer require ...
 
 docker-compose-override-init:
 	cp docker-compose.override.yml.example docker-compose.override.yml
