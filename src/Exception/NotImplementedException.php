@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Exception;
 
 /**
- * Данное исключение является заглушкой для не реализованных методов
+ * Данное исключение является заглушкой для не реализованных методов.
  */
 class NotImplementedException extends DomainException
 {
