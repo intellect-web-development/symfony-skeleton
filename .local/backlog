@@ -1,10 +1,6 @@
 Backlog:
 - Написать readme.md с инструкцией по развертыванию
-- Подключить doctrine:fixtures
 - Подключить normalizer + factory
-- Подключить App\Service\EventDispatcher
-- Подключить intellect-web-development/symfony-presentation-bundle
-- Подключить phpunit, настроить запуск тестов по команде
 - Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
 
 composer require --dev roave/security-advisories:dev-latest
