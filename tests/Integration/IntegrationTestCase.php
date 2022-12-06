@@ -18,7 +18,6 @@ class IntegrationTestCase extends KernelTestCase
     protected EntityManagerInterface $entityManager;
     protected static Generator $faker;
 
-    /** @var Container */
     protected static Container $containerTool;
 
     public static function setUpBeforeClass(): void
@@ -46,12 +45,7 @@ class IntegrationTestCase extends KernelTestCase
         parent::tearDown();
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @throws \ReflectionException
-     */
-    protected static function bindMock(object $object, string $property, $value): void
+    protected static function bindMock(object $object, string $property, mixed $value): void
     {
         $className = get_class($object);
         try {
@@ -67,8 +61,6 @@ class IntegrationTestCase extends KernelTestCase
     }
 
     /**
-     * @param class-string<mixed> $className
-     *
      * @throws \ReflectionException
      */
     private static function getReflectionProperty(string $className, string $property): \ReflectionProperty

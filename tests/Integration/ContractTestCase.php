@@ -24,7 +24,9 @@ class ContractTestCase extends IntegrationTestCase
      */
     protected static function assertViolations(object $contract, array $expectedErrors): void
     {
+        /** @var array<string, string> $violations */
         $violations = [];
+
         /** @var ConstraintViolation $violation */
         foreach (self::$validator->validate($contract) as $violation) {
             $violations[$violation->getPropertyPath()] = $violation->getMessage();
@@ -45,7 +47,11 @@ class ContractTestCase extends IntegrationTestCase
             self::assertSame(
                 $violationMessage,
                 $expectedMessage,
-                sprintf('Actual error "%s" is not equals for "%s"', $violationMessage, $expectedMessage)
+                sprintf(
+                    'Actual error "%s" is not equals for "%s"',
+                    (string) $violationMessage,
+                    (string) $expectedMessage
+                )
             );
             self::assertContains(
                 $expectedMessage,
