@@ -6,6 +6,7 @@ namespace App\Tests\Integration;
 
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
@@ -37,6 +38,20 @@ class IntegrationTestCase extends KernelTestCase
         $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->beginTransaction();
         $this->entityManager->getConnection()->setAutoCommit(false);
+
+        foreach (static::withFixtures() as $fixtureClass) {
+            /** @var FixtureInterface $fixture */
+            $fixture = new $fixtureClass();
+            $fixture->load($this->entityManager);
+        }
+    }
+
+    /**
+     * @return class-string<FixtureInterface>[]
+     */
+    protected static function withFixtures(): array
+    {
+        return [];
     }
 
     protected function tearDown(): void

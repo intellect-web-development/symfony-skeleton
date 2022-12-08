@@ -6,6 +6,7 @@ namespace App\Tests\Functional;
 
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
@@ -18,7 +19,7 @@ class FunctionalTestCase extends WebTestCase
     use AssertsTrait;
 
     protected static Container $containerTool;
-    protected static EntityManagerInterface $entityManager;
+    protected EntityManagerInterface $entityManager;
     protected KernelBrowser $client;
     protected static Generator $faker;
 
@@ -36,19 +37,33 @@ class FunctionalTestCase extends WebTestCase
     {
         parent::setUp();
         self::$containerTool = new Container(parent::getContainer());
-        self::$entityManager = self::$containerTool->get(EntityManagerInterface::class);
+
+        $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
+        $this->entityManager->getConnection()->beginTransaction();
+        $this->entityManager->getConnection()->setAutoCommit(false);
 
         $this->client = clone self::$clientBlank;
         $this->client->disableReboot();
 
-        self::$entityManager->getConnection()->beginTransaction();
-        self::$entityManager->getConnection()->setAutoCommit(false);
+        foreach (static::withFixtures() as $fixtureClass) {
+            /** @var FixtureInterface $fixture */
+            $fixture = new $fixtureClass();
+            $fixture->load($this->entityManager);
+        }
+    }
+
+    /**
+     * @return class-string<FixtureInterface>[]
+     */
+    protected static function withFixtures(): array
+    {
+        return [];
     }
 
     protected function tearDown(): void
     {
-        self::$entityManager->getConnection()->rollback();
-        self::$entityManager->close();
+        $this->entityManager->getConnection()->rollback();
+        $this->entityManager->close();
         parent::tearDown();
     }
 
