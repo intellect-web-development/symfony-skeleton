@@ -41,7 +41,7 @@ class IntegrationTestCase extends KernelTestCase
 
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var FixtureInterface $fixture */
-            $fixture = new $fixtureClass();
+            $fixture = self::$containerTool->get($fixtureClass);
             $fixture->load($this->entityManager);
         }
     }

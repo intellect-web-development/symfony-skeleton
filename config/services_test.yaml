@@ -3,3 +3,10 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\Tests\Integration\:
+        public: true
+        resource: '../tests/Integration/**/*Fixture.php'
+
+    App\Tests\Functional\:
+        public: true
+        resource: '../tests/Functional/**/*Fixture.php'
