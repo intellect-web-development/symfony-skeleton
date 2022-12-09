@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16ad30da712890017e57650a7bc2f35d",
+    "content-hash": "780fa7d03af1ec705dfb9517154513a5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1788,42 +1788,43 @@
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
-            "version": "0.0.4",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
-                "reference": "655a076311ba1cbd91a5cc4492cdea2f82a45992"
+                "reference": "c6f0949720288ced0242510e7861643dca24421a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/655a076311ba1cbd91a5cc4492cdea2f82a45992",
-                "reference": "655a076311ba1cbd91a5cc4492cdea2f82a45992",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/c6f0949720288ced0242510e7861643dca24421a",
+                "reference": "c6f0949720288ced0242510e7861643dca24421a",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=8.0",
-                "zircote/swagger-php": "^3.2"
+                "php": ">=8.0"
             },
             "require-dev": {
                 "doctrine/orm": "^2.13",
+                "friendsofphp/php-cs-fixer": "^3.13",
                 "overtrue/phplint": "^3.0",
                 "phpmetrics/phpmetrics": "^2.7",
                 "phpstan/phpstan": "^0.12.81",
                 "phpunit/phpunit": "^9.5",
+                "psalm/plugin-symfony": "^4.0",
                 "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.5",
                 "symfony/config": "^6.1",
                 "symfony/dependency-injection": "^6.1",
                 "symfony/http-kernel": "^6.1",
                 "symfony/serializer": "^6.1",
                 "symfony/validator": "^6.1",
-                "vimeo/psalm": "^4.6"
+                "vimeo/psalm": "^4.6",
+                "zircote/swagger-php": "^3.2"
             },
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
-                    "Symfony\\PresentationBundle\\": "src/"
+                    "IWD\\Symfony\\PresentationBundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1839,9 +1840,9 @@
             "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.0.4"
+                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.1.0"
             },
-            "time": "2022-09-18T20:33:14+00:00"
+            "time": "2022-12-09T16:48:53+00:00"
         },
         {
             "name": "laminas/laminas-code",
