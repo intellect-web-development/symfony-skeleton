@@ -6,7 +6,7 @@ namespace App\Tests\Functional;
 
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use App\Tests\Tools\TestFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
@@ -46,14 +46,14 @@ class FunctionalTestCase extends WebTestCase
         $this->client->disableReboot();
 
         foreach (static::withFixtures() as $fixtureClass) {
-            /** @var FixtureInterface $fixture */
+            /** @var TestFixture $fixture */
             $fixture = self::$containerTool->get($fixtureClass);
             $fixture->load($this->entityManager);
         }
     }
 
     /**
-     * @return class-string<FixtureInterface>[]
+     * @return class-string<TestFixture>[]
      */
     protected static function withFixtures(): array
     {
