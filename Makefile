@@ -6,6 +6,8 @@ init-app: env-init composer-install database-create-test migrations-up fixtures
 first-init-app: env-init composer-install database-create-test # make-migration migrations-up fixtures
 recreate-database: database-drop database-create database-create-test
 
+up-test-down: first-init before-deploy docker-down-clear
+
 stub-composer-operation:
 	docker compose run --rm app-php-cli composer require ...
 
