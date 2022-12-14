@@ -1,3 +1,5 @@
+#todo: актуализировать с monolith
+
 up: docker-up
 first-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up first-init-app
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
