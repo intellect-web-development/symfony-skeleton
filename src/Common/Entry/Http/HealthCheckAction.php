@@ -8,9 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RootController extends AbstractController
+class HealthCheckAction extends AbstractController
 {
-    #[Route(path: '', name: 'root', methods: ['GET'])]
+    public const NAME = 'root';
+
+    #[Route(path: '', name: self::NAME, methods: ['GET'])]
     public function root(): JsonResponse
     {
         return new JsonResponse([
