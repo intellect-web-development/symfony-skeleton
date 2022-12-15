@@ -1,3 +1,7 @@
+imports:
+    - { resource: doctrine_types.yaml }
+    - { resource: doctrine_mappings.yaml }
+
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
