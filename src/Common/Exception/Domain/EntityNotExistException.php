@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Exception;
+namespace App\Common\Exception\Domain;
 
-class AccessDeniedHttpException extends DomainException
+use Throwable;
+
+class EntityNotExistException extends DomainException
 {
     public function __construct(
         string $message = '',
-        ?int $code = 403,
-        ?\Throwable $previous = null
+        ?int $code = 400,
+        ?Throwable $previous = null
     ) {
         parent::__construct($message, (int) $code, $previous);
     }

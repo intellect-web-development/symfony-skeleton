@@ -1,14 +1,12 @@
-#todo: актуализировать с monolith
-
-up: docker-up
-first-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up first-init-app
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
 before-deploy: php-lint php-cs php-stan psalm test
-init-app: env-init composer-install database-create-test migrations-up fixtures
-first-init-app: env-init composer-install database-create-test # make-migration migrations-up fixtures
-recreate-database: database-drop database-create database-create-test
 
-up-test-down: first-init before-deploy docker-down-clear
+up: docker-up
+init-app: env-init composer-install database-create migrations-up fixtures
+recreate-database: database-drop database-create
+
+up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
+	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
 
 stub-composer-operation:
 	docker compose run --rm app-php-cli composer require ...
@@ -33,22 +31,29 @@ fixtures:
 make-migration:
 	docker compose run --rm app-php-cli php bin/console make:migration
 
+migrations-next:
+	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate next -n
+	docker compose run --rm app-php-cli php bin/console --env=test doctrine:migrations:migrate next -n
+
+migrations-prev:
+	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev -n
+	docker compose run --rm app-php-cli php bin/console --env=test doctrine:migrations:migrate prev -n
+
 migrations-up:
 	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction --env=test
 
 migrations-down:
 	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev --no-interaction
+	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev --no-interaction --env=test
 
 database-create:
-	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction
-
-database-create-test:
-	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --env=test
+	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --if-not-exists
+	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
 
 database-drop:
-	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction
-	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction --env=test
+	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction --if-exists
+	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction --env=test --if-exists
 
 test:
 	docker compose run --rm app-php-cli ./vendor/bin/phpunit

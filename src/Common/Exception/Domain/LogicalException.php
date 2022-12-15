@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Exception;
+namespace App\Common\Exception\Domain;
 
-class DomainException extends \DomainException
+use Throwable;
+
+class LogicalException extends DomainException
 {
     public function __construct(
         string $message = '',
-        ?int $code = 500,
-        ?\Throwable $previous = null
+        ?int $code = 400,
+        ?Throwable $previous = null
     ) {
         parent::__construct($message, (int) $code, $previous);
     }

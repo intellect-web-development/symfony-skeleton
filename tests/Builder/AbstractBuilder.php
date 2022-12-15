@@ -6,6 +6,7 @@ namespace App\Tests\Builder;
 
 use Faker\Factory;
 use Faker\Generator;
+use ReflectionProperty;
 
 abstract class AbstractBuilder
 {
@@ -142,7 +143,7 @@ abstract class AbstractBuilder
      *
      * @throws \ReflectionException
      */
-    private static function getReflectionProperty(string $className, string $property): \ReflectionProperty
+    private static function getReflectionProperty(string $className, string $property): ReflectionProperty
     {
         $refProperty = new \ReflectionProperty($className, $property);
         $refProperty->setAccessible(true);

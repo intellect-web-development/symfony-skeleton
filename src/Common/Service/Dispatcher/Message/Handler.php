@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Dispatcher\Message;
+namespace App\Common\Service\Dispatcher\Message;
 
-use App\Service\Dispatcher\NamedEvent;
+use App\Common\Service\Dispatcher\NamedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 

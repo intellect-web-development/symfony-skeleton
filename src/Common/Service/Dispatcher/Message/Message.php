@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Dispatcher\Message;
+namespace App\Common\Service\Dispatcher\Message;
 
 class Message
 {

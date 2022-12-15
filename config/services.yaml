@@ -19,22 +19,26 @@ services:
         exclude:
             - '../src/DependencyInjection'
             - '../src/Kernel.php'
-            - '../src/Tests'
 
-    App\Http\:
-        resource: '../src/Http/'
+    App\Common\Entry\Http\:
+        resource: '../src/Common/Entry/Http/'
         tags: [ 'controller.service_arguments' ]
 
-    App\Model\Flusher: ~
+    App\Common\Core\Model\Flusher: ~
 
-    App\Model\EventDispatcher:
-        class: App\Service\Dispatcher\MessengerEventDispatcher
+    App\Common\Core\EventDispatcher:
+        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
 
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
 
     Symfony\Component\Serializer\SerializerInterface:
-        factory: [ 'App\Container\SerializerFactory', 'create' ]
+        factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
+
+    App\Common\EventListener\Exception\HttpExceptionSubscriber:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $debug: '%env(LOCAL_TEST)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -1,5 +1,5 @@
-controllers:
-    resource: ../src/Http/
+common_controllers:
+    resource: ../src/Common/Entry/Http/
     type: annotation
 
 kernel:
