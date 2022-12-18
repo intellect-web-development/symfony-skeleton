@@ -24,9 +24,9 @@ services:
         resource: '../src/Common/Entry/Http/'
         tags: [ 'controller.service_arguments' ]
 
-    App\Common\Core\Model\Flusher: ~
+    App\Common\Service\Core\Flusher: ~
 
-    App\Common\Core\EventDispatcher:
+    App\Common\Service\Core\EventDispatcher:
         class: App\Common\Service\Dispatcher\MessengerEventDispatcher
 
     GuzzleHttp\ClientInterface:
