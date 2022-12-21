@@ -1,4 +1,4 @@
-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
+init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app phpmetrics
 before-deploy: php-lint php-cs php-stan psalm test
 
 up: docker-up
@@ -128,3 +128,6 @@ docker-pull:
 
 docker-build:
 	docker compose build
+
+phpmetrics:
+	docker compose run --rm app-php-cli php ./vendor/bin/phpmetrics --report-html=var/myreport ./src

@@ -195,6 +195,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.6.1"
     },
+    "phpmetrics/phpmetrics": {
+        "version": "v2.8.1"
+    },
     "phpstan/phpstan": {
         "version": "1.6.8"
     },
