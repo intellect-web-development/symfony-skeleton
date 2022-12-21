@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\EventListener\Exception;
+namespace App\Common\EventSubscriber\Exception;
 
 use App\Common\Exception\Domain\DomainException;
 use Psr\Log\LoggerInterface;
