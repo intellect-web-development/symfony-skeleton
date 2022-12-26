@@ -1,3 +1,6 @@
+imports:
+    - { resource: services_test_public.yaml }
+
 services:
     _defaults:
         autowire: true
