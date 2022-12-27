@@ -1,6 +1,3 @@
-imports:
-    - { resource: routes_http.yaml }
-
 common_controllers:
     resource: ../src/Common/Entry/Http/
     type: annotation
