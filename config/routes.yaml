@@ -1,5 +1,5 @@
 imports:
-    - { resource: services_http.yaml }
+    - { resource: routes_http.yaml }
 
 common_controllers:
     resource: ../src/Common/Entry/Http/
