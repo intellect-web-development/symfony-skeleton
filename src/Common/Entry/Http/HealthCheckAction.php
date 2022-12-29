@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HealthCheckAction extends AbstractController
 {
-    public const NAME = 'root';
+    public const NAME = 'health_check';
 
-    #[Route(path: '', name: self::NAME, methods: ['GET'])]
+    #[Route(path: '/health-check', name: self::NAME, methods: ['GET'])]
     public function root(): JsonResponse
     {
         return new JsonResponse([
