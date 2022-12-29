@@ -11,6 +11,9 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 #up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
 #	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
 
+debug-router:
+	docker-compose run --rm app-php-cli bin/console debug:router
+
 stub-composer-operation:
 	docker compose run --rm app-php-cli composer require ...
 
