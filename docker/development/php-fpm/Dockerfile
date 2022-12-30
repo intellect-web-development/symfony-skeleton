@@ -16,7 +16,9 @@ RUN pecl install -o -f redis \
 
 RUN apk add --no-cache postgresql-dev fcgi \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql sockets
+    && docker-php-ext-install pdo pdo_pgsql pgsql sockets \
+    && docker-php-ext-install intl pdo_mysql \
+    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
