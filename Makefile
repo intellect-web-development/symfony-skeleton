@@ -18,7 +18,7 @@ stub-composer-operation:
 	docker compose run --rm app-php-cli composer require ...
 
 docker-compose-override-init:
-	cp docker-compose.override.yml.example docker-compose.override.yml
+	cp docker-compose.override-example.yml docker-compose.override.yml
 
 cache-clear:
 	docker compose run --rm app-php-cli php bin/console cache:clear
