@@ -1,7 +1,8 @@
 version: "3.7"
 
 networks:
-  internal-network:
+  default:
+    name: internal-network
 
 services:
   nginx:
@@ -10,8 +11,6 @@ services:
       dockerfile: development/nginx/Dockerfile
     volumes:
       - ./:/app
-    networks:
-      - internal-network
 
   app-php-fpm:
     build:
@@ -21,8 +20,6 @@ services:
       - ./:/app
       - app_cache:/var/cache/app
       - app_log:/var/log/app
-    networks:
-      - internal-network
 
   app-php-cli:
     build:
@@ -32,8 +29,6 @@ services:
       - ./:/app
       - app_cache:/var/cache/app
       - app_log:/var/log/app
-    networks:
-      - internal-network
 
   app-postgres-db:
     volumes:
@@ -44,8 +39,6 @@ services:
       POSTGRES_DB: application-db
       POSTGRES_USER: default
       POSTGRES_PASSWORD: secret
-    networks:
-      - internal-network
 
 volumes:
   db:
