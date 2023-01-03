@@ -16,6 +16,7 @@ return (new PhpCsFixer\Config())
         'single_line_comment_style' => false,
         'php_unit_fqcn_annotation' => false,
         'global_namespace_import' => false,
+        'phpdoc_summary' => false,
         'concat_space' => ['spacing' => 'one'],
     ])
     ->setFinder($finder)
