@@ -20,6 +20,8 @@ RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzi
     && docker-php-ext-install intl pdo_mysql \
     && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
 
+RUN docker-php-ext-install bcmath
+
 RUN apk add --no-cache unzip
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
