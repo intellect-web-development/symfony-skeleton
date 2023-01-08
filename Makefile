@@ -68,13 +68,13 @@ test-coverage:
 	docker compose run --rm app-php-cli ./vendor/bin/phpunit --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-unit-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html   var/coverage
+	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-integration-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=integration --coverage-clover var/clover.xml --coverage-html   var/coverage
+	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=integration --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-functional-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=functional --coverage-clover var/clover.xml --coverage-html   var/coverage
+	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=functional --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-unit:
 	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=unit
