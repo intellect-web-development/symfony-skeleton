@@ -9,6 +9,7 @@ use Exception;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -30,6 +31,9 @@ class HttpExceptionSubscriber
         $format = (string) $event->getRequest()->attributes->get('_format', 'json');
 
         $exception = $event->getThrowable();
+        if ($exception instanceof AccessDeniedException) {
+            return;
+        }
         try {
             $previous = $exception->getPrevious();
             if (!empty($previous) && is_subclass_of($previous, DomainException::class)) {
