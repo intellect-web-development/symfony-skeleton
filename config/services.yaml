@@ -12,11 +12,39 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    _instanceof:
+        Doctrine\Common\EventSubscriber:
+            tags:
+                name: doctrine.event_subscriber
+                connection: default
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection'
+            - '../src/Kernel.php'
+
+    App\Common\Entry\Http\:
+        resource: '../src/Common/Entry/Http/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\Common\Service\Core\Flusher: ~
+
+    App\Common\Service\Core\EventDispatcher:
+        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
 
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
+
+    Symfony\Component\Serializer\SerializerInterface:
+        factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
+
+    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $debug: '%env(LOCAL_TEST)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

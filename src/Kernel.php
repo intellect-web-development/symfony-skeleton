@@ -13,51 +13,30 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public const PATHS = ConfigPaths::PATHS;
-//    public const PATHS = [
-//        // You can move the paths here
-//    ];
-
     protected function configureContainer(ContainerConfigurator $container): void
     {
-        $this->configureContainerForPath($container, __DIR__ . '/../config');
-        foreach (self::PATHS as $path) {
-            $this->configureContainerForPath($container, __DIR__ . '/' . $path);
+        $container->import('../config/{packages}/*.yaml');
+        $container->import('../config/{packages}/' . $this->environment . '/*.yaml');
+
+        if (is_file(\dirname(__DIR__) . '/config/services.yaml')) {
+            $container->import('../config/services.yaml');
+            $container->import('../config/{services}_' . $this->environment . '.yaml');
+
+            $container->import('../config/{services}/*.yaml');
+            $container->import('../config/{services}/' . $this->environment . '/*.yaml');
+        } elseif (is_file($path = \dirname(__DIR__) . '/config/services.php')) {
+            (require $path)($container->withPath($path), $this);
         }
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $this->configureRoutesForPath($routes, __DIR__ . '/../config');
-        foreach (self::PATHS as $path) {
-            $this->configureRoutesForPath($routes, __DIR__ . '/' . $path);
-        }
-    }
+        $routes->import('../config/{routes}/' . $this->environment . '/*.yaml');
+        $routes->import('../config/{routes}/*.yaml');
 
-    public function configureContainerForPath(ContainerConfigurator $container, string $pathToConfig): void
-    {
-        $container->import($pathToConfig . '/{packages}/*.yaml');
-        $container->import($pathToConfig . '/{packages}/' . $this->environment . '/*.yaml');
-
-        if (is_file($pathToConfig . '/services.yaml')) {
-            $container->import($pathToConfig . '/services.yaml');
-            $container->import($pathToConfig . '/{services}_' . $this->environment . '.yaml');
-
-            $container->import($pathToConfig . '/{services}/*.yaml');
-            $container->import($pathToConfig . '/{services}/' . $this->environment . '/*.yaml');
-        } elseif (is_file($path = $pathToConfig . '/services.php')) {
-            (require $path)($container->withPath($path), $this);
-        }
-    }
-
-    public function configureRoutesForPath(RoutingConfigurator $routes, string $pathToConfig): void
-    {
-        $routes->import($pathToConfig . '/{routes}/' . $this->environment . '/*.yaml');
-        $routes->import($pathToConfig . '/{routes}/*.yaml');
-
-        if (is_file($pathToConfig . '/routes.yaml')) {
-            $routes->import($pathToConfig . '/routes.yaml');
-        } elseif (is_file($path = $pathToConfig . '/routes.php')) {
+        if (is_file(\dirname(__DIR__) . '/config/routes.yaml')) {
+            $routes->import('../config/routes.yaml');
+        } elseif (is_file($path = \dirname(__DIR__) . '/config/routes.php')) {
             (require $path)($routes->withPath($path), $this);
         }
     }
