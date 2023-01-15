@@ -6,7 +6,10 @@ init-app: env-init composer-install database-create migrations-up fixtures
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create migrations-up make-migration migrations-up before-deploy docker-down-clear
+	composer-install database-create make-migration-no-interaction migrations-up before-deploy docker-down-clear
+
+make-migration-no-interaction:
+	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
 #up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
 #	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
