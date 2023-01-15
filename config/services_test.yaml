@@ -10,9 +10,3 @@ services:
     App\Tests\Functional\:
         public: true
         resource: '../tests/Functional/**/*Fixture.php'
-
-    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
-        public: true
-        arguments:
-            $env: '%env(APP_ENV)%'
-            $debug: '%env(LOCAL_TEST)%'
