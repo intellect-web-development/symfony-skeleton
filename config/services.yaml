@@ -23,25 +23,26 @@ services:
     App\:
         resource: '../src/'
         exclude:
+            - '../src/Common'
             - '../src/DependencyInjection'
             - '../src/Kernel.php'
 
-    App\Common\Entry\Http\:
-        resource: '../src/Common/Entry/Http/'
-        tags: [ 'controller.service_arguments' ]
-
-    App\Common\Service\Core\Flusher: ~
-
-    App\Common\Service\Core\EventDispatcher:
-        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
+    #    App\Common\Entry\Http\:
+    #        resource: '../src/Common/Entry/Http/'
+    #        tags: [ 'controller.service_arguments' ]
+    #
+    #    App\Common\Service\Core\Flusher: ~
+    #
+    #    App\Common\Service\Core\EventDispatcher:
+    #        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
 
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
 
-    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
-        arguments:
-            $env: '%env(APP_ENV)%'
-            $debug: '%env(LOCAL_TEST)%'
+    #    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
+    #        arguments:
+    #            $env: '%env(APP_ENV)%'
+    #            $debug: '%env(LOCAL_TEST)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

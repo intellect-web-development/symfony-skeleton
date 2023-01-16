@@ -3,24 +3,24 @@ services:
         autowire: true
         autoconfigure: true
 
-#    App\Common\:
-#        resource: '../'
-#        exclude:
-#            - '../config'
+    App\Common\:
+        resource: '../'
+        exclude:
+            - '../config'
 
-#    App\Common\Entry\Http\:
-#        resource: '../Entry/Http/'
-#        tags: [ 'controller.service_arguments' ]
-#
-#    App\Common\Service\Core\Flusher: ~
-#
-#    App\Common\Service\Core\EventDispatcher:
-#        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
-#
-#    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
-#        arguments:
-#            $env: '%env(APP_ENV)%'
-#            $debug: '%env(LOCAL_TEST)%'
-#
+    App\Common\Entry\Http\:
+        resource: '../Entry/Http/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\Common\Service\Core\Flusher: ~
+
+    App\Common\Service\Core\EventDispatcher:
+        class: App\Common\Service\Dispatcher\MessengerEventDispatcher
+
+    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $debug: '%env(LOCAL_TEST)%'
+
     Symfony\Component\Serializer\SerializerInterface:
         factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
