@@ -38,9 +38,6 @@ services:
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
 
-    Symfony\Component\Serializer\SerializerInterface:
-        factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
-
     App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
         arguments:
             $env: '%env(APP_ENV)%'
