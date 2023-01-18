@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9de7730263b09d1d366d60132c9f13b9",
+    "content-hash": "c1a8ed8c5a1bd94c7658d9416656d1f9",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1788,16 +1788,16 @@
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
-                "reference": "c6f0949720288ced0242510e7861643dca24421a"
+                "reference": "9e0fa0a2c56bb9d330440cc3884be4549ce3a10f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/c6f0949720288ced0242510e7861643dca24421a",
-                "reference": "c6f0949720288ced0242510e7861643dca24421a",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/9e0fa0a2c56bb9d330440cc3884be4549ce3a10f",
+                "reference": "9e0fa0a2c56bb9d330440cc3884be4549ce3a10f",
                 "shasum": ""
             },
             "require": {
@@ -1840,9 +1840,9 @@
             "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.1.0"
+                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.1.1"
             },
-            "time": "2022-12-09T16:48:53+00:00"
+            "time": "2023-01-18T12:27:38+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -10083,6 +10083,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.1",
+        "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },

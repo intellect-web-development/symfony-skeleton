@@ -18,7 +18,7 @@ debug-router:
 	docker compose run --rm app-php-cli bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-cli composer require ...
+	docker compose run --rm app-php-cli composer require intellect-web-development/symfony-presentation-bundle:0.1.1
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml

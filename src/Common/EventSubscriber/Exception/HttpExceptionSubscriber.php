@@ -6,15 +6,15 @@ namespace App\Common\EventSubscriber\Exception;
 
 use App\Common\Exception\Domain\DomainException;
 use Exception;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
+use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
+use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
+use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
 use Throwable;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION, method: 'logException', priority: 2)]
@@ -34,6 +34,14 @@ class HttpExceptionSubscriber
         $exception = $event->getThrowable();
         try {
             throw $exception;
+        } catch (DeserializePayloadToInputContractException $exception) {
+            $this->logger->warning(
+                sprintf(
+                    'Failed deserialize request to InputContract. Payload: %s, Error: %s',
+                    json_encode($exception->getPayload()),
+                    $exception->getPrevious()?->getMessage()
+                )
+            );
         } catch (DomainException $exception) {
             $this->logger->warning($exception->getMessage());
         } catch (Throwable $exception) {
@@ -47,9 +55,6 @@ class HttpExceptionSubscriber
         $event->allowCustomResponseCode();
 
         $exception = $event->getThrowable();
-        if ($exception instanceof AccessDeniedException) {
-            return;
-        }
 
         try {
             $previous = $exception->getPrevious();
