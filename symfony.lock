@@ -230,6 +230,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "promphp/prometheus_client_php": {
+        "version": "v2.6.2"
+    },
     "psalm/plugin-symfony": {
         "version": "v4.0.0"
     },

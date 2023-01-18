@@ -40,6 +40,9 @@ services:
       POSTGRES_USER: default
       POSTGRES_PASSWORD: secret
 
+  app-metrics-sidecar:
+    image: redis:alpine
+
 volumes:
   db:
   app_cache:
