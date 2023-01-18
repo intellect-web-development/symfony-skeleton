@@ -8,13 +8,10 @@ use App\Common\Exception\Domain\DomainException;
 
 class MetricsGuard
 {
-    private string $prometheusHost;
-    private string $appEnv;
-
-    public function __construct(string $appEnv, string $prometheusHost)
-    {
-        $this->prometheusHost = $prometheusHost;
-        $this->appEnv = $appEnv;
+    public function __construct(
+        private readonly string $appEnv,
+        private readonly string $prometheusHost,
+    ) {
     }
 
     public function guard(string $host): void
