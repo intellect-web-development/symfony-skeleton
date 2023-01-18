@@ -30,3 +30,8 @@ services:
 
     Symfony\Component\Serializer\SerializerInterface:
         factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
+
+    App\Common\Service\Metrics\Adapters\Redis\Config:
+        arguments:
+            $host: '%env(METRICS_SIDECAR_HOST)%'
+            $namespace: 'app'
