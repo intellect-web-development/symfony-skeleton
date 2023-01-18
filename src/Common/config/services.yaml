@@ -35,3 +35,8 @@ services:
         arguments:
             $host: '%env(METRICS_SIDECAR_HOST)%'
             $namespace: 'app'
+
+    App\Common\Service\Metrics\MetricsGuard:
+        arguments:
+            $appEnv: '%env(APP_ENV)%'
+            $prometheusHost: '%env(PROMETHEUS_HOST)%'
