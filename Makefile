@@ -1,5 +1,5 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app phpmetrics
-before-deploy: php-lint php-cs php-stan psalm test
+before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
 up: docker-up
 init-app: env-init composer-install database-create migrations-up fixtures
@@ -103,6 +103,9 @@ php-cs:
 
 psalm:
 	docker compose run --rm app-php-cli ./vendor/bin/psalm --no-cache $(ARGS)
+
+doctrine-schema-validate:
+	docker compose run --rm php bin/console --env=test doctrine:schema:validate
 
 composer-install:
 	docker compose run --rm app-php-cli composer install
