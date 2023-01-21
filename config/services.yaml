@@ -6,5 +6,30 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.identical_property_naming_strategy
+
+    Http\Message\Formatter\FullHttpMessageFormatter: ~
+
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
+
+    form.factory:
+        class: Symfony\Component\Form\FormFactory
+        public: true
+
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
+
+    Psr\Container\ContainerInterface: '@service_container'
+
+    session:
+        class: Symfony\Component\HttpFoundation\Session\Session
+        public: true
+
+    security.token_storage:
+        alias: security.untracked_token_storage
+        public: true
+
+    security.authorization_checker:
+        class: Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+        public: true

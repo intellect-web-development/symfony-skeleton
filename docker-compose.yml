@@ -40,6 +40,11 @@ services:
       POSTGRES_USER: default
       POSTGRES_PASSWORD: secret
 
+  node:
+    build: docker/common/node
+    volumes:
+      - ./:/var/www/
+
   app-metrics-sidecar:
     image: redis:alpine
 

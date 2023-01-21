@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
+use Exception;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,7 +21,7 @@ class ContractTestCase extends IntegrationTestCase
     /**
      * @param array<string> $expectedErrors
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function assertViolations(object $contract, array $expectedErrors): void
     {
@@ -34,11 +35,11 @@ class ContractTestCase extends IntegrationTestCase
 
         foreach ($expectedErrors as $expectedProperty => $expectedMessage) {
             if (!isset($violations[$expectedProperty])) {
-                throw new \Exception("Undefined array key '$expectedProperty'");
+                throw new Exception("Undefined array key '$expectedProperty'");
             }
             $violationMessage = $violations[$expectedProperty];
             if (is_int($expectedProperty)) {
-                throw new \Exception(
+                throw new Exception(
                     sprintf('Field name value not set for next error: "%s"', $expectedMessage)
                 );
             }

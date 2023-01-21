@@ -22,6 +22,10 @@ RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzi
 
 RUN docker-php-ext-install bcmath
 
+# php-gd
+RUN apk add --no-cache libpng-dev \
+    && docker-php-ext-install gd
+
 RUN apk add --no-cache unzip
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini

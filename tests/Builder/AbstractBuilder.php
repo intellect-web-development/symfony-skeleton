@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Builder;
 
+use ArrayAccess;
+use Closure;
 use Faker\Factory;
 use Faker\Generator;
+use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 
 abstract class AbstractBuilder
@@ -52,7 +56,7 @@ abstract class AbstractBuilder
     {
         $clone = clone $this;
 
-        $grabber = \Closure::bind(
+        $grabber = Closure::bind(
             function () {
                 return get_object_vars($this);
             },
@@ -78,7 +82,7 @@ abstract class AbstractBuilder
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected static function hydrate(object $entity, array $data): object
     {
@@ -94,17 +98,17 @@ abstract class AbstractBuilder
     /**
      * @param class-string $class
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected static function newWithoutConstructor(string $class): object
     {
-        return (new \ReflectionClass($class))->newInstanceWithoutConstructor();
+        return (new ReflectionClass($class))->newInstanceWithoutConstructor();
     }
 
     /**
      * @return mixed
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected static function getProperty(object $object, string $property)
     {
@@ -114,8 +118,8 @@ abstract class AbstractBuilder
             $refProperty = self::getReflectionProperty($className, $property);
 
             return $refProperty->getValue($object);
-        } catch (\ReflectionException $reflectionException) {
-            if ($object instanceof \ArrayAccess) {
+        } catch (ReflectionException $reflectionException) {
+            if ($object instanceof ArrayAccess) {
                 return $object[$property];
             } else {
                 throw $reflectionException;
@@ -129,8 +133,8 @@ abstract class AbstractBuilder
         try {
             $refProperty = self::getReflectionProperty($className, $property);
             $refProperty->setValue($object, $value);
-        } catch (\ReflectionException $reflectionException) {
-            if ($object instanceof \ArrayAccess) {
+        } catch (ReflectionException $reflectionException) {
+            if ($object instanceof ArrayAccess) {
                 $object[$property] = $value;
             } else {
                 throw $reflectionException;
@@ -141,11 +145,11 @@ abstract class AbstractBuilder
     /**
      * @param class-string $className
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private static function getReflectionProperty(string $className, string $property): ReflectionProperty
     {
-        $refProperty = new \ReflectionProperty($className, $property);
+        $refProperty = new ReflectionProperty($className, $property);
         $refProperty->setAccessible(true);
 
         return $refProperty;

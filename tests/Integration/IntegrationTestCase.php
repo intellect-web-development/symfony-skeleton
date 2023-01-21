@@ -7,9 +7,12 @@ namespace App\Tests\Integration;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
+use ArrayAccess;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
+use ReflectionException;
+use ReflectionProperty;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class IntegrationTestCase extends KernelTestCase
@@ -66,8 +69,8 @@ class IntegrationTestCase extends KernelTestCase
         try {
             $refProperty = self::getReflectionProperty($className, $property);
             $refProperty->setValue($object, $value);
-        } catch (\ReflectionException $reflectionException) {
-            if ($object instanceof \ArrayAccess) {
+        } catch (ReflectionException $reflectionException) {
+            if ($object instanceof ArrayAccess) {
                 $object[$property] = $value;
             } else {
                 throw $reflectionException;
@@ -76,11 +79,11 @@ class IntegrationTestCase extends KernelTestCase
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    private static function getReflectionProperty(string $className, string $property): \ReflectionProperty
+    private static function getReflectionProperty(string $className, string $property): ReflectionProperty
     {
-        $refProperty = new \ReflectionProperty($className, $property);
+        $refProperty = new ReflectionProperty($className, $property);
         $refProperty->setAccessible(true);
 
         return $refProperty;

@@ -14,6 +14,10 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public const SKELETON_PATHS = [
+        'Common/config',
+        'Auth/config',
+    ];
     public const PATHS = ConfigPaths::PATHS;
 //    public const PATHS = [
 //        // You can move the paths here
@@ -22,7 +26,7 @@ class Kernel extends BaseKernel
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $this->configureContainerForPath($container, __DIR__ . '/../config');
-        foreach (self::PATHS as $path) {
+        foreach ([...self::SKELETON_PATHS, ...self::PATHS] as $path) {
             $this->configureContainerForPath($container, __DIR__ . '/' . $path);
         }
     }
@@ -30,7 +34,7 @@ class Kernel extends BaseKernel
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $this->configureRoutesForPath($routes, __DIR__ . '/../config');
-        foreach (self::PATHS as $path) {
+        foreach ([...self::SKELETON_PATHS, ...self::PATHS] as $path) {
             $this->configureRoutesForPath($routes, __DIR__ . '/' . $path);
         }
     }

@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        Doctrine\Common\EventSubscriber:
+            tags:
+                name: doctrine.event_subscriber
+                connection: default
+
+    App\Auth\:
+        resource: '../'
+        exclude:
+            - '../config'
+
+    App\Auth\Entry\Http\:
+        resource: '../Entry/Http/'
+        tags: [ 'controller.service_arguments' ]

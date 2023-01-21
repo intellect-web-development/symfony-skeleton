@@ -1,0 +1,2 @@
+auth:
+    resource: routing/auth/*.yaml

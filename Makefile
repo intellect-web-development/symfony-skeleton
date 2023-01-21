@@ -2,17 +2,21 @@ init: docker-compose-override-init docker-down-clear docker-pull docker-build do
 before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
 up: docker-up
-init-app: env-init composer-install database-create migrations-up fixtures
+init-app: env-init composer-install database-create migrations-up fixtures create-default-admin init-assets
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create make-migration-no-interaction migrations-up before-deploy docker-down-clear
+	composer-install database-create make-migration-no-interaction migrations-up create-default-admin \
+	before-deploy docker-down-clear
 
 make-migration-no-interaction:
 	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
 #up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
 #	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
+
+create-default-admin:
+	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin admin@dev.com root
 
 debug-router:
 	docker compose run --rm app-php-cli bin/console debug:router
@@ -105,7 +109,7 @@ psalm:
 	docker compose run --rm app-php-cli ./vendor/bin/psalm --no-cache $(ARGS)
 
 doctrine-schema-validate:
-	docker compose run --rm php bin/console --env=test doctrine:schema:validate
+	docker compose run --rm app-php-cli php bin/console --env=test doctrine:schema:validate
 
 composer-install:
 	docker compose run --rm app-php-cli composer install
@@ -143,3 +147,8 @@ docker-build:
 
 phpmetrics:
 	docker compose run --rm app-php-cli php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
+
+init-assets:
+	docker compose run node sh -c "yarn"
+	docker compose run --rm app-php-cli php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
+	docker compose run node sh -c "yarn encore dev"

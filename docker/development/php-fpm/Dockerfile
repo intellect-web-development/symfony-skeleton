@@ -22,6 +22,10 @@ RUN apk add --no-cache postgresql-dev fcgi \
 
 RUN docker-php-ext-install bcmath
 
+# php-gd
+RUN apk add --no-cache libpng-dev \
+    && docker-php-ext-install gd
+
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
 COPY ./development/php/conf.d /usr/local/etc/php/conf.d

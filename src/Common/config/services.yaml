@@ -40,3 +40,9 @@ services:
         arguments:
             $appEnv: '%env(APP_ENV)%'
             $prometheusHost: '%env(PROMETHEUS_HOST)%'
+
+    app.menu_builder:
+        class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder
+        arguments: [ "@knp_menu.factory" ]
+        tags:
+            - { name: knp_menu.menu_builder, method: buildMenu, alias: ec.main }

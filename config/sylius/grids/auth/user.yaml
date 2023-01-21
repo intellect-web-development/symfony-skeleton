@@ -1,0 +1,55 @@
+sylius_grid:
+    grids:
+        app_user:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%app.model.user.class%"
+            fields:
+                id:
+                    type: string
+                    label: app.admin.ui.modules.auth.user.properties.id
+                    sortable: ~
+                createdAt:
+                    type: datetime
+                    label: app.admin.ui.modules.auth.user.properties.created_at
+                email:
+                    type: string
+                    label: app.admin.ui.modules.auth.user.properties.email
+                name:
+                    type: string
+                    label: app.admin.ui.modules.auth.user.properties.name
+            sorting:
+                id: desc
+            filters:
+                id:
+                    type: string
+                    form_options:
+                        label: app.admin.ui.modules.auth.user.properties.id
+                        type: equal
+                    options:
+                        type: equal
+                name:
+                    type: string
+                    label: app.admin.ui.modules.auth.user.properties.name
+                    form_options:
+                        type: contains
+                    options:
+                        type: contains
+                        fields: [ name ]
+                email:
+                    type: string
+                    label: app.admin.ui.modules.auth.user.properties.email
+                    form_options:
+                        type: contains
+                    options:
+                        type: contains
+                        fields: [ email ]
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    show:
+                        type: show
+
