@@ -1,3 +1,34 @@
-imports:
-    - { resource: ../sylius/resources.yaml }
-    - { resource: ../sylius/grids.yaml }
+sylius_grid:
+    templates:
+        bulk_action:
+            delete: "@SyliusUi/Grid/BulkAction/delete.html.twig"
+            enable: "admin/layout/grid/action/enable.html.twig"
+            disable: "admin/layout/grid/action/disable.html.twig"
+            send: "admin/layout/grid/action/bulk_send.html.twig"
+            repeat: "admin/layout/grid/action/bulk_repeat.html.twig"
+        action:
+            default: "@SyliusUi/Grid/Action/default.html.twig"
+            create: "@SyliusUi/Grid/Action/create.html.twig"
+            delete: "@SyliusUi/Grid/Action/delete.html.twig"
+            show: "@SyliusUi/Grid/Action/show.html.twig"
+            update: "@SyliusUi/Grid/Action/update.html.twig"
+            links: "@SyliusUi/Grid/Action/links.html.twig"
+            archive: "@SyliusUi/Grid/Action/archive.html.twig"
+            unsubscribe: "admin/layout/grid/action/unsubscribe.html.twig"
+            download: "admin/layout/grid/action/download.html.twig"
+            send: "admin/layout/grid/action/send.html.twig"
+            repeat: "admin/layout/grid/action/repeat.html.twig"
+        filter:
+            string: "@SyliusUi/Grid/Filter/string.html.twig"
+            boolean: "@SyliusUi/Grid/Filter/boolean.html.twig"
+            date: "@SyliusUi/Grid/Filter/date.html.twig"
+            entity: "@SyliusUi/Grid/Filter/entity.html.twig"
+            exists: "@SyliusUi/Grid/Filter/exists.html.twig"
+            boolean_multiple: "@SyliusUi/Grid/Filter/boolean.html.twig"
+            select: "@SyliusUi/Grid/Filter/select.html.twig"
+            timestamp: "admin/layout/grid/filter/timestamp.html.twig"
+            timestamp_range: "@SyliusUi/Grid/Filter/date.html.twig"
+            number: "admin/layout/grid/filter/number.html.twig"
+            user_autocomplete: "grid/filter/user_autocomplete.html.twig"
+            select2: "admin/layout/grid/filter/select2.html.twig"
+            int: "admin/layout/grid/filter/int.html.twig"

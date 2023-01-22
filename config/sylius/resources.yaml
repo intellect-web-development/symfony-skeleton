@@ -1,3 +1,0 @@
-imports:
-    - { resource: resources/*.yaml }
-    - { resource: resources/auth/*.yaml }
