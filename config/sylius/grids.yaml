@@ -9,7 +9,6 @@ sylius_grid:
             disable: "admin/layout/grid/action/disable.html.twig"
             send: "admin/layout/grid/action/bulk_send.html.twig"
             repeat: "admin/layout/grid/action/bulk_repeat.html.twig"
-            move_sites_to_status: "admin/layout/grid/action/bulk_move_sites_to_status.html.twig"
         action:
             default: "@SyliusUi/Grid/Action/default.html.twig"
             create: "@SyliusUi/Grid/Action/create.html.twig"
