@@ -1,6 +1,6 @@
 sylius_grid:
     grids:
-        app_user: #todo: add auth
+        app_user:
             driver:
                 name: doctrine/orm
                 options:
