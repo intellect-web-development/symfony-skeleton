@@ -17,12 +17,13 @@ class IdTypeTest extends UnitTestCase
         /** @psalm-suppress InternalMethod */
         $idType = new IdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
-        $value = '835';
+        $value = '708';
 
+        /** @var Id|null $phpValue */
         $phpValue = $idType->convertToPHPValue($value, $abstractPlatformMock);
 
+        self::assertSame($value, $phpValue?->getValue());
         self::assertInstanceOf(Id::class, $phpValue);
-        self::assertEquals($value, $phpValue->getValue());
     }
 
     public function testConvertToPHPValueWithEmptyValue(): void
@@ -41,10 +42,10 @@ class IdTypeTest extends UnitTestCase
         /** @psalm-suppress InternalMethod */
         $idType = new IdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
-        $value = new Id('146');
+        $value = new Id('697');
 
         $convertedDatabaseValue = $idType->convertToDatabaseValue($value, $abstractPlatformMock);
-        self::assertEquals($value->getValue(), $convertedDatabaseValue);
+        self::assertSame($value->getValue(), $convertedDatabaseValue);
     }
 
     public function testConvertToDatabaseValueWithEmptyValue(): void
@@ -62,7 +63,7 @@ class IdTypeTest extends UnitTestCase
     {
         /** @psalm-suppress InternalMethod */
         $idType = new IdType();
-        self::assertEquals(IdType::NAME, $idType->getName());
+        self::assertSame(IdType::NAME, $idType->getName());
     }
 
     public function testRequiresSQLCommentHint(): void
