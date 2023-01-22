@@ -36,12 +36,12 @@ class UserBuilder extends AbstractBuilder
         $payload = [];
 
         $payload['id'] = new Id((string) self::$faker->numberBetween(100000, 999999));
-        $payload['createdAt'] = new DateTimeImmutable(self::$faker->dateTime->format('Y-m-d H:i:s'));
-        $payload['updatedAt'] = new DateTimeImmutable(self::$faker->dateTime->format('Y-m-d H:i:s'));
-        $payload['email'] = self::$faker->email;
-        $payload['name'] = self::$faker->name;
+        $payload['createdAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
+        $payload['updatedAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
+        $payload['email'] = self::$faker->email();
+        $payload['name'] = self::$faker->name();
         $payload['userRoles'] = [User::ROLE_ADMIN];
-        $payload['password'] = sha1(self::$faker->password);
+        $payload['password'] = sha1(self::$faker->password());
 
         return $payload;
     }

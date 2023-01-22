@@ -34,7 +34,7 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             $command = new Command(
                 id: new Id(Fixture::ID),
-                newPassword: self::$faker->password,
+                newPassword: self::$faker->password(),
                 oldPassword: Fixture::PASSWORD
             )
         );
@@ -55,8 +55,8 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             new Command(
                 id: new Id(Fixture::ID),
-                newPassword: self::$faker->password,
-                oldPassword: self::$faker->password . self::$faker->sha1
+                newPassword: self::$faker->password(),
+                oldPassword: self::$faker->password() . self::$faker->sha1()
             )
         );
         self::assertTrue(

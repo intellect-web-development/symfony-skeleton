@@ -34,9 +34,9 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                plainPassword: self::$faker->password,
-                name: self::$faker->name . md5(random_bytes(255)),
-                email: self::$faker->email . md5(random_bytes(255))
+                plainPassword: self::$faker->password(),
+                name: self::$faker->name() . md5(random_bytes(255)),
+                email: self::$faker->email() . md5(random_bytes(255))
             )
         );
         self::assertTrue(
@@ -61,8 +61,8 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                plainPassword: self::$faker->password,
-                name: self::$faker->name . md5(random_bytes(255)),
+                plainPassword: self::$faker->password(),
+                name: self::$faker->name() . md5(random_bytes(255)),
                 email: Fixture::EMAIL
             )
         );

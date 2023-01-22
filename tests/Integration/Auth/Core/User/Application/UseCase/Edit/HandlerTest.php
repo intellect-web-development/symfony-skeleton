@@ -57,8 +57,8 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             $command = new Command(
                 id: new Id(Fixture::ID),
-                name: self::$faker->name . self::$faker->sha1,
-                email: self::$faker->email . self::$faker->sha1
+                name: self::$faker->name() . self::$faker->sha1(),
+                email: self::$faker->email() . self::$faker->sha1()
             )
         );
         self::assertTrue(
@@ -75,8 +75,8 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             new Command(
                 id: new Id('100000'),
-                name: self::$faker->name . self::$faker->sha1,
-                email: self::$faker->email . self::$faker->sha1
+                name: self::$faker->name() . self::$faker->sha1(),
+                email: self::$faker->email() . self::$faker->sha1()
             )
         );
         self::assertTrue(
@@ -90,7 +90,7 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             $command = new Command(
                 id: new Id(Fixture::ID),
-                name: self::$faker->name . self::$faker->sha1,
+                name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::SELF_EMAIL,
             )
         );
@@ -108,7 +108,7 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             new Command(
                 id: new Id(Fixture::ID),
-                name: self::$faker->name . self::$faker->sha1,
+                name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::BUSY_EMAIL,
             )
         );
