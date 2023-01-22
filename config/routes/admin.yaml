@@ -18,6 +18,3 @@ admin_logout:
     path: "/logout"
     methods: [GET]
 
-
-sylius:
-    resource: "../sylius/routing.yaml"
