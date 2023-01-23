@@ -43,6 +43,11 @@ services:
 
     app.menu_builder:
         class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder
-        arguments: [ "@knp_menu.factory" ]
+        arguments:
+            $factory: "@knp_menu.factory"
         tags:
             - { name: knp_menu.menu_builder, method: buildMenu, alias: ec.main }
+
+    App\Common\Entry\Http\Admin\Menu\SectionBuilderFactory:
+        arguments:
+            - !tagged_iterator app.section_builder
