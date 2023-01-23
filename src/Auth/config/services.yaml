@@ -15,6 +15,7 @@ services:
         resource: '../'
         exclude:
             - '../config'
+            - '../translations'
 
     App\Auth\Entry\Http\:
         resource: '../Entry/Http/'
