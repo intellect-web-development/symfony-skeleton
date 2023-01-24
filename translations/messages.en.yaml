@@ -6,3 +6,4 @@ app:
             common:
                 project: Application
                 save: Save
+                login: Log in
