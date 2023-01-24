@@ -3,10 +3,6 @@ app:
         ui:
             id: Id
             edit: Edit
-            users: Users
-            new_user: Add User
-            edit_user: Edit User
-            show_user: User
             common:
                 project: Application
                 save: Save

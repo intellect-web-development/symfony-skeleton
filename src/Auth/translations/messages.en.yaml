@@ -1,6 +1,10 @@
 app:
     admin:
         ui:
+            users: Users
+            new_user: Add User
+            edit_user: Edit User
+            show_user: User
             modules:
                 auth:
                     user:
