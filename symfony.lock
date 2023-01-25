@@ -188,6 +188,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "sirian/suggest-bundle": {
+        "version": "v2.1.2"
+    },
     "sonata-project/block-bundle": {
         "version": "4.17",
         "recipe": {

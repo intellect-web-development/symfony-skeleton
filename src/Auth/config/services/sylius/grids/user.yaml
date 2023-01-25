@@ -23,7 +23,7 @@ sylius_grid:
                 id: desc
             filters:
                 id:
-                    type: string
+                    type: int
                     form_options:
                         label: app.admin.ui.modules.auth.user.properties.id
                         type: equal

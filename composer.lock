@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5906a1f5e9b51f5562a86d634a05ea4f",
+    "content-hash": "14f6dc1cf70944d1dae6b7c9cc2dde0c",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -5432,6 +5432,42 @@
                 }
             ],
             "time": "2023-01-12T18:13:24+00:00"
+        },
+        {
+            "name": "sirian/suggest-bundle",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sirian/suggest-bundle.git",
+                "reference": "27f703c5516cae100cce645a1e3ee6e6e50e3a88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sirian/suggest-bundle/zipball/27f703c5516cae100cce645a1e3ee6e6e50e3a88",
+                "reference": "27f703c5516cae100cce645a1e3ee6e6e50e3a88",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sirian\\SuggestBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "symfony2 suggest (autocomplete) bundle",
+            "support": {
+                "issues": "https://github.com/sirian/suggest-bundle/issues",
+                "source": "https://github.com/sirian/suggest-bundle/tree/v2.1.2"
+            },
+            "time": "2019-11-19T11:35:27+00:00"
         },
         {
             "name": "sonata-project/block-bundle",

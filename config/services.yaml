@@ -6,6 +6,8 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    Sylius\Component\Grid\DataExtractor\DataExtractorInterface: "@sylius.grid.data_extractor.property_access"
+
     jms_serializer.naming_strategy:
         alias: jms_serializer.identical_property_naming_strategy
 

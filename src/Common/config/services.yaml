@@ -51,3 +51,28 @@ services:
     App\Common\Entry\Http\Admin\Menu\SectionBuilderFactory:
         arguments:
             - !tagged_iterator app.section_builder
+
+
+    App\Common\Entry\Http\Admin\Grid\FieldType\BooleanType:
+        tags:
+            - { name: sylius.grid_field, type: boolean }
+
+    App\Common\Entry\Http\Admin\Grid\FieldType\NullableStringType:
+        tags:
+            - { name: sylius.grid_field, type: nullable_string }
+
+    App\Common\Entry\Http\Admin\Grid\Filter\TimestampFilter:
+        tags:
+            - { name: 'sylius.grid_filter', type: 'timestamp', form_type: App\Common\Entry\Http\Admin\Form\Filter\TimestampType }
+
+    App\Common\Entry\Http\Admin\Grid\Filter\NumberFilter:
+        tags:
+            - { name: 'sylius.grid_filter', type: 'number', form_type: App\Common\Entry\Http\Admin\Form\Filter\NumberType }
+
+    App\Common\Entry\Http\Admin\Grid\Filter\Select2Filter:
+        tags:
+            - { name: 'sylius.grid_filter', type: 'select2', form_type: App\Common\Entry\Http\Admin\Form\Filter\Select2Type }
+
+    App\Common\Entry\Http\Admin\Grid\Filter\IntegerFilter:
+        tags:
+            - { name: 'sylius.grid_filter', type: 'int', form_type: App\Common\Entry\Http\Admin\Form\Filter\IntegerFilterType }
