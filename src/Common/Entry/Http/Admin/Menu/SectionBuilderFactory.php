@@ -26,10 +26,9 @@ class SectionBuilderFactory
     public function getSortedBuilders(): array
     {
         $builders = [];
-        foreach ($this->sectionBuilders as $sectionBuilder) {
-            $builders[$sectionBuilder->getOrder()] = $sectionBuilder;
+        foreach ($this->sectionBuilders as $key => $sectionBuilder) {
+            $builders[(int) ($sectionBuilder->getOrder() . $key)] = $sectionBuilder;
         }
-        sort($builders);
 
         return $builders;
     }
