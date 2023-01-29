@@ -1,5 +1,7 @@
 FROM php:8.1.3-cli-alpine
 
+RUN apk add --update linux-headers
+
 RUN apk add --no-cache autoconf g++ make \
     && pecl install xdebug \
     && rm -rf /tmp/pear \
