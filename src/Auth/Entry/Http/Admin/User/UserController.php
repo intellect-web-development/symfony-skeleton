@@ -187,7 +187,7 @@ class UserController extends ResourceController
             $payload = $changePasswordForm->getData();
 
             /** @var array|null $changePassword */
-            $changePassword = $request->request->get('change_password');
+            $changePassword = $request->request->all()['change_password'] ?? null;
             if (!is_array($changePassword)) {
                 $changePassword = [];
             }
