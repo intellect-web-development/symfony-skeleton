@@ -16,7 +16,7 @@ make-migration-no-interaction:
 #	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
 
 create-default-admin:
-	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin admin@dev.com root
+	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
 debug-router:
 	docker compose run --rm app-php-cli bin/console debug:router

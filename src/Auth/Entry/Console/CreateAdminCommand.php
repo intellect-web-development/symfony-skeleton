@@ -10,8 +10,8 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -39,15 +39,17 @@ class CreateAdminCommand extends Command
     {
         $this
             ->setDescription('Create root user for admin panel')
-            ->addArgument('email', InputArgument::REQUIRED, 'Root user email')
-            ->addArgument('password', InputArgument::OPTIONAL, 'Root user password');
+            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'Email admin', 'admin@dev.com')
+            ->addOption('password', null, InputOption::VALUE_REQUIRED, 'Root user password', 'root')
+            ->addOption('name', null, InputOption::VALUE_REQUIRED, 'User name', 'Administration');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $email = $input->getArgument('email');
-        $password = $input->getArgument('password');
+        $email = $input->getOption('email');
+        $password = $input->getOption('password');
+        $name = $input->getOption('name');
 
         if (!$password) {
             $password = bin2hex(random_bytes(8));
@@ -57,7 +59,7 @@ class CreateAdminCommand extends Command
         if ($this->userRepository->findOneBy(['email' => $email])) {
             $io->error('Root user is already exists');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $now = new DateTimeImmutable();
@@ -67,7 +69,7 @@ class CreateAdminCommand extends Command
             updatedAt: $now,
             email: $email,
             roles: [User::ROLE_ADMIN],
-            name: 'Administration'
+            name: $name,
         );
         $user->changePassword(
             $this->passwordEncoder->hashPassword($user, $password)
@@ -78,6 +80,6 @@ class CreateAdminCommand extends Command
 
         $io->success('Administration user was created!');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
