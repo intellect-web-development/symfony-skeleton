@@ -48,8 +48,16 @@ services:
   app-metrics-sidecar:
     image: redis:alpine
 
+  redis:
+    image: redis:5
+    volumes:
+      - redis_data:/data
+    environment:
+      REDIS_PASSWORD: none
+
 volumes:
   db:
+  redis_data:
   app_cache:
     driver: local
     driver_opts:
