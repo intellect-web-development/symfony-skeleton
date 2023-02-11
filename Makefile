@@ -18,7 +18,7 @@ debug-router:
 	docker compose run --rm app-php-cli bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-cli composer require ...
+	docker compose run --rm app-php-cli composer require sentry/sentry-symfony
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
@@ -30,8 +30,8 @@ cache-clear:
 env-init:
 	docker compose run --rm app-php-cli rm -f .env.local
 	docker compose run --rm app-php-cli rm -f .env.test.local
-	docker compose run --rm app-php-cli ln -sr .env.local.example .env.local
-	docker compose run --rm app-php-cli ln -sr .env.test.local.example .env.test.local
+	docker compose run --rm app-php-cli cp .env.local.example .env.local
+	docker compose run --rm app-php-cli cp .env.test.local.example .env.test.local
 
 fixtures:
 	docker compose run --rm app-php-cli php bin/console doctrine:fixtures:load --no-interaction
