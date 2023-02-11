@@ -1,6 +1,0 @@
-Backlog:
-- Написать readme.md с инструкцией по развертыванию
-- Подключить normalizer + factory
-- Подключить App\Container\Config\RedisConfig + App\Service\Redis\RedisConnection
-
-composer require --dev roave/security-advisories:dev-latest
