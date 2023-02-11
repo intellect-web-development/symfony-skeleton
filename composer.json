@@ -27,6 +27,7 @@
         "promphp/prometheus_client_php": "*",
         "psr/log": "^1.0",
         "psr/simple-cache": "^2.0",
+        "sentry/sentry-symfony": "^4.5",
         "sirian/suggest-bundle": "^2.1",
         "sylius/grid-bundle": "^1.11",
         "sylius/resource-bundle": "^1.9",
