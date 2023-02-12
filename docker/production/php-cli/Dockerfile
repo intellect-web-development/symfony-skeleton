@@ -3,9 +3,7 @@ FROM php:8.1.3-cli-alpine
 RUN apk add --update linux-headers
 
 RUN apk add --no-cache autoconf g++ make \
-    && pecl install xdebug \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable xdebug
+    && rm -rf /tmp/pear
 
 RUN pecl install -o -f redis \
     && rm -rf /tmp/pear \
@@ -27,7 +25,7 @@ RUN apk add --no-cache unzip
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./development/php/conf.d /usr/local/etc/php/conf.d
+COPY ./production/php/conf.d /usr/local/etc/php/conf.d
 
 COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
 RUN chmod 555 /usr/local/bin/wait-for-it

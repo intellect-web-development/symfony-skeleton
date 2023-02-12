@@ -1,0 +1,71 @@
+version: "3.7"
+#todo: тут пока что полная копия девелоперского, нужно разобраться как это деплоить через Docker-hub
+
+networks:
+  default:
+    name: internal-network
+
+services:
+  nginx:
+    build:
+      context: docker
+      dockerfile: development/nginx/Dockerfile
+    volumes:
+      - ./:/app
+
+  app-php-fpm:
+    build:
+      context: docker
+      dockerfile: development/php-fpm/Dockerfile
+    volumes:
+      - ./:/app
+      - app_cache:/var/cache/app
+      - app_log:/var/log/app
+
+  app-php-cli:
+    build:
+      context: docker
+      dockerfile: development/php-cli/Dockerfile
+    volumes:
+      - ./:/app
+      - app_cache:/var/cache/app
+      - app_log:/var/log/app
+
+  app-postgres-db:
+    volumes:
+      - db:/var/lib/postgresql/data
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: application-db
+      POSTGRES_USER: default
+      POSTGRES_PASSWORD: secret
+
+  node:
+    build: docker/common/node
+    volumes:
+      - ./:/var/www/
+
+  app-metrics-sidecar:
+    image: redis:alpine
+
+  redis:
+    image: redis:5
+    volumes:
+      - redis_data:/data
+    environment:
+      REDIS_PASSWORD: none
+
+volumes:
+  db:
+  redis_data:
+  app_cache:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  app_log:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
