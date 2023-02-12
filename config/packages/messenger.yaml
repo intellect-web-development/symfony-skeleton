@@ -13,6 +13,9 @@ framework:
                     # if your workers run for a long time and the database
                     # connection is sometimes lost
                     - doctrine_ping_connection
+        # reset services after consuming messages
+        reset_on_message: true
+
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 

@@ -5,6 +5,9 @@
     "amphp/byte-stream": {
         "version": "v1.8.1"
     },
+    "clue/stream-filter": {
+        "version": "v1.6.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.5"
     },
@@ -143,11 +146,20 @@
     "guzzlehttp/psr7": {
         "version": "2.2.1"
     },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.2.0"
+    },
     "intellect-web-development/symfony-presentation-bundle": {
         "version": "0.0.4"
     },
+    "jean85/pretty-package-versions": {
+        "version": "2.0.5"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
+    },
+    "monolog/monolog": {
+        "version": "2.9.1"
     },
     "myclabs/deep-copy": {
         "version": "1.11.0"
@@ -185,6 +197,24 @@
     },
     "phar-io/version": {
         "version": "3.2.1"
+    },
+    "php-http/client-common": {
+        "version": "2.6.0"
+    },
+    "php-http/discovery": {
+        "version": "1.15.2"
+    },
+    "php-http/httplug": {
+        "version": "2.3.0"
+    },
+    "php-http/message": {
+        "version": "1.13.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "1.1.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -308,6 +338,24 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "sentry/sdk": {
+        "version": "3.3.0"
+    },
+    "sentry/sentry": {
+        "version": "3.13.0"
+    },
+    "sentry/sentry-symfony": {
+        "version": "4.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.0",
+            "ref": "9ac202e84b6fb3c276cb3d7846006e0df65272d0"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
     "symfony/asset": {
         "version": "v6.0.7"
     },
@@ -396,6 +444,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v6.0.20"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v3.2.0"
+    },
     "symfony/http-foundation": {
         "version": "v6.0.8"
     },
@@ -423,8 +477,26 @@
             "config/packages/messenger.yaml"
         ]
     },
+    "symfony/monolog-bridge": {
+        "version": "v6.0.19"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.7",
+            "ref": "213676c4ec929f046dfde5ea8e97625b81bc0578"
+        },
+        "files": [
+            "config/packages/monolog.yaml"
+        ]
+    },
     "symfony/options-resolver": {
         "version": "v6.0.3"
+    },
+    "symfony/password-hasher": {
+        "version": "v6.0.19"
     },
     "symfony/phpunit-bridge": {
         "version": "6.1",
@@ -468,6 +540,9 @@
     "symfony/proxy-manager-bridge": {
         "version": "v6.0.6"
     },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.4"
+    },
     "symfony/routing": {
         "version": "6.0",
         "recipe": {
@@ -483,6 +558,9 @@
     },
     "symfony/runtime": {
         "version": "v6.0.8"
+    },
+    "symfony/security-core": {
+        "version": "v6.0.19"
     },
     "symfony/serializer": {
         "version": "v6.0.12"

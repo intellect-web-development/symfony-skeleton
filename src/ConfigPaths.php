@@ -7,6 +7,5 @@ namespace App;
 class ConfigPaths
 {
     public const PATHS = [
-        'Common/config',
     ];
 }

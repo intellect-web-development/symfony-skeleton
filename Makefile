@@ -18,7 +18,7 @@ debug-router:
 	docker compose run --rm app-php-cli bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-cli composer require sentry/sentry-symfony
+	docker compose run --rm app-php-cli composer require ...
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
