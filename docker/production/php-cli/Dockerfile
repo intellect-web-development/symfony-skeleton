@@ -5,26 +5,9 @@ WORKDIR /app
 COPY ./package.json ./yarn.lock ./
 RUN yarn install && yarn cache clean
 
-COPY ./ ./
-RUN yarn build
-
 FROM php:8.1.3-cli-alpine AS builder
 
 RUN apk add --update linux-headers
-#
-#FROM node:14 as node
-#
-#COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-#COPY --from=node /usr/local/bin/node /usr/local/bin/node
-#COPY --from=node /opt /opt
-#RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-#    && yarn_dir=$(ls -d /opt/yarn*) \
-#    && ln -sf ${yarn_dir}/bin/yarn /usr/local/bin/yarn \
-#    && ln -sf ${yarn_dir}/bin/yarnpkg /usr/local/bin/yarnpkg
-#
-#ARG run_env
-#
-#COPY . .
 
 RUN apk add --no-cache postgresql-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
@@ -52,6 +35,17 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php -- --inst
 
 WORKDIR /app
 
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /opt /opt
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && yarn_dir=$(ls -d /opt/yarn*) \
+    && ln -sf ${yarn_dir}/bin/yarn /usr/local/bin/yarn \
+    && ln -sf ${yarn_dir}/bin/yarnpkg /usr/local/bin/yarnpkg
+
+ARG run_env
+
+COPY . .
 COPY ./composer.json ./composer.lock ./
 
 RUN composer install --no-dev --no-interaction --no-scripts
