@@ -43,5 +43,4 @@ class ConsoleCallSubscriber
             'fos:js-routing:dump',
         ];
     }
-
 }
