@@ -12,9 +12,6 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 make-migration-no-interaction:
 	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
-#up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-#	composer-install database-create make-migration migrations-up fixtures before-deploy docker-down-clear
-
 create-default-admin:
 	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
@@ -152,3 +149,13 @@ init-assets:
 	docker compose run node sh -c "yarn"
 	docker compose run --rm app-php-cli php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 	docker compose run node sh -c "yarn encore dev"
+
+production-build:
+	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/skeleton-nginx:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/skeleton-app-php-fpm:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/skeleton-app-php-cli:${IMAGE_TAG} .
+
+production-push:
+	docker push ${REGISTRY}/skeleton_nginx:${IMAGE_TAG}
+	docker push ${REGISTRY}/skeleton_app-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/skeleton_app-php-cli:${IMAGE_TAG}
