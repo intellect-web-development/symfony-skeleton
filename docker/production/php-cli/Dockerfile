@@ -1,10 +1,3 @@
-FROM node:14-alpine as node
-
-WORKDIR /app
-
-COPY ./package.json ./yarn.lock ./
-RUN yarn install && yarn cache clean
-
 FROM php:8.1.3-cli-alpine AS builder
 
 RUN apk add --update linux-headers
@@ -28,6 +21,10 @@ RUN apk add --no-cache rabbitmq-c-dev && \
     curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
     docker-php-ext-install amqp
 
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+    && pecl install redis \
+    && docker-php-ext-enable redis.so
+
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # composer
@@ -35,29 +32,22 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php -- --inst
 
 WORKDIR /app
 
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /opt /opt
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-    && yarn_dir=$(ls -d /opt/yarn*) \
-    && ln -sf ${yarn_dir}/bin/yarn /usr/local/bin/yarn \
-    && ln -sf ${yarn_dir}/bin/yarnpkg /usr/local/bin/yarnpkg
-
-ARG run_env
-
 COPY . .
 COPY ./composer.json ./composer.lock ./
 
-RUN composer install --no-dev --no-interaction --no-scripts
+RUN apk add --no-cache nodejs yarn
 
-#RUN php bin/console cache:clear \
-#    && php bin/console assets:install \
-#    && yarn \
-#    && php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json \
-#    && yarn encore prod \
-#    && rm -rf node_modules
+RUN composer install --prefer-dist --optimize-autoloader --no-interaction --no-scripts
+#RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts
+# todo: разобраться как поставить dev-зависимости, и не сломать билд
 
-### CLI ###
+RUN php bin/console cache:clear \
+    && php bin/console assets:install
+
+RUN yarn \
+    && php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json \
+    && yarn encore prod \
+    && rm -rf node_modules
 
 FROM php:8.1.3-cli-alpine
 
