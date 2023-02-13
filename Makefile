@@ -159,3 +159,6 @@ production-push:
 	docker push ${REGISTRY}/skeleton_nginx:${IMAGE_TAG}
 	docker push ${REGISTRY}/skeleton_app-php-fpm:${IMAGE_TAG}
 	docker push ${REGISTRY}/skeleton_app-php-cli:${IMAGE_TAG}
+
+try-build:
+	REGISTRY=localhost IMAGE_TAG=0 make production-build
