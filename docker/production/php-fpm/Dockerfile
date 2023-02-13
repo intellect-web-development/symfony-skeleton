@@ -1,31 +1,44 @@
+FROM php:8.1.3-cli-alpine AS builder
+
+RUN apk add --update linux-headers
+
+RUN apk add --no-cache postgresql-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql opcache
+
+RUN apk add --no-cache unzip
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet \
+    && composer global require hirak/prestissimo --no-plugins --no-scripts \
+    && rm -rf /root/.composer/cache
+
+WORKDIR /app
+
+COPY ./composer.json ./composer.lock ./
+
+RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader \
+    && rm -rf /root/.composer/cache
+
+### FPM ###
+
 FROM php:8.1.3-fpm-alpine
 
 RUN apk add --update linux-headers
 
-RUN apk add --no-cache autoconf g++ make libmcrypt-dev \
-    && rm -rf /tmp/pear \
-
-RUN pecl install -o -f redis \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis
-
 RUN apk add --no-cache postgresql-dev fcgi \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql sockets \
-    && docker-php-ext-install intl pdo_mysql \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
+    && docker-php-ext-install pdo_pgsql opcache
 
-RUN docker-php-ext-install bcmath
+RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 
-# php-gd
-RUN apk add --no-cache libpng-dev \
-    && docker-php-ext-install gd
-
-RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
-
-COPY ./production/php/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
 
 WORKDIR /app
 
-COPY ./production/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
-RUN chmod +x /usr/local/bin/docker-php-entrypoint
+COPY --from=builder /app ./
+COPY ./ ./
+
+RUN chown www-data:www-data ./var -R

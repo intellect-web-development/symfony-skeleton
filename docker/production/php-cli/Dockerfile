@@ -1,39 +1,45 @@
+FROM php:8.1.3-cli-alpine AS builder
+
+RUN apk add --update linux-headers
+
+RUN apk add --no-cache postgresql-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql opcache
+
+RUN apk add --no-cache unzip
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet \
+    && composer global require hirak/prestissimo --no-plugins --no-scripts \
+    && rm -rf /root/.composer/cache
+
+WORKDIR /app
+
+COPY ./composer.json ./composer.lock ./
+
+RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader \
+    && rm -rf /root/.composer/cache
+
+### CLI ###
+
 FROM php:8.1.3-cli-alpine
 
 RUN apk add --update linux-headers
 
-RUN apk add --no-cache autoconf g++ make \
-    && rm -rf /tmp/pear
-
-RUN pecl install -o -f redis \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis
-
-RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzip autoconf g++ \
+RUN apk add --no-cache postgresql-dev bash coreutils \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql bcmath sockets \
-    && docker-php-ext-install intl pdo_mysql \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
+    && docker-php-ext-install pdo_pgsql opcache
 
-RUN docker-php-ext-install bcmath
+RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 
-# php-gd
-RUN apk add --no-cache libpng-dev \
-    && docker-php-ext-install gd
+COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
 
-RUN apk add --no-cache unzip
-
-RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
-
-COPY ./production/php/conf.d /usr/local/etc/php/conf.d
-
-COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
+COPY ./docker/common/wait-for-it.sh /usr/local/bin/wait-for-it
 RUN chmod 555 /usr/local/bin/wait-for-it
-
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-RUN wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/bin --filename=composer --quiet
 
 WORKDIR /app
 
-CMD tail -f /dev/null
+COPY --from=builder /app ./
+COPY ./ ./

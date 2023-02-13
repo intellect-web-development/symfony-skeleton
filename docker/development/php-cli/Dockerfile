@@ -23,10 +23,16 @@ RUN docker-php-ext-install bcmath
 RUN apk add --no-cache libpng-dev \
     && docker-php-ext-install gd
 
+RUN apk add --no-cache rabbitmq-c-dev && \
+    mkdir -p /usr/src/php/ext/amqp && \
+    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
+    docker-php-ext-install amqp
+
 RUN apk add --no-cache unzip
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
+COPY ./common/php/conf.d /usr/local/etc/php/conf.d
 COPY ./development/php/conf.d /usr/local/etc/php/conf.d
 
 COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
