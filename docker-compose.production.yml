@@ -1,5 +1,4 @@
 version: "3.7"
-#todo: тут пока что полная копия девелоперского, нужно разобраться как это деплоить через Docker-hub
 
 networks:
   default:
@@ -7,33 +6,19 @@ networks:
 
 services:
   nginx:
-    build:
-      context: docker
-      dockerfile: development/nginx/Dockerfile
-    volumes:
-      - ./:/app
+    image: ${REGISTRY}/skeleton-nginx:${IMAGE_TAG}
+    restart: always
 
   app-php-fpm:
-    build:
-      context: docker
-      dockerfile: development/php-fpm/Dockerfile
-    volumes:
-      - ./:/app
-      - app_cache:/var/cache/app
-      - app_log:/var/log/app
+    image: ${REGISTRY}/skeleton-php-fpm:${IMAGE_TAG}
+    restart: always
 
   app-php-cli:
-    build:
-      context: docker
-      dockerfile: development/php-cli/Dockerfile
-    volumes:
-      - ./:/app
-      - app_cache:/var/cache/app
-      - app_log:/var/log/app
+    image: ${REGISTRY}/skeleton-php-cli:${IMAGE_TAG}
 
   app-postgres-db:
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./database:/var/lib/postgresql/data
     image: postgres:13-alpine
     restart: always
     environment:
@@ -41,31 +26,13 @@ services:
       POSTGRES_USER: default
       POSTGRES_PASSWORD: secret
 
-  node:
-    build: docker/common/node
-    volumes:
-      - ./:/var/www/
-
   app-metrics-sidecar:
     image: redis:alpine
+    restart: always
 
   redis:
     image: redis:5
-    volumes:
-      - redis_data:/data
+    restart: always
     environment:
       REDIS_PASSWORD: none
 
-volumes:
-  db:
-  redis_data:
-  app_cache:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
-  app_log:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
