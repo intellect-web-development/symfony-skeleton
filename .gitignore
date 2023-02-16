@@ -61,3 +61,4 @@ finish_dev.sh
 ###< lexik/jwt-authentication-bundle ###
 /.composer/
 /database/
+/provisioning/hosts.yml
