@@ -45,7 +45,7 @@ services:
     environment:
         - CHOKIDAR_USEPOLLING=true
     volumes:
-      - ./:/var/www/
+      - ./:/app
 
   app-metrics-sidecar:
     image: redis:alpine
