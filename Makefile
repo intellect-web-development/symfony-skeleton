@@ -1,8 +1,8 @@
-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app phpmetrics
+init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
 before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
 up: docker-up
-init-app: env-init composer-install database-create migrations-up fixtures create-default-admin init-assets
+init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
