@@ -6,7 +6,7 @@ init-app: env-init composer-install database-create migrations-up create-default
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create migrations-up make-migration-no-interaction migrations-up create-default-admin init-assets \
+	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
 	before-deploy docker-down-clear
 
 make-migration-no-interaction:
