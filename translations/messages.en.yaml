@@ -7,3 +7,4 @@ app:
                 project: Application
                 save: Save
                 login: Log in
+                create: Create
