@@ -39,6 +39,8 @@ RUN apk add --no-cache nodejs yarn
 
 RUN composer install --prefer-dist --optimize-autoloader --no-interaction --no-scripts
 #RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts
+#RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-interaction --no-scripts \
+#    && rm -rf /root/.composer/cache # эта штука позволит облегчить вес образа, удалив кэши композера из него.
 # todo: разобраться как поставить dev-зависимости, и не сломать билд
 
 RUN php bin/console cache:clear \
