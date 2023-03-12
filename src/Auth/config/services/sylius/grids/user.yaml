@@ -7,9 +7,10 @@ sylius_grid:
                     class: "%app.model.user.class%"
             fields:
                 id:
-                    type: string
-                    label: app.admin.ui.modules.auth.user.properties.id
-                    sortable: ~
+                    type: twig
+                    label: app.admin.ui.show_user
+                    options:
+                        template: admin/auth/user/link-to-show.html.twig
                 createdAt:
                     type: datetime
                     label: app.admin.ui.modules.auth.user.properties.created_at
@@ -49,7 +50,3 @@ sylius_grid:
                 main:
                     create:
                         type: create
-                item:
-                    show:
-                        type: show
-
