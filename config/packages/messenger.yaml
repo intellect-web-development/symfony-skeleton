@@ -21,7 +21,7 @@ framework:
         # failure_transport: failed
 
         transports:
-            command-bus:
+            common-command-transport:
                 dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
                 retry_strategy:
                     max_retries: 3
