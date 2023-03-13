@@ -29,15 +29,27 @@ class ChangePasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'label' => 'app.admin.ui.modules.auth.user.properties.password',
                 'required' => true,
-                'first_options' => ['label' => 'app.admin.ui.modules.auth.user.properties.password'],
-                'second_options' => ['label' => 'app.admin.ui.modules.auth.user.actions.password_repeat'],
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'password_is_short',
-                        'max' => 4096,
-                    ]),
+                'first_options' => [
+                    'label' => 'app.admin.ui.modules.auth.user.properties.password',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'password_is_short',
+                            'max' => 4096,
+                        ]),
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'app.admin.ui.modules.auth.user.actions.password_repeat',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'password_is_short',
+                            'max' => 4096,
+                        ]),
+                    ],
                 ],
             ]);
     }
