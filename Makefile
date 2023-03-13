@@ -15,6 +15,10 @@ make-migration-no-interaction:
 consume:
 	docker-compose exec php bin/console messenger:consume -vv
 
+consume-all:
+	@docker-compose exec php bin/console messenger:consume \
+	common-command-transport
+
 create-default-admin:
 	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
