@@ -12,6 +12,9 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 make-migration-no-interaction:
 	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
+consume:
+	docker-compose exec php bin/console messenger:consume -vv
+
 create-default-admin:
 	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
