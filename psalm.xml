@@ -5,6 +5,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="false"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -14,4 +16,7 @@
             <file name="tests/bootstrap.php"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <MissingTemplateParam errorLevel="suppress" />
+    </issueHandlers>
 <plugins><pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/></plugins></psalm>

@@ -59,8 +59,8 @@ class ContractTestCase extends IntegrationTestCase
                 $expectedErrors,
                 sprintf(
                     'Error for property "%s" with value "%s" is not provided',
-                    $expectedProperty,
-                    $expectedMessage
+                    (string) $expectedProperty,
+                    (string) $expectedMessage
                 )
             );
         }

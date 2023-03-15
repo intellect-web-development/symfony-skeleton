@@ -17,6 +17,10 @@ class IdType extends BigIntType
         return $value instanceof Id ? $value->__toString() : $value;
     }
 
+    /**
+     * @psalm-suppress InvalidNullableReturnType
+     * @psalm-suppress NullableReturnStatement
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Id
     {
         return !empty($value) ? new Id((string) $value) : null;
