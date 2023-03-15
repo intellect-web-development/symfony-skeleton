@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a68bef41653b7b1f99c8e617272ec06a",
+    "content-hash": "8dfb004c82465e788754d2a6ef41436e",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1952,63 +1952,6 @@
                 "source": "https://github.com/FriendsOfSymfony/FOSRestBundle/tree/3.5.0"
             },
             "time": "2023-01-06T15:33:47+00:00"
-        },
-        {
-            "name": "fusonic/http-kernel-extensions",
-            "version": "5.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fusonic/php-http-kernel-extensions.git",
-                "reference": "f49ecb8170453767239f34e233f7c4bf9bb5b403"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fusonic/php-http-kernel-extensions/zipball/f49ecb8170453767239f34e233f7c4bf9bb5b403",
-                "reference": "f49ecb8170453767239f34e233f7c4bf9bb5b403",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1",
-                "phpdocumentor/reflection-docblock": "^5.3",
-                "symfony/http-kernel": "^5.4|^6.0",
-                "symfony/property-access": "^5.4|^6.0",
-                "symfony/property-info": "^5.4|^6.0",
-                "symfony/serializer": "^5.4.12|^6.0",
-                "symfony/validator": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.13",
-                "phpstan/phpstan": "^1.5",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.1",
-                "phpstan/phpstan-symfony": "^1.1",
-                "phpunit/phpunit": "^9.5",
-                "symfony/cache": "^5.4|^6.0",
-                "symfony/phpunit-bridge": "^5.4|^6.0",
-                "symplify/phpstan-rules": "^11.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Fusonic\\HttpKernelExtensions\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fusonic GmbH",
-                    "email": "office@fusonic.net"
-                }
-            ],
-            "description": "Symfony HttpKernel Component Extensions.",
-            "support": {
-                "issues": "https://github.com/fusonic/php-http-kernel-extensions/issues",
-                "source": "https://github.com/fusonic/php-http-kernel-extensions/tree/5.3.2"
-            },
-            "time": "2022-12-19T11:37:19+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
