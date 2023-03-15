@@ -14,7 +14,6 @@
         "doctrine/orm": "^2.13",
         "friendsofsymfony/jsrouting-bundle": "^3.2",
         "intellect-web-development/symfony-presentation-bundle": "0.1.1",
-        "knplabs/doctrine-behaviors": "^2.6",
         "liip/imagine-bundle": "^2.8",
         "mobiledetect/mobiledetectlib": "^2.8",
         "nelmio/api-doc-bundle": "^4.10",
