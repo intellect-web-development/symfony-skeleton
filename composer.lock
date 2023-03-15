@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd45796d0daf0a0ffb5c6525f18a98fc",
+    "content-hash": "94007d8388860e02515c816e4eee2ab8",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2394,16 +2394,16 @@
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
-                "reference": "9e0fa0a2c56bb9d330440cc3884be4549ce3a10f"
+                "reference": "3d33c8ae061564731b176c1a29ffa67eb02c9ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/9e0fa0a2c56bb9d330440cc3884be4549ce3a10f",
-                "reference": "9e0fa0a2c56bb9d330440cc3884be4549ce3a10f",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/3d33c8ae061564731b176c1a29ffa67eb02c9ed6",
+                "reference": "3d33c8ae061564731b176c1a29ffa67eb02c9ed6",
                 "shasum": ""
             },
             "require": {
@@ -2446,9 +2446,9 @@
             "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.1.1"
+                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.2.0"
             },
-            "time": "2023-01-18T12:27:38+00:00"
+            "time": "2023-03-15T12:02:07+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
