@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94007d8388860e02515c816e4eee2ab8",
+    "content-hash": "ccb1de62d2e0c6fc594c976b004a79f5",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2391,6 +2391,44 @@
                 "source": "https://github.com/php-imagine/Imagine/tree/1.3.3"
             },
             "time": "2022-11-16T13:09:11+00:00"
+        },
+        {
+            "name": "intellect-web-development/measurement",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/intellect-web-development/measurement.git",
+                "reference": "3fe8eb7620414b02def1d6785854a9eafebae8bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/intellect-web-development/measurement/zipball/3fe8eb7620414b02def1d6785854a9eafebae8bc",
+                "reference": "3fe8eb7620414b02def1d6785854a9eafebae8bc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IWD\\Measurement\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Package for measurement",
+            "support": {
+                "issues": "https://github.com/intellect-web-development/measurement/issues",
+                "source": "https://github.com/intellect-web-development/measurement/tree/1.0.0"
+            },
+            "time": "2023-03-17T15:10:25+00:00"
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
