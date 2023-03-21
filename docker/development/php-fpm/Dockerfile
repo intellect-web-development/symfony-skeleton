@@ -1,4 +1,4 @@
-FROM php:8.1.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 RUN apk add --update linux-headers
 

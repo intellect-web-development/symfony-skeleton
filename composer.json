@@ -109,7 +109,7 @@
         "dama/doctrine-test-bundle": "^7.1",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.20",
-        "friendsofphp/php-cs-fixer": "^3.10",
+        "friendsofphp/php-cs-fixer": "3.15",
         "overtrue/phplint": "*",
         "php-http/vcr-plugin": "^1.2",
         "phpmetrics/phpmetrics": "^2.8",
@@ -120,7 +120,7 @@
         "symfony/browser-kit": "6.2.*",
         "symfony/css-selector": "6.2.*",
         "symfony/maker-bundle": "^1.48",
-        "symfony/phpunit-bridge":  "6.2.*",
+        "symfony/phpunit-bridge": "6.2.*",
         "symfony/stopwatch": "6.2.*",
         "symfony/web-profiler-bundle": "6.2.*"
     }

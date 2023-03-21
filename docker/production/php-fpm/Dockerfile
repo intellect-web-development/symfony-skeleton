@@ -1,4 +1,4 @@
-FROM php:8.1.3-cli-alpine AS builder
+FROM php:8.2-cli-alpine AS builder
 
 RUN apk add --update linux-headers
 
@@ -51,7 +51,7 @@ RUN yarn \
     && yarn encore prod \
     && rm -rf node_modules
 
-FROM php:8.1.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 RUN apk add --update linux-headers
 
