@@ -13,10 +13,10 @@ make-migration-no-interaction:
 	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
 consume:
-	docker-compose exec php bin/console messenger:consume -vv
+	docker compose exec php bin/console messenger:consume -vv
 
 consume-all:
-	@docker-compose exec php bin/console messenger:consume \
+	@docker compose exec php bin/console messenger:consume \
 	common-command-transport
 
 create-default-admin:
