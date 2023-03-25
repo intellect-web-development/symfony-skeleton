@@ -5,10 +5,6 @@ up: docker-up
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
 
-up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
-	before-deploy docker-down-clear
-
 make-migration-no-interaction:
 	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
 
@@ -158,14 +154,18 @@ init-assets:
 	docker compose run node sh -c "yarn encore dev"
 
 production-build:
-	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/skeleton-nginx:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/skeleton-app-php-fpm:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/skeleton-app-php-cli:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-nginx:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-app-php-fpm:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-app-php-cli:${IMAGE_TAG} .
 
 production-push:
-	docker push ${REGISTRY}/skeleton_nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/skeleton_app-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/skeleton_app-php-cli:${IMAGE_TAG}
+	docker login --username=${NAMESPACE} ${REGISTRY}
+	docker push ${REGISTRY}/${NAMESPACE}/skeleton-nginx:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/skeleton-app-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/skeleton-app-php-cli:${IMAGE_TAG}
 
 try-build:
-	REGISTRY=localhost IMAGE_TAG=0 make production-build
+	REGISTRY=localhost NAMESPACE=aerinfkcorecom IMAGE_TAG=0 make production-build
+
+try-push:
+	REGISTRY=localhost NAMESPACE=aerinfkcorecom IMAGE_TAG=0 make production-push

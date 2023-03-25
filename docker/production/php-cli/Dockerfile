@@ -34,14 +34,12 @@ WORKDIR /app
 
 COPY . .
 COPY ./composer.json ./composer.lock ./
+COPY docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
+COPY docker/production/php/${run_env}/.env.local ./
 
 RUN apk add --no-cache nodejs yarn
 
-RUN composer install --prefer-dist --optimize-autoloader --no-interaction --no-scripts
-#RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts
-#RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-interaction --no-scripts \
-#    && rm -rf /root/.composer/cache # эта штука позволит облегчить вес образа, удалив кэши композера из него.
-# todo: разобраться как поставить dev-зависимости, и не сломать билд
+RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts
 
 RUN php bin/console cache:clear \
     && php bin/console assets:install
