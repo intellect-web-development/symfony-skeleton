@@ -165,7 +165,7 @@ production-push:
 	docker push ${REGISTRY}/${NAMESPACE}/skeleton-app-php-cli:${IMAGE_TAG}
 
 try-build:
-	REGISTRY=localhost NAMESPACE=aerinfkcorecom IMAGE_TAG=0 make production-build
+	REGISTRY=localhost NAMESPACE=login IMAGE_TAG=0 make production-build
 
 try-push:
-	REGISTRY=localhost NAMESPACE=aerinfkcorecom IMAGE_TAG=0 make production-push
+	REGISTRY=localhost NAMESPACE=login IMAGE_TAG=0 make production-push
