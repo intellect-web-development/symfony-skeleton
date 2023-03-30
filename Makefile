@@ -185,6 +185,3 @@ deploy:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --if-not-exists'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction'
 	ssh -o StrictHostKeyChecking=no root@${HOST} -p ${PORT} 'service nginx restart'
-
-create-user-ssh:
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console app:auth:user:create-admin --email="shaman@dev.com" --password="shaman_777" --name="Admin"'
