@@ -1,7 +1,8 @@
 ---
 -   name: Add authorized key
-    hosts: manager
+    hosts: all
     remote_user: root
+    gather_facts: no
     vars_prompt:
         -   name: file
             prompt: "Public key file"

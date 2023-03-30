@@ -1,9 +1,10 @@
 ---
 -   name: Log into private registry
-    hosts: manager
+    hosts: all
     remote_user: root
     become: yes
     become_user: deploy
+    gather_facts: no
     vars_prompt:
         -   name: registry
             prompt: "Registry"

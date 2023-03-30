@@ -1,11 +1,14 @@
+ifneq ("$(wildcard .env)","")
+  include .env
+else
+  include .env.local
+endif
+
 app:
 	ansible-playbook -i hosts.yml app.yml
 
 upgrade:
 	ansible-playbook -i hosts.yml upgrade.yml
-
-authorize:
-	ansible-playbook -i hosts.yml authorize.yml
 
 generate-deploy-key:
 	ssh-keygen -q -t rsa -N '' -f files/deploy_rsa
@@ -13,5 +16,14 @@ generate-deploy-key:
 authorize-deploy:
 	ansible-playbook -i hosts.yml authorize-deploy.yml
 
+authorize:
+	ansible-playbook -i hosts.yml authorize.yml
+
 docker-login:
 	ansible-playbook -i hosts.yml docker-login.yml
+
+ping-host:
+	ansible all -i hosts.yml -u ${DEPLOY_USERNAME} -m ping
+
+ad-hoc-command:
+	ansible all -i hosts.yml -u ${DEPLOY_USERNAME} -m command -a 'systemctl status nginx'
