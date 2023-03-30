@@ -153,19 +153,38 @@ init-assets:
 	docker compose run --rm app-php-cli php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 	docker compose run node sh -c "yarn encore dev"
 
+
 production-build:
-	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-nginx:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-app-php-fpm:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/skeleton-app-php-cli:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-app-php-cli:${IMAGE_TAG} .
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY}
-	docker push ${REGISTRY}/${NAMESPACE}/skeleton-nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/skeleton-app-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/skeleton-app-php-cli:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-app-php-cli:${IMAGE_TAG}
 
 try-build:
-	REGISTRY=localhost NAMESPACE=login IMAGE_TAG=0 make production-build
+	IMAGE_TAG=${BUILD_NUMBER} make production-build
 
 try-push:
-	REGISTRY=localhost NAMESPACE=login IMAGE_TAG=0 make production-push
+	IMAGE_TAG=${BUILD_NUMBER} make production-push
+
+deploy:
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
+	scp -o StrictHostKeyChecking=no -P ${PORT} docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=futures_trader" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY_FULL}" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "IMAGE_TAG=${BUILD_NUMBER}" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && docker compose -f docker-compose-production.yml pull'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && docker compose -f docker-compose-production.yml up --build -d --remove-orphans'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -f app'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'ln -sr app_${BUILD_NUMBER} app'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --if-not-exists'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction'
+	ssh -o StrictHostKeyChecking=no root@${HOST} -p ${PORT} 'service nginx restart'
+
+create-user-ssh:
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console app:auth:user:create-admin --email="shaman@dev.com" --password="shaman_777" --name="Admin"'
