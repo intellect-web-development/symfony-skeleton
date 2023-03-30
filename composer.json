@@ -8,6 +8,7 @@
         "ext-amqp": "*",
         "ext-bcmath": "*",
         "ext-ctype": "*",
+        "ext-redis": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
