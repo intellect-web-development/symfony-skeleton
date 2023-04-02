@@ -7,20 +7,19 @@ networks:
 services:
   nginx:
     container_name: app-nginx
-    image: ${REGISTRY}/app-nginx:${IMAGE_TAG}
+    image: ${REGISTRY}/${NAMESPACE}/app-nginx:${IMAGE_TAG}
     restart: always
     ports:
       - "8080:80"
 
   app-php-fpm:
-    image: ${REGISTRY}/app-app-php-fpm:${IMAGE_TAG}
+    image: ${REGISTRY}/${NAMESPACE}/app-app-php-fpm:${IMAGE_TAG}
     restart: always
-
-  app-php-cli:
-    image: ${REGISTRY}/app-app-php-cli:${IMAGE_TAG}
 
   app-postgres-db:
     container_name: app-postgres-db
+    volumes:
+      - ./../pg_data:/var/lib/postgresql/data
     image: postgres:13-alpine
     restart: always
     ports:
@@ -32,6 +31,8 @@ services:
 
   rabbitmq:
     image: rabbitmq:management
+    volumes:
+      - ./../rabbit_data/:/var/lib/rabbitmq/mnesia/
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -40,11 +41,15 @@ services:
       RABBITMQ_DEFAULT_PASS: admin
 
   app-metrics-sidecar:
+    volumes:
+      - ./../redis_metrics:/data
     image: redis:alpine
     restart: always
 
   redis:
     image: redis:5
+    volumes:
+      - ./../redis_app:/data
     restart: always
     environment:
       REDIS_PASSWORD: none
