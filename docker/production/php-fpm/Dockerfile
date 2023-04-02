@@ -1,22 +1,13 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-cli-alpine AS builder
+FROM --platform=linux/amd64 php:8.2-fpm-alpine AS php-fpm-base
 
 RUN apk add --update linux-headers
 
-RUN apk add --no-cache postgresql-dev \
+RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzip autoconf libpng-dev g++ \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo_pgsql opcache
-
-RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzip autoconf g++ \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql bcmath sockets \
-    && docker-php-ext-install intl pdo_mysql \
-    && docker-php-ext-install bcmath \
+    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql sockets intl bcmath opcache gd \
     && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
-
-RUN apk add --no-cache libpng-dev \
-    && docker-php-ext-install gd
 
 RUN apk add --no-cache rabbitmq-c-dev && \
     mkdir -p /usr/src/php/ext/amqp && \
@@ -26,6 +17,8 @@ RUN apk add --no-cache rabbitmq-c-dev && \
 RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
     && pecl install redis \
     && docker-php-ext-enable redis.so
+
+FROM php-fpm-base AS builder
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
@@ -41,42 +34,15 @@ COPY docker/production/php/${run_env}/.env.local ./
 
 RUN apk add --no-cache nodejs yarn
 
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts
-
-RUN php bin/console cache:clear \
-    && php bin/console assets:install
-
-RUN yarn \
+RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
+    && bin/console cache:clear \
+    && php bin/console assets:install \
+    && yarn \
     && php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json \
     && yarn encore prod \
     && rm -rf node_modules
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine
-
-RUN apk add --update linux-headers
-
-RUN apk add --no-cache postgresql-dev fcgi \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo_pgsql opcache
-
-RUN apk add --no-cache postgresql-dev bash coreutils libmcrypt-dev wget git unzip autoconf g++ \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql bcmath sockets \
-    && docker-php-ext-install intl pdo_mysql \
-    && docker-php-ext-install bcmath \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
-
-RUN apk add --no-cache libpng-dev \
-    && docker-php-ext-install gd
-
-RUN apk add --no-cache rabbitmq-c-dev && \
-    mkdir -p /usr/src/php/ext/amqp && \
-    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
-    docker-php-ext-install amqp
-
-RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
-    && pecl install redis \
-    && docker-php-ext-enable redis.so
+FROM php-fpm-base
 
 RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 
@@ -89,6 +55,3 @@ COPY --from=builder /app ./
 COPY ./ ./
 
 RUN chown www-data:www-data ./var -R
-
-#COPY ./docker/production/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
-#RUN chmod +x /usr/local/bin/docker-php-entrypoint

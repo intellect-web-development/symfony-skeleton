@@ -1,3 +1,7 @@
+ifneq ("$(wildcard .env.deploy)","")
+  include .env.deploy
+endif
+
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
 before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
@@ -10,125 +14,125 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 	before-deploy docker-down-clear
 
 make-migration-no-interaction:
-	docker compose run --rm app-php-cli php bin/console make:migration --no-interaction
+	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
 
 consume:
-	docker compose exec php bin/console messenger:consume -vv
+	docker compose exec app-php-fpm bin/console messenger:consume -vv
 
 consume-all:
-	@docker compose exec php bin/console messenger:consume \
+	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
 
 create-default-admin:
-	docker compose run --rm app-php-cli php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
+	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
 debug-router:
-	docker compose run --rm app-php-cli bin/console debug:router
+	docker compose run --rm app-php-fpm bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-cli composer require ...
+	docker compose run --rm app-php-fpm composer require ...
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
 
 cache-clear:
-	docker compose run --rm app-php-cli php bin/console cache:clear
-	docker compose run --rm app-php-cli php bin/console cache:warmup
+	docker compose run --rm app-php-fpm php bin/console cache:clear
+	docker compose run --rm app-php-fpm php bin/console cache:warmup
 
 env-init:
-	docker compose run --rm app-php-cli rm -f .env.local
-	docker compose run --rm app-php-cli rm -f .env.test.local
-	docker compose run --rm app-php-cli cp .env.local.example .env.local
-	docker compose run --rm app-php-cli cp .env.test.local.example .env.test.local
+	docker compose run --rm app-php-fpm rm -f .env.local
+	docker compose run --rm app-php-fpm rm -f .env.test.local
+	docker compose run --rm app-php-fpm cp .env.local.example .env.local
+	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
 
 fixtures:
-	docker compose run --rm app-php-cli php bin/console doctrine:fixtures:load --no-interaction
-	docker compose run --rm app-php-cli php bin/console doctrine:fixtures:load --no-interaction --env=test
+	docker compose run --rm app-php-fpm php bin/console doctrine:fixtures:load --no-interaction
+	docker compose run --rm app-php-fpm php bin/console doctrine:fixtures:load --no-interaction --env=test
 
 make-migration:
-	docker compose run --rm app-php-cli php bin/console make:migration
+	docker compose run --rm app-php-fpm php bin/console make:migration
 
 migrations-next:
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate next -n
-	docker compose run --rm app-php-cli php bin/console --env=test doctrine:migrations:migrate next -n
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate next -n
+	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:migrations:migrate next -n
 
 migrations-prev:
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev -n
-	docker compose run --rm app-php-cli php bin/console --env=test doctrine:migrations:migrate prev -n
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate prev -n
+	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:migrations:migrate prev -n
 
 migrations-up:
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction --env=test
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction --env=test
 
 migrations-down:
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev --no-interaction
-	docker compose run --rm app-php-cli php bin/console doctrine:migrations:migrate prev --no-interaction --env=test
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate prev --no-interaction
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate prev --no-interaction --env=test
 
 database-create:
-	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --if-not-exists
-	docker compose run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
+	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --if-not-exists
+	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
 
 database-drop:
-	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction --if-exists
-	docker compose run --rm app-php-cli php bin/console doctrine:database:drop --force --no-interaction --env=test --if-exists
+	docker compose run --rm app-php-fpm php bin/console doctrine:database:drop --force --no-interaction --if-exists
+	docker compose run --rm app-php-fpm php bin/console doctrine:database:drop --force --no-interaction --env=test --if-exists
 
 test:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit
 
 test-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --coverage-clover var/clover.xml --coverage-html var/coverage
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-unit-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html var/coverage
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-integration-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=integration --coverage-clover var/clover.xml --coverage-html var/coverage
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=integration --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-functional-coverage:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=functional --coverage-clover var/clover.xml --coverage-html var/coverage
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=functional --coverage-clover var/clover.xml --coverage-html var/coverage
 
 test-unit:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=unit
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=unit
 
 test-functional:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=functional
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=functional
 
 test-integration:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=integration
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=integration
 
 test-acceptance:
-	docker compose run --rm app-php-cli ./vendor/bin/phpunit --testsuite=acceptance
+	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=acceptance
 
 php-stan:
-	docker compose run --rm app-php-cli ./vendor/bin/phpstan --memory-limit=-1
+	docker compose run --rm app-php-fpm ./vendor/bin/phpstan --memory-limit=-1
 
 php-lint:
-	docker compose run --rm app-php-cli ./vendor/bin/phplint
+	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
 php-cs:
-	docker compose run --rm app-php-cli ./vendor/bin/php-cs-fixer fix -v --using-cache=no
-	docker compose run --rm app-php-cli ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
+	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix -v --using-cache=no
+	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
 psalm:
-	docker compose run --rm app-php-cli ./vendor/bin/psalm --no-cache $(ARGS)
+	docker compose run --rm app-php-fpm ./vendor/bin/psalm --no-cache $(ARGS)
 
 doctrine-schema-validate:
-	docker compose run --rm app-php-cli php bin/console --env=test doctrine:schema:validate
+	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:schema:validate
 
 composer-install:
-	docker compose run --rm app-php-cli composer install
+	docker compose run --rm app-php-fpm composer install
 
 composer-dump:
-	docker compose run --rm app-php-cli composer dump-autoload
+	docker compose run --rm app-php-fpm composer dump-autoload
 
 composer-update:
-	docker compose run --rm app-php-cli composer update
+	docker compose run --rm app-php-fpm composer update
 
 composer-outdated:
-	docker compose run --rm app-php-cli composer outdated
+	docker compose run --rm app-php-fpm composer outdated
 
 composer-dry-run:
-	docker compose run --rm app-php-cli composer update --dry-run
+	docker compose run --rm app-php-fpm composer update --dry-run
 
 docker-up:
 	docker compose up -d
@@ -150,24 +154,21 @@ docker-build:
 	docker compose build
 
 phpmetrics:
-	docker compose run --rm app-php-cli php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
+	docker compose run --rm app-php-fpm php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
 
 init-assets:
 	docker compose run node sh -c "yarn"
-	docker compose run --rm app-php-cli php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
+	docker compose run --rm app-php-fpm php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 	docker compose run node sh -c "yarn encore dev"
-
 
 production-build:
 	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG} .
 	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-cli/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-app-php-cli:${IMAGE_TAG} .
 
 production-push:
-	docker login --username=${NAMESPACE} ${REGISTRY}
+	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
 	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG}
 	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-app-php-cli:${IMAGE_TAG}
 
 try-build:
 	IMAGE_TAG=${BUILD_NUMBER} make production-build
@@ -176,16 +177,38 @@ try-push:
 	IMAGE_TAG=${BUILD_NUMBER} make production-push
 
 deploy:
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
 	scp -o StrictHostKeyChecking=no -P ${PORT} docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=futures_trader" >> .env'
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY_FULL}" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY}" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "NAMESPACE=${NAMESPACE}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "IMAGE_TAG=${BUILD_NUMBER}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && docker compose -f docker-compose-production.yml pull'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && docker compose -f docker-compose-production.yml up --build -d --remove-orphans'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -f app'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'ln -sr app_${BUILD_NUMBER} app'
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:database:create --no-interaction --if-not-exists'
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --if-not-exists'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction'
 	ssh -o StrictHostKeyChecking=no root@${HOST} -p ${PORT} 'service nginx restart'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker image prune -a'
+
+create-user-ssh:
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"'
+
+clear-unused-images:
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker image prune -a'
+
+test-ci:
+	docker compose -f docker-compose-test.yml pull
+	docker compose -f docker-compose-test.yml up --build -d
+	docker compose run --rm app-php-fpm rm -f .env.test.local
+	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
+	docker compose run --rm app-php-fpm composer install
+	docker compose run --rm app-php-fpm sh -c "yarn"
+	docker compose run --rm app-php-fpm php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
+	docker compose run --rm app-php-fpm sh -c "yarn encore dev"
+	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
+	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction --env=test
+	make before-deploy

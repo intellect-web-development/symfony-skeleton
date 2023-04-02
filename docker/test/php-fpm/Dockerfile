@@ -1,4 +1,6 @@
-FROM php:8.2-fpm-alpine
+#!/bin/bash
+
+FROM --platform=linux/amd64 php:8.2-fpm-alpine
 
 RUN apk add --update linux-headers
 
@@ -31,7 +33,11 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/bin --filename=composer --quiet
 
+RUN apk add --no-cache nodejs yarn
+
 COPY ./development/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 WORKDIR /app
+
+COPY . .

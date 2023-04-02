@@ -2,7 +2,6 @@
 -   name: Put deploy authorized key
     hosts: all
     remote_user: root
-    gather_facts: no
     tasks:
         -   name: Add user authorized key
             authorized_key:
