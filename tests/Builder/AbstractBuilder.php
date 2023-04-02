@@ -127,7 +127,7 @@ abstract class AbstractBuilder
         }
     }
 
-    protected static function setProperty(object $object, string $property, mixed $value): void
+    public static function setProperty(object $object, string $property, mixed $value): void
     {
         $className = get_class($object);
         try {
