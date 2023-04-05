@@ -60,6 +60,10 @@ services:
         tags:
             - { name: sylius.grid_field, type: nullable_string }
 
+    App\Common\Entry\Http\Admin\Form\Filter\Select2Type:
+        arguments:
+            $suggesters: !tagged_iterator app.suggester
+
     App\Common\Entry\Http\Admin\Grid\Filter\TimestampFilter:
         tags:
             - { name: 'sylius.grid_filter', type: 'timestamp', form_type: App\Common\Entry\Http\Admin\Form\Filter\TimestampType }

@@ -9,6 +9,8 @@
 import jquery from 'jquery';
 import Routing from '../public/bundles/fosjsrouting/js/router.min';
 
+import './bootstrap';
+
 import '../node_modules/semantic-ui-css/semantic.min.css'
 import '../vendor/sylius/ui-bundle/Resources/private/sass/main.scss'
 import '../node_modules/select2/dist/css/select2.min.css'

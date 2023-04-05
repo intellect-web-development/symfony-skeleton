@@ -1,18 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Common\Entry\Http\Admin\Form\Filter;
 
-use Sirian\SuggestBundle\Form\Type\SuggestType;
+use App\Common\Service\Suggester\SuggesterInterface;
+use RuntimeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Select2Type extends AbstractType
 {
+    /**
+     * @var array<string, SuggesterInterface>
+     */
+    private array $suggesters = [];
+
+    public function __construct(iterable $suggesters)
+    {
+        foreach ($suggesters as $suggester) {
+            /** @var SuggesterInterface $suggester */
+            $this->suggesters[$suggester->getSuggesterName()] = $suggester;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws RuntimeException
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add($options['field_name'], SuggestType::class, [
-            'suggester' => $options['suggester'],
+        /** @var string $rawSuggesterName */
+        $rawSuggesterName = $options['suggester'];
+        $suggesterName = str_replace('-', '_', $rawSuggesterName);
+        if (!isset($this->suggesters[$suggesterName])) {
+            throw new RuntimeException(\sprintf('There is no suggester with name %s', $rawSuggesterName));
+        }
+
+        $fieldName = $options['field_name'] ?? '';
+
+        $builder->add($fieldName, get_class($this->suggesters[$suggesterName]), [
             'label' => $options['label'],
         ]);
     }
@@ -23,6 +52,7 @@ class Select2Type extends AbstractType
             ->setDefined(['field_name', 'label', 'suggester'])
             ->setAllowedTypes('field_name', ['string'])
             ->setAllowedTypes('suggester', ['string'])
-            ->setAllowedTypes('label', ['string']);
+            ->setAllowedTypes('label', ['string'])
+        ;
     }
 }

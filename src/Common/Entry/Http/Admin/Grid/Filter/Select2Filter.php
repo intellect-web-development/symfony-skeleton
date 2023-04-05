@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Common\Entry\Http\Admin\Grid\Filter;
 
 use Sylius\Component\Grid\Data\DataSourceInterface;
@@ -9,10 +11,10 @@ class Select2Filter implements FilterInterface
 {
     public function apply(DataSourceInterface $dataSource, string $name, mixed $data, array $options = []): void
     {
-        if (empty($data[$name])) {
+        if (!is_array($data) || empty($data[$name]['autocomplete'])) {
             return;
         }
 
-        $dataSource->restrict($dataSource->getExpressionBuilder()->equals($name, $data[$name]));
+        $dataSource->restrict($dataSource->getExpressionBuilder()->equals($name, (int) $data[$name]['autocomplete']));
     }
 }

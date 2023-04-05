@@ -197,9 +197,6 @@
             "config/packages/sentry.yaml"
         ]
     },
-    "sirian/suggest-bundle": {
-        "version": "v2.1.2"
-    },
     "sonata-project/block-bundle": {
         "version": "4.17",
         "recipe": {
@@ -409,6 +406,18 @@
         },
         "files": [
             "config/packages/uid.yaml"
+        ]
+    },
+    "symfony/ux-autocomplete": {
+        "version": "2.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.6",
+            "ref": "07d9602b7231ba355f484305d6cea58310c01741"
+        },
+        "files": [
+            "config/routes/ux_autocomplete.yaml"
         ]
     },
     "symfony/validator": {
