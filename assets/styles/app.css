@@ -13,6 +13,10 @@
     line-height: 24px;
 }
 
+.ts-wrapper:not(.form-control):not(.form-select) {
+    width: 100% !important;
+}
+
 @media only screen and (max-width: 992px) {
     .table.ui.sortable:not(.unstackable) tfoot, .table.ui.sortable:not(.unstackable) thead {
         display: none;
