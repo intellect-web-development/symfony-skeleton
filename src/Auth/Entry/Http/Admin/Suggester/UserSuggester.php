@@ -11,9 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
 use Symfony\UX\Autocomplete\Form\ParentEntityAutocompleteType;
 
-#[AsEntityAutocompleteField]
+#[AsEntityAutocompleteField(alias: self::SUGGESTER_NAME)]
 class UserSuggester extends AbstractType implements SuggesterInterface
 {
+    private const SUGGESTER_NAME = 'auth_user';
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -29,6 +31,6 @@ class UserSuggester extends AbstractType implements SuggesterInterface
 
     public function getSuggesterName(): string
     {
-        return 'auth_user';
+        return self::SUGGESTER_NAME;
     }
 }
