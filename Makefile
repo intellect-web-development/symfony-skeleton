@@ -38,6 +38,9 @@ docker-compose-override-init:
 cache-clear:
 	docker compose run --rm app-php-fpm php bin/console cache:clear
 	docker compose run --rm app-php-fpm php bin/console cache:warmup
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-metadata
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-query
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-result
 
 env-init:
 	docker compose run --rm app-php-fpm rm -f .env.local
