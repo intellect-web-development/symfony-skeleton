@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MetricsAction extends AbstractController
 {
@@ -18,11 +19,14 @@ class MetricsAction extends AbstractController
     public function metrics(
         Request $request,
         AdapterInterface $adapter,
-        MetricsGuard $metricsGuard
+        MetricsGuard $metricsGuard,
+        ?UserInterface $user
     ): Response {
-        $metricsGuard->guard(
-            $request->getHost()
-        );
+        if (null === $user) {
+            $metricsGuard->guard(
+                $request->getHost()
+            );
+        }
 
         return new Response(
             (new RenderTextFormat())->render($adapter->collect()),
