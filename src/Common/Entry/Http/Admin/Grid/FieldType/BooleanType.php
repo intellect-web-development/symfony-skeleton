@@ -7,9 +7,16 @@ namespace App\Common\Entry\Http\Admin\Grid\FieldType;
 use Sylius\Component\Grid\DataExtractor\DataExtractorInterface;
 use Sylius\Component\Grid\Definition\Field;
 use Sylius\Component\Grid\FieldTypes\FieldTypeInterface;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 
+#[AutoconfigureTag(
+    name: 'sylius.grid_field',
+    attributes: [
+        'type' => 'boolean',
+    ]
+)]
 class BooleanType implements FieldTypeInterface
 {
     private const TEMPLATE = 'admin/layout/grid/field/boolean.html.twig';

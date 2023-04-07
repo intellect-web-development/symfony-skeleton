@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Common\Entry\Http\Admin\Grid\Filter;
 
+use App\Common\Entry\Http\Admin\Form\Filter\IntegerFilterType;
 use Sylius\Component\Grid\Data\DataSourceInterface;
 use Sylius\Component\Grid\Data\ExpressionBuilderInterface;
 use Sylius\Component\Grid\Filtering\FilterInterface;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag(
+    name: 'sylius.grid_filter',
+    attributes: [
+        'type' => 'int',
+        'form_type' => IntegerFilterType::class,
+    ]
+)]
 class IntegerFilter implements FilterInterface
 {
     public const NAME = 'string';

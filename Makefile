@@ -158,7 +158,6 @@ phpmetrics:
 
 init-assets:
 	docker compose run node sh -c "yarn"
-	docker compose run --rm app-php-fpm php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 	docker compose run node sh -c "yarn encore dev"
 
 production-build:
@@ -207,7 +206,6 @@ test-ci:
 	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
 	docker compose run --rm app-php-fpm composer install
 	docker compose run --rm app-php-fpm sh -c "yarn"
-	docker compose run --rm app-php-fpm php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 	docker compose run --rm app-php-fpm sh -c "yarn encore dev"
 	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
 	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction --env=test

@@ -30,6 +30,5 @@ sylius_grid:
             timestamp_range: "@SyliusUi/Grid/Filter/date.html.twig"
             number: "admin/layout/grid/filter/number.html.twig"
             user_autocomplete: "grid/filter/user_autocomplete.html.twig"
-            select2: "admin/layout/grid/filter/select2.html.twig"
             int: "admin/layout/grid/filter/int.html.twig"
             uuid: "admin/layout/grid/filter/uuid.html.twig"

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Common\Entry\Http\Admin\Menu;
 
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
 class SectionBuilderFactory
 {
     /** @var SectionBuilderInterface[] */
@@ -13,6 +15,7 @@ class SectionBuilderFactory
      * @param SectionBuilderInterface[]|iterable $sectionBuilders
      */
     public function __construct(
+        #[TaggedIterator(tag: 'app.section_builder')]
         iterable $sectionBuilders,
     ) {
         foreach ($sectionBuilders as $sectionBuilder) {

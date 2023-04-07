@@ -21,7 +21,6 @@
     },
     "dependencies": {
         "inputmask": "^5.0.7",
-        "select2": "^4.1.0-rc.0",
         "semantic-ui-css": "^2.4.1",
         "stimulus-dropdown": "^2.0.0",
         "semantic-ui-calendar": "^0.0.8"
