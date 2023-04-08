@@ -2,12 +2,10 @@
 
 FROM --platform=linux/amd64 php:8.2-fpm-alpine AS php-fpm-base
 
-# Combine package installation commands
+# Combine package installation commands and configure and install PHP extensions
 RUN apk add --update linux-headers \
-    postgresql-dev bash coreutils libmcrypt-dev wget git unzip autoconf libpng-dev g++ pcre-dev $PHPIZE_DEPS rabbitmq-c-dev
-
-# Configure and install PHP extensions
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    postgresql-dev bash coreutils libmcrypt-dev git autoconf libpng-dev g++ pcre-dev $PHPIZE_DEPS rabbitmq-c-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql sockets intl bcmath opcache gd \
     && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini \
     && pecl install redis \
@@ -50,6 +48,7 @@ COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
 WORKDIR /app
 
 COPY --from=builder /app ./
+COPY ./ ./
 
 # Change owner of directory
 RUN chown www-data:www-data ./var -R
