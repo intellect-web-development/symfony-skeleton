@@ -1,6 +1,7 @@
 sylius_grid:
     grids:
         app_user:
+            limits: [25, 50, 100, 250, 500]
             driver:
                 name: doctrine/orm
                 options:
