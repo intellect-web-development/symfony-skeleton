@@ -51,9 +51,11 @@ class UserController extends ResourceController
             }
             if ($result->isSuccess()) {
                 $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success_created'));
+
+                return $this->redirectToRoute('app_user_show', ['id' => $result->user?->getId()->getValue()]);
             }
 
-            return $this->redirectToRoute('app_user_index');
+            return $this->redirectToRoute('app_user_create');
         }
 
         return $this->render(
@@ -102,9 +104,11 @@ class UserController extends ResourceController
             }
             if ($result->isSuccess()) {
                 $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success_edited'));
+
+                return $this->redirectToRoute('app_user_show', ['id' => $result->user?->getId()->getValue()]);
             }
 
-            return $this->redirectToRoute('app_user_index');
+            return $this->redirectToRoute('app_user_edit');
         }
 
         return $this->render(
