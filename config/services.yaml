@@ -6,10 +6,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    _instanceof:
-        App\Common\Service\Suggester\SuggesterInterface:
-            tags: [ 'app.suggester' ]
-
     Monolog\Processor\PsrLogMessageProcessor:
         tags: { name: monolog.processor, handler: sentry }
 
