@@ -28,11 +28,12 @@ class ChangePasswordType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => 'app.admin.ui.modules.auth.user.properties.password',
+                'invalid_message' => 'password_is_not_equals',
                 'required' => true,
                 'first_options' => [
                     'label' => 'app.admin.ui.modules.auth.user.properties.password',
                     'constraints' => [
-                        new NotBlank(),
+                        new NotBlank(allowNull: false),
                         new Length([
                             'min' => 6,
                             'minMessage' => 'password_is_short',
@@ -43,7 +44,7 @@ class ChangePasswordType extends AbstractType
                 'second_options' => [
                     'label' => 'app.admin.ui.modules.auth.user.actions.password_repeat',
                     'constraints' => [
-                        new NotBlank(),
+                        new NotBlank(allowNull: false),
                         new Length([
                             'min' => 6,
                             'minMessage' => 'password_is_short',
