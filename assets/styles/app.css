@@ -16,7 +16,6 @@
         line-height: 20px;
         display: flex !important;
         padding: 0 !important;
-
     }
 
     .table.ui.sortable tbody, .table.ui.sortable tbody td, .table.ui.sortable tbody tr {
