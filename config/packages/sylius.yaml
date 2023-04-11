@@ -32,3 +32,4 @@ sylius_grid:
             user_autocomplete: "grid/filter/user_autocomplete.html.twig"
             int: "admin/layout/grid/filter/int.html.twig"
             uuid: "admin/layout/grid/filter/uuid.html.twig"
+            autocomplete: "admin/layout/grid/filter/autocomplete.html.twig"
