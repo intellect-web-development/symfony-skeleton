@@ -24,18 +24,14 @@ object Build : BuildType({
     steps {
         script {
             name = "Test"
-            scriptContent = "cd .deploy && make test-ci"
+            scriptContent = "make -f ./.deploy/Makefile test-ci"
         }
         script {
             name = "Production Build"
             scriptContent = """
-                REGESTRY=%deploy.registry% NAMESPACE=%deploy.namespace% IMAGE_TAG=%build.number% make production-build
-                REGESTRY=%deploy.registry% NAMESPACE=%deploy.namespace% IMAGE_TAG=%build.number% make production-push
+                REGISTRY=%deploy.registry% NAMESPACE=%deploy.namespace% IMAGE_TAG=%build.number% make -f ./.deploy/Makefile production-build
+                REGISTRY=%deploy.registry% NAMESPACE=%deploy.namespace% IMAGE_TAG=%build.number% PASSWORD=%deploy.password% make -f ./.deploy/Makefile production-push
             """.trimIndent()
-        }
-        script {
-            name = "Deploy to Production"
-            scriptContent = "BUILD_NUMBER=%build.number% PORT=%deploy.port% HOST=%deploy.host%  REGISTRY_FULL=%deploy.registry%/%deploy.namespace% REGESTRY=%deploy.registry% NAMESPACE=%deploy.namespace% PASSWORD=%deploy.password% make deploy"
         }
     }
 
