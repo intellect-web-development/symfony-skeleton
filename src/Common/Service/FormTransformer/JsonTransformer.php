@@ -28,7 +28,6 @@ class JsonTransformer implements DataTransformerInterface
 
     /**
      * @param string|null $value
-     * @return array|null
      */
     public function reverseTransform($value): ?array
     {
