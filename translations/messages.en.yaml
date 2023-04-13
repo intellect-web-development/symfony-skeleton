@@ -5,6 +5,9 @@ app:
             edit: Edit
             common:
                 project: Application
+                repeat: Repeat
                 save: Save
                 login: Log in
                 create: Create
+                yes_label: 'Yes'
+                no_label: 'No'
