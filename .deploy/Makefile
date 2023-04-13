@@ -21,7 +21,7 @@ deploy:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
-	scp -o StrictHostKeyChecking=no -P ${PORT} ../docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
+	scp -o StrictHostKeyChecking=no -P ${PORT} docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=futures_trader" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "NAMESPACE=${NAMESPACE}" >> .env'
@@ -59,8 +59,8 @@ cache-clear-prod:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console --env=prod doctrine:cache:clear-result'
 
 test-ci:
-	docker compose -f ../docker-compose-test.yml pull
-	docker compose -f ../docker-compose-test.yml up --build -d
+	docker compose -f docker-compose-test.yml pull
+	docker compose -f docker-compose-test.yml up --build -d
 	docker compose run --rm app-php-fpm rm -f .env.test.local
 	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
 	docker compose run --rm app-php-fpm composer install
