@@ -63,4 +63,4 @@ finish_dev.sh
 /database/
 /provisioning/hosts.yml
 /provisioning/.env
-/.env.deploy
+/.deploy/.env
