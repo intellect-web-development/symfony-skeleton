@@ -1,7 +1,3 @@
-ifneq ("$(wildcard .env.deploy)","")
-  include .env.deploy
-endif
-
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
 before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
