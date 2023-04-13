@@ -21,7 +21,7 @@ deploy:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
-	scp -o StrictHostKeyChecking=no -P ${PORT} docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
+	scp -o StrictHostKeyChecking=no -P ${PORT} ../docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=futures_trader" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "NAMESPACE=${NAMESPACE}" >> .env'
