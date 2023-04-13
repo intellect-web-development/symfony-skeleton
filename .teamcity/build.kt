@@ -24,7 +24,7 @@ object Build : BuildType({
     steps {
         script {
             name = "Test"
-            scriptContent = "make test-ci"
+            scriptContent = "cd .deploy && make test-ci"
         }
         script {
             name = "Production Build"
