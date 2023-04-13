@@ -68,4 +68,4 @@ test-ci:
 	docker compose run --rm app-php-fpm sh -c "yarn encore dev"
 	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
 	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction --env=test
-	make -f ../Makefile before-deploy
+	make -f Makefile before-deploy
