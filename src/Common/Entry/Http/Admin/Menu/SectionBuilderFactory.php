@@ -32,6 +32,7 @@ class SectionBuilderFactory
         foreach ($this->sectionBuilders as $key => $sectionBuilder) {
             $builders[(int) ($sectionBuilder->getOrder() . $key)] = $sectionBuilder;
         }
+        ksort($builders);
 
         return $builders;
     }
