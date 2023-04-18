@@ -69,7 +69,11 @@ class UserController extends ResourceController
         );
     }
 
-    #[Route(path: '/{id}/edit', name: 'update', methods: ['GET', 'PUT', 'PATCH'])]
+    #[Route(
+        path: '/{id}/edit',
+        name: 'update',
+        methods: ['GET', 'POST'],
+    )]
     public function update(
         Request $request,
         EditHandler $handler,
