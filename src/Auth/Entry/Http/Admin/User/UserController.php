@@ -126,7 +126,11 @@ class UserController extends ResourceController
         );
     }
 
-    #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
+    #[Route(
+        path: '/{id}/delete',
+        name: 'delete',
+        methods: ['POST'],
+    )]
     public function delete(
         string $id,
         TranslatorInterface $translator,
