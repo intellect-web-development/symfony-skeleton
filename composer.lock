@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46c4169204f4125ff5cfb4ec0a56a789",
+    "content-hash": "cfa0dba5d8c39b5a7cd5994bfb4308db",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2394,16 +2394,16 @@
         },
         {
             "name": "intellect-web-development/measurement",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/measurement.git",
-                "reference": "3fe8eb7620414b02def1d6785854a9eafebae8bc"
+                "reference": "96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/measurement/zipball/3fe8eb7620414b02def1d6785854a9eafebae8bc",
-                "reference": "3fe8eb7620414b02def1d6785854a9eafebae8bc",
+                "url": "https://api.github.com/repos/intellect-web-development/measurement/zipball/96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d",
+                "reference": "96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d",
                 "shasum": ""
             },
             "require": {
@@ -2426,9 +2426,9 @@
             "description": "Package for measurement",
             "support": {
                 "issues": "https://github.com/intellect-web-development/measurement/issues",
-                "source": "https://github.com/intellect-web-development/measurement/tree/1.0.0"
+                "source": "https://github.com/intellect-web-development/measurement/tree/1.1.0"
             },
-            "time": "2023-03-17T15:10:25+00:00"
+            "time": "2023-04-18T10:59:44+00:00"
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
@@ -15929,6 +15929,7 @@
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-mbstring": "*",
         "ext-redis": "*"
     },
     "platform-dev": [],
