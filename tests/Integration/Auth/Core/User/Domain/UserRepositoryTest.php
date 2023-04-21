@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Auth\Core\User\Domain;
 
 use App\Auth\Core\User\Domain\User;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Common\Entry\Http\Admin\Form\Filter;
 
 use Symfony\Component\Form\AbstractType;

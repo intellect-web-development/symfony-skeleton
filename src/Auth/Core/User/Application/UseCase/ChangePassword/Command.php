@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auth\Core\User\Application\UseCase\ChangePassword;
 
 use App\Auth\Core\User\Domain\ValueObject\Id;

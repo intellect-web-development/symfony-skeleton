@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auth\DataFixtures;
 
 use App\Tests\Builder\Auth\User\UserBuilder;
