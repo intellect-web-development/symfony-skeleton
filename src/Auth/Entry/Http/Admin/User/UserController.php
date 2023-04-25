@@ -54,8 +54,6 @@ class UserController extends ResourceController
 
                 return $this->redirectToRoute('app_user_show', ['id' => $result->user?->getId()->getValue()]);
             }
-
-            return $this->redirectToRoute('app_user_create');
         }
 
         return $this->render(
