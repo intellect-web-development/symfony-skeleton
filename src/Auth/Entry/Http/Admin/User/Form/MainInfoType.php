@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MainInfoType extends AbstractType
@@ -21,6 +22,7 @@ class MainInfoType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(allowNull: false),
+                    new Length(max: 255),
                 ],
                 'empty_data' => '',
             ])
@@ -30,6 +32,7 @@ class MainInfoType extends AbstractType
                 'constraints' => [
                     new Email(),
                     new NotBlank(),
+                    new Length(max: 255),
                 ],
                 'empty_data' => '',
             ]);

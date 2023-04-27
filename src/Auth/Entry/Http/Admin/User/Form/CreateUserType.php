@@ -23,6 +23,7 @@ class CreateUserType extends AbstractType
                 'label' => 'app.admin.ui.modules.auth.user.properties.name',
                 'constraints' => [
                     new NotBlank(allowNull: false),
+                    new Length(max: 255),
                 ],
                 'empty_data' => '',
             ])
@@ -31,6 +32,7 @@ class CreateUserType extends AbstractType
                 'constraints' => [
                     new Email(),
                     new NotBlank(allowNull: false),
+                    new Length(max: 255),
                 ],
                 'empty_data' => '',
             ])
