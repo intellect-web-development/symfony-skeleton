@@ -10,17 +10,21 @@ sylius_grid:
                 id:
                     type: twig
                     label: app.admin.ui.show_user
+                    sortable: ~
                     options:
                         template: admin/auth/user/link-to-show.html.twig
                 createdAt:
                     type: datetime
                     label: app.admin.ui.modules.auth.user.properties.created_at
+                    sortable: ~
                 email:
                     type: string
                     label: app.admin.ui.modules.auth.user.properties.email
+                    sortable: ~
                 name:
                     type: string
                     label: app.admin.ui.modules.auth.user.properties.name
+                    sortable: ~
             sorting:
                 id: desc
             filters:
