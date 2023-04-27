@@ -12,7 +12,7 @@ use Twig\TwigFunction;
 /**
  * @method bool isMobile()
  */
-class FkExtension extends AbstractExtension
+class AppExtension extends AbstractExtension
 {
     protected Mobile_Detect $detector;
 
