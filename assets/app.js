@@ -19,5 +19,6 @@ import '../node_modules/semantic-ui-calendar/dist/calendar.min'
 import '../vendor/sylius/ui-bundle/Resources/private/js/app.js'
 import '../vendor/sylius/ui-bundle/Resources/private/js/sylius-auto-complete.js'
 import '../node_modules/inputmask/dist/jquery.inputmask.js'
+import './js/sidebar'
 
 global.$ = global.jQuery = jquery;
