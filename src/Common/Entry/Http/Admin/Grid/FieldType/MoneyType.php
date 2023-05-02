@@ -37,7 +37,7 @@ class MoneyType implements FieldTypeInterface
     {
         $data = $this->dataExtractor->get($field, $data);
 
-        return $this->twig->render(self::TEMPLATE, ['data' => (bool) $data, 'options' => $options]);
+        return $this->twig->render(self::TEMPLATE, ['data' => $data, 'options' => $options]);
     }
 
     /**
