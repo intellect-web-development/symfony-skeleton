@@ -21,9 +21,6 @@ class MoneyType implements FieldTypeInterface
 {
     private const TEMPLATE = 'admin/layout/grid/field/money.html.twig';
 
-    /**
-     * BooleanFieldType constructor.
-     */
     public function __construct(
         private readonly DataExtractorInterface $dataExtractor,
         private readonly Environment $twig
