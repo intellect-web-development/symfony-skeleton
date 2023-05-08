@@ -45,6 +45,7 @@ services:
     image: redis:5
     volumes:
       - redis_data:/data
+    restart: unless-stopped
     environment:
       REDIS_PASSWORD: none
 

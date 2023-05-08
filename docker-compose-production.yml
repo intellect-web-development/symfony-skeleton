@@ -15,6 +15,7 @@ services:
 
   app-php-fpm:
     image: ${REGISTRY}/${NAMESPACE}/app-app-php-fpm:${IMAGE_TAG}
+    stop_grace_period: 1440m
     restart: always
 
   app-postgres-db:
@@ -54,3 +55,31 @@ services:
     restart: always
     environment:
       REDIS_PASSWORD: none
+
+  prometheus:
+    image: ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG}
+    restart: always
+    volumes:
+      - ./../prometheus:/opt/
+    ports:
+      - "9090:9090"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+#  alertmanager:
+#    image: prom/alertmanager:latest
+#    container_name: alertmanager
+#    hostname: alertmanager
+#    restart: always
+#    ports:
+#      - "9093:9093"
+
+volumes:
+  grafana-storage:
