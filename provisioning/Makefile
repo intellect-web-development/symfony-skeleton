@@ -19,6 +19,9 @@ authorize-deploy:
 authorize:
 	ansible-playbook -i hosts.yml authorize.yml
 
+jobs:
+	ansible-playbook -i hosts.yml jobs.yml
+
 docker-login:
 	ansible-playbook -i hosts.yml docker-login.yml
 
