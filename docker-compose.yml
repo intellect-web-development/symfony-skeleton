@@ -50,12 +50,21 @@ services:
 
   rabbitmq:
     image: rabbitmq:management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+
+  prometheus:
+    container_name: prometheus
+    build: docker/common/metrics/prometheus
+    restart: always
+    volumes:
+      - ./../prometheus:/opt/
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    restart: always
 
 volumes:
   db:
