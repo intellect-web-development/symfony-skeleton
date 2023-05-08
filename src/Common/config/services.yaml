@@ -38,7 +38,7 @@ services:
 
     App\Common\Service\Metrics\MetricsGuard:
         arguments:
-            $prometheusHost: '%env(PROMETHEUS_HOST)%'
+            $prometheusToken: '%env(PROMETHEUS_TOKEN)%'
 
     app.menu_builder:
         class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder

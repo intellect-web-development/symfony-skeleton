@@ -9,13 +9,13 @@ use App\Common\Exception\Domain\DomainException;
 class MetricsGuard
 {
     public function __construct(
-        private readonly string $prometheusHost,
+        private readonly string $prometheusToken,
     ) {
     }
 
-    public function guard(string $host): void
+    public function guard(string $token): void
     {
-        if ($host !== $this->prometheusHost) {
+        if ($token !== $this->prometheusToken) {
             throw new DomainException('Invalid permissions');
         }
     }

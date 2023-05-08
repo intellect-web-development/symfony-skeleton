@@ -2,7 +2,7 @@ version: "3.7"
 
 networks:
   default:
-    name: internal-network
+    name: app-network
 
 services:
   nginx:

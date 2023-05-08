@@ -8,24 +8,26 @@ use App\Common\Service\Metrics\AdapterInterface;
 use App\Common\Service\Metrics\MetricsGuard;
 use Prometheus\RenderTextFormat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class MetricsAction extends AbstractController
 {
-    #[Route(path: '/metrics', name: 'metrics', methods: ['GET'])]
+    #[Route(
+        path: '/metrics/{token?}',
+        name: 'metrics',
+        defaults: ['token' => ''],
+        methods: ['GET', '']
+    )]
     public function metrics(
-        Request $request,
+        string $token,
         AdapterInterface $adapter,
         MetricsGuard $metricsGuard,
         ?UserInterface $user
     ): Response {
         if (null === $user) {
-            $metricsGuard->guard(
-                $request->getHost()
-            );
+            $metricsGuard->guard($token);
         }
 
         return new Response(
