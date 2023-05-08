@@ -18,7 +18,7 @@ object Build : BuildType({
         param("deploy.registry", "")
     }
     vcs {
-        root(HttpsGithubComIntellectWebDevelopmentFuturesTraderRefsHeadsMaster)
+        root(RefsHeadsMaster)
     }
 
     steps {

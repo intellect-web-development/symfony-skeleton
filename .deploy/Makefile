@@ -3,13 +3,13 @@ ifneq ("$(wildcard .env)","")
 endif
 
 production-build:
-	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG} .
+	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG} .
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
-	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/futures-trader-app-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG}
 
 try-build:
 	IMAGE_TAG=${BUILD_NUMBER} make production-build
@@ -22,7 +22,7 @@ deploy:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
 	scp -o StrictHostKeyChecking=no -P ${PORT} ../docker-compose-production.yml deploy@${HOST}:app_${BUILD_NUMBER}/docker-compose-production.yml
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=futures_trader" >> .env'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=app" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "NAMESPACE=${NAMESPACE}" >> .env'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app_${BUILD_NUMBER} && echo "IMAGE_TAG=${BUILD_NUMBER}" >> .env'

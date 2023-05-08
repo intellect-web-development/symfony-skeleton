@@ -1,5 +1,0 @@
-framework:
-    messenger:
-        transports:
-             common-command-transport: 'sync://'
-             sync: 'sync://'
