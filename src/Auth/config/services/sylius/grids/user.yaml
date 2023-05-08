@@ -36,13 +36,10 @@ sylius_grid:
                     options:
                         type: equal
                 name:
-                    type: string
-                    label: app.admin.ui.modules.auth.user.properties.name
+                    type: like
                     form_options:
-                        type: contains
-                    options:
-                        type: contains
-                        fields: [ name ]
+                        field_name: name
+                        label: app.admin.ui.modules.auth.user.properties.name
                 email:
                     type: string
                     label: app.admin.ui.modules.auth.user.properties.email
