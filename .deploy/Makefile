@@ -11,6 +11,7 @@ production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
 	docker push ${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG}
 	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG}
 
 try-build:
 	IMAGE_TAG=${BUILD_NUMBER} make production-build

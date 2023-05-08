@@ -25,8 +25,9 @@ WORKDIR /app
 
 COPY . .
 COPY ./composer.json ./composer.lock ./
-COPY docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
-COPY docker/production/php/${run_env}/.env.local ./
+
+COPY ./docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/production/php/${run_env}/.env.local ./
 
 # Combine package installation commands
 RUN apk add --no-cache nodejs yarn \
