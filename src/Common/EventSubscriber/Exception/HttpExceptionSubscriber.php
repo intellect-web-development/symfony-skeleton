@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Common\EventSubscriber\Exception;
 
 use App\Common\Exception\Domain\DomainException;
+use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
 use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
@@ -25,6 +26,7 @@ class HttpExceptionSubscriber
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
+        private readonly AdapterInterface $metrics,
         private readonly string $env,
         private readonly bool $debug,
     ) {
@@ -33,6 +35,10 @@ class HttpExceptionSubscriber
     public function logException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+        $this->metrics->createCounter(
+            name: 'error:http',
+            help: 'error in http'
+        )->inc();
         try {
             throw $exception;
         } catch (DeserializePayloadToInputContractException $exception) {
