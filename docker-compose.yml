@@ -55,14 +55,12 @@ services:
       RABBITMQ_DEFAULT_PASS: admin
 
   prometheus:
-    container_name: prometheus
     build: docker/common/metrics/prometheus
     restart: always
     volumes:
       - ./../prometheus:/opt/
 
   grafana:
-    container_name: grafana
     image: grafana/grafana:latest
     restart: always
 
