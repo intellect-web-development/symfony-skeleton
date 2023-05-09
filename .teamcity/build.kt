@@ -17,9 +17,6 @@ object Build : BuildType({
         param("deploy.namespace", "")
         param("deploy.registry", "")
     }
-    vcs {
-        root(RefsHeadsMaster)
-    }
 
     steps {
         script {
