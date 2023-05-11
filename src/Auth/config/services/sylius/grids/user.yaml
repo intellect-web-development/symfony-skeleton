@@ -41,13 +41,10 @@ sylius_grid:
                         field_name: name
                         label: app.admin.ui.modules.auth.user.properties.name
                 email:
-                    type: string
-                    label: app.admin.ui.modules.auth.user.properties.email
+                    type: like
                     form_options:
-                        type: contains
-                    options:
-                        type: contains
-                        fields: [ email ]
+                        field_email: name
+                        label: app.admin.ui.modules.auth.user.properties.email
             actions:
                 main:
                     create:
