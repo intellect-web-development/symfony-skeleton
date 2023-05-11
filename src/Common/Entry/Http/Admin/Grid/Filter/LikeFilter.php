@@ -31,6 +31,7 @@ class LikeFilter implements FilterInterface
 
         /** @var QueryBuilder $qb */
         $qb = $refProperty->getValue($dataSource->getExpressionBuilder());
-        $qb->andWhere('LOWER(o.' . $name . ') LIKE :' . $bind)->setParameter($bind, $value);
+        $rootAlias = current($qb->getRootAliases());
+        $qb->andWhere('LOWER(' . $rootAlias . '.' . $name . ') LIKE :' . $bind)->setParameter($bind, $value);
     }
 }
