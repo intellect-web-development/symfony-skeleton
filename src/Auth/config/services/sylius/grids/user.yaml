@@ -43,7 +43,7 @@ sylius_grid:
                 email:
                     type: like
                     form_options:
-                        field_email: name
+                        field_name: email
                         label: app.admin.ui.modules.auth.user.properties.email
             actions:
                 main:
