@@ -33,7 +33,7 @@
 
         {{ sonata_block_render_event(event_prefix ~ '.form', {'resource': resource}) }}
 
-        {% include '@SyliusUi/Form/Buttons/_update.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('show'), configuration.vars.route.parameters|default({ 'id': resource.id }))}} %}
+         {% include '@SyliusUi/Form/Buttons/_update.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('show'), configuration.vars.route.parameters|default({ 'id': resource.id }))}} %}
 
         {{ form_end(form, {'render_rest': false}) }}
     </div>
