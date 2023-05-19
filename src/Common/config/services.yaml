@@ -23,22 +23,8 @@ services:
     App\Common\Service\Core\EventDispatcher:
         class: App\Common\Service\Dispatcher\MessengerEventDispatcher
 
-    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
-        arguments:
-            $env: '%env(APP_ENV)%'
-            $debug: '%env(LOCAL_TEST)%'
-
     Symfony\Component\Serializer\SerializerInterface:
         factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
-
-    App\Common\Service\Metrics\Adapters\Redis\Config:
-        arguments:
-            $host: '%env(METRICS_SIDECAR_HOST)%'
-            $namespace: 'app'
-
-    App\Common\Service\Metrics\MetricsGuard:
-        arguments:
-            $prometheusToken: '%env(PROMETHEUS_TOKEN)%'
 
     app.menu_builder:
         class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder

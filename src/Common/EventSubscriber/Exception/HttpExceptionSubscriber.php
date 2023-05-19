@@ -9,6 +9,7 @@ use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
 use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -27,7 +28,9 @@ class HttpExceptionSubscriber
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
         private readonly AdapterInterface $metrics,
+        #[Autowire('%env(APP_ENV)%')]
         private readonly string $env,
+        #[Autowire('%env(LOCAL_TEST)%')]
         private readonly bool $debug,
     ) {
     }
