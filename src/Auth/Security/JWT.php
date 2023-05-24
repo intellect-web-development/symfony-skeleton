@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Auth\Security;
 
-class JWT
-{
-    public string $privateKey;
-    public string $publicKey;
-    public string $passPhrase;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
+readonly class JWT
+{
     public function __construct(
-        string $privateKey,
-        string $publicKey,
-        string $passPhrase,
+        #[Autowire('%env(resolve:JWT_SECRET_KEY)%')]
+        public string $privateKey,
+        #[Autowire('%env(resolve:JWT_PUBLIC_KEY)%')]
+        public string $publicKey,
+        #[Autowire('%env(JWT_PASSPHRASE)%')]
+        public string $passPhrase,
     ) {
-        $this->privateKey = $privateKey;
-        $this->publicKey = $publicKey;
-        $this->passPhrase = $passPhrase;
     }
 }

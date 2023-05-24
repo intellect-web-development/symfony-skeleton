@@ -6,14 +6,13 @@ namespace App\Auth\Security;
 
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-#todo: ValueResolverInterface переделать
-class UserIdentityResolver implements ArgumentValueResolverInterface
+class UserIdentityResolver implements ValueResolverInterface
 {
     public function __construct(
         private readonly UserProviderInterface $userProvider,
@@ -21,15 +20,12 @@ class UserIdentityResolver implements ArgumentValueResolverInterface
     ) {
     }
 
-    public function supports(Request $request, ArgumentMetadata $argument): bool
-    {
-        $type = $argument->getType();
-
-        return null !== $type && is_subclass_of($type, UserInterface::class);
-    }
-
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
+        if (!$this->supports($request, $argument)) {
+            return [];
+        }
+
         $authorization = $request->headers->get('Authorization');
         if (null === $authorization) {
             throw new AccessDeniedException('Authorization token not found');
@@ -42,5 +38,12 @@ class UserIdentityResolver implements ArgumentValueResolverInterface
         $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
 
         yield $user;
+    }
+
+    public function supports(Request $request, ArgumentMetadata $argument): bool
+    {
+        $type = $argument->getType();
+
+        return null !== $type && is_subclass_of($type, UserInterface::class);
     }
 }
