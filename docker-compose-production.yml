@@ -6,6 +6,13 @@ networks:
     name: app-network
 
 services:
+  admin-panel:
+    container_name: admin-panel
+    image: ${REGISTRY}/${NAMESPACE}/app-admin:${IMAGE_TAG}
+    restart: always
+    ports:
+      - "8081:80"
+
   nginx:
     container_name: app-nginx
     image: ${REGISTRY}/${NAMESPACE}/app-nginx:${IMAGE_TAG}

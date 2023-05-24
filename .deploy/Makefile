@@ -6,12 +6,14 @@ production-build:
 	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG} .
 	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG} .
 	docker --log-level=debug build --pull --file=docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG} ./docker/common/metrics/prometheus
+	docker --log-level=debug build --pull --file=frontend/admin/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-admin:${IMAGE_TAG} ./frontend/admin
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
 	docker push ${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG}
 	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG}
 	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/app-admin:${IMAGE_TAG}
 
 try-build:
 	IMAGE_TAG=${BUILD_NUMBER} make production-build
