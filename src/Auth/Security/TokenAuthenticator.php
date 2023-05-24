@@ -36,15 +36,22 @@ class TokenAuthenticator extends AbstractAuthenticator
             throw new CustomUserMessageAuthenticationException('No API token provided');
         }
 
-        if (str_starts_with($authorization, 'Bearer ') && strlen($authorization) > 7) {
-            [$type, $token] = explode(' ', $authorization);
-            /** @var UserIdentity $user */
-            $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
+        try {
+            if (str_starts_with($authorization, 'Bearer ') && strlen($authorization) > 7) {
+                [$type, $token] = explode(' ', $authorization);
+                /** @var UserIdentity $user */
+                $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
 
-            return new SelfValidatingPassport(
-                new UserBadge(
-                    $user->getUserIdentifier()
-                )
+                return new SelfValidatingPassport(
+                    new UserBadge(
+                        $user->getUserIdentifier()
+                    )
+                );
+            }
+        } catch (\Throwable $exception) {
+            throw new CustomUserMessageAuthenticationException(
+                message: $exception->getMessage(),
+                previous: $exception
             );
         }
 

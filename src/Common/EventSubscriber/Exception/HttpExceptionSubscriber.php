@@ -66,6 +66,26 @@ class HttpExceptionSubscriber
 
         $exception = $event->getThrowable();
         if ($exception instanceof AccessDeniedException) {
+            /** @var \Symfony\Component\HttpFoundation\Request $request */
+            $request = $exception->getSubject();
+            if ('get' === $request->getMethod()) {
+                return;
+            }
+            $response = new Response();
+            $response->setContent(
+                $this->serializer->serialize(
+                    ApiFormatter::prepare(
+                        null,
+                        Response::HTTP_UNAUTHORIZED,
+                        $exception->getMessage(),
+                    ),
+                    $format
+                )
+            );
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
+
             return;
         }
 
