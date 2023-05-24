@@ -10,14 +10,13 @@ use Prometheus\Counter;
 class Adapter implements AdapterInterface
 {
     private \Prometheus\Storage\Redis $adapter;
-    private Config $config;
 
-    public function __construct(Config $config)
-    {
+    public function __construct(
+        private readonly Config $config
+    ) {
         $this->adapter = new \Prometheus\Storage\Redis([
-            'host' => $config->getHost(),
+            'host' => $config->host,
         ]);
-        $this->config = $config;
     }
 
     public function collect(): array
@@ -32,7 +31,7 @@ class Adapter implements AdapterInterface
     ): Counter {
         return new Counter(
             $this->adapter,
-            $this->config->getNamespace(),
+            $this->config->namespace,
             $name,
             $help,
             $labels

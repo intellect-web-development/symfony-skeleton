@@ -1,6 +1,8 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
 before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
 
+first-init: jwt-keys chmod-password-key init
+
 up: docker-up
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
@@ -19,6 +21,14 @@ consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
 
+jwt-keys:
+	mkdir -p config/jwt
+	ssh-keygen -t rsa -b 4096 -m PEM -f ./config/jwt/jwtRS256.key
+	openssl rsa -in ./config/jwt/jwtRS256.key -pubout -outform PEM -out ./config/jwt/jwtRS256.key.pub
+
+chmod-password-key:
+	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
+
 create-default-admin:
 	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
 
@@ -26,7 +36,7 @@ debug-router:
 	docker compose run --rm app-php-fpm bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-fpm composer require ...
+	docker compose run --rm app-php-fpm composer require firebase/php-jwt
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml

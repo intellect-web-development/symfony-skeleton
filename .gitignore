@@ -64,3 +64,4 @@ finish_dev.sh
 /provisioning/hosts.yml
 /provisioning/.env
 /.deploy/.env
+/config/jwt/

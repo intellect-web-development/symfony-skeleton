@@ -182,4 +182,18 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
     {
         return $this->plainPassword;
     }
+
+    #todo: переделать под множество ролей
+    public function getRole(): string
+    {
+        return current($this->userRoles);
+    }
+
+    /**
+     * @internal
+     */
+    public function getPasswordHash(): string
+    {
+        return $this->password;
+    }
 }

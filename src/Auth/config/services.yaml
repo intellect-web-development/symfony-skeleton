@@ -18,3 +18,14 @@ services:
     App\Auth\Entry\Http\:
         resource: '../Entry/Http/'
         tags: [ 'controller.service_arguments' ]
+
+#todo: сделать в тестах тоже самое, и настроить тестовый FunctionalTestCase
+#todo: настроить файлик secutiry.yaml
+    App\Auth\Security\JWT:
+        arguments:
+            - '%env(resolve:JWT_SECRET_KEY)%'
+            - '%env(resolve:JWT_PUBLIC_KEY)%'
+            - '%env(JWT_PASSPHRASE)%'
+
+    Symfony\Component\Security\Core\User\UserProviderInterface:
+        class: App\Auth\Security\UserProvider
