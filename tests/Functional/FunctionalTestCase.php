@@ -68,6 +68,7 @@ class FunctionalTestCase extends WebTestCase
             roles: [User::ROLE_ADMIN],
             name: 'admin@dev.com'
         );
+        self::$user->changePassword($passwordHasher->hash('12345'));
         self::$userIdentity = new UserIdentity(
             id: self::$user->getId()->getValue(),
             username: self::$user->getUsername(),
@@ -75,7 +76,6 @@ class FunctionalTestCase extends WebTestCase
             display: self::$user->getUsername(),
             role: self::$user->getRole(),
         );
-        self::$user->changePassword($passwordHasher->hash('12345'));
         $this->entityManager->persist(self::$user);
         $this->entityManager->flush();
         $this->client->loginUser(self::$user);
