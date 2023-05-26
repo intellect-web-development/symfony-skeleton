@@ -1,17 +1,20 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page class="row items-center justify-evenly">
+    Hello
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
+import { useMeta } from "quasar";
 
 export default defineComponent({
-  name: 'IndexPage'
-})
+  beforeCreate() {
+    useMeta(() => {
+      return {
+        title: 'Admin panel'
+      }
+    })
+  }
+});
 </script>
