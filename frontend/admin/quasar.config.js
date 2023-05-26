@@ -15,7 +15,6 @@ const path = require('path');
 module.exports = configure(function (/* ctx */) {
   return {
 
-
     // https://v2.quasar.dev/quasar-cli/prefetch-feature
     // preFetch: true,
 
@@ -36,7 +35,7 @@ module.exports = configure(function (/* ctx */) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v5',
-      // 'fontawesome-v6',
+      'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -53,10 +52,12 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
+
+      env: require('dotenv').config({ override: true }).parsed,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
@@ -90,7 +91,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true // opens browser window automatically
+      open: false // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
@@ -108,7 +109,12 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Meta',
+        'Notify',
+        'Dialog'
+      ],
+      iconSet: 'fontawesome-v6'
     },
 
     // animations: 'all', // --- includes all animations
