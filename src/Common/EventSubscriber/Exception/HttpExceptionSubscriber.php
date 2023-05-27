@@ -11,6 +11,7 @@ use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractEx
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -68,7 +69,7 @@ class HttpExceptionSubscriber
         if ($exception instanceof AccessDeniedException) {
             /** @var \Symfony\Component\HttpFoundation\Request $request */
             $request = $exception->getSubject();
-            if ('get' === $request->getMethod()) {
+            if (Request::METHOD_GET === $request->getMethod()) {
                 return;
             }
             $response = new Response();
