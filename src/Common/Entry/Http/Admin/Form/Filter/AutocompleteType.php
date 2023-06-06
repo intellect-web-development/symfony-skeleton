@@ -26,7 +26,6 @@ class AutocompleteType extends AbstractType
             if (!$suggester instanceof SuggesterInterface) {
                 continue;
             }
-            /** @var SuggesterInterface $suggester */
             $this->suggesters[$suggester->getSuggesterName()] = $suggester;
         }
     }
