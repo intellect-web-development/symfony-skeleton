@@ -23,10 +23,10 @@ class AutocompleteType extends AbstractType
         iterable $suggesters
     ) {
         foreach ($suggesters as $suggester) {
-            if (!$suggester instanceof SuggesterInterface) {
-                continue;
+            if ($suggester instanceof SuggesterInterface) {
+                $this->suggesters[$suggester->getSuggesterName()] = $suggester;
             }
-            $this->suggesters[$suggester->getSuggesterName()] = $suggester;
+
         }
     }
 
