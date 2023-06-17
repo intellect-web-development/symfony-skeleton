@@ -23,10 +23,11 @@ class AutocompleteType extends AbstractType
         iterable $suggesters
     ) {
         foreach ($suggesters as $suggester) {
-            if ($suggester instanceof SuggesterInterface) {
-                $this->suggesters[$suggester->getSuggesterName()] = $suggester;
+            if (!$suggester instanceof SuggesterInterface) {
+                continue;
             }
-
+            /** @var SuggesterInterface $suggester */
+            $this->suggesters[$suggester->getSuggesterName()] = $suggester;
         }
     }
 
@@ -41,7 +42,7 @@ class AutocompleteType extends AbstractType
         $rawSuggesterName = $options['suggester'];
         $suggesterName = str_replace('-', '_', $rawSuggesterName);
         if (!isset($this->suggesters[$suggesterName])) {
-            throw new RuntimeException(\sprintf('There is no suggester with name %s', $rawSuggesterName));
+            throw new RuntimeException(sprintf('There is no suggester with name %s', $rawSuggesterName));
         }
 
         $fieldName = $options['field_name'] ?? '';
