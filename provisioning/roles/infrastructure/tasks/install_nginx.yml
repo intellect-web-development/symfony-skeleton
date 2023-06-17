@@ -23,7 +23,7 @@
 - name: Copy nginx config file
   become: yes
   vars:
-    server_name: 31.172.72.15
+    server_name: 111.111.111.111
   template:
     src=templates/app.nginx.conf
     dest=/etc/nginx/sites-available/app
