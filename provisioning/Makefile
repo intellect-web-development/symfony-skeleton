@@ -7,6 +7,9 @@ endif
 app:
 	ansible-playbook -i hosts.yml app.yml
 
+jwt:
+	ansible-playbook -i hosts.yml jwt.yml
+
 upgrade:
 	ansible-playbook -i hosts.yml upgrade.yml
 
