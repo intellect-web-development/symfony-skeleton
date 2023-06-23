@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Auth\Entry\Console\CreateAdmin;
 
 use IWD\Symfony\PresentationBundle\Interfaces\InputContractInterface;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
