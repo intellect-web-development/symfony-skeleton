@@ -6,9 +6,10 @@ namespace App\Common\Service\Dispatcher\Message;
 
 use App\Common\Service\Dispatcher\NamedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class Handler implements MessageHandlerInterface
+#[AsMessageHandler]
+class Handler
 {
     private EventDispatcherInterface $dispatcher;
 

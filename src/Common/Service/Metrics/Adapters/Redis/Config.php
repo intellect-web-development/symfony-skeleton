@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace App\Common\Service\Metrics\Adapters\Redis;
 
-class Config
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+readonly class Config
 {
-    private string $host;
-    private string $namespace;
-
-    public function __construct(string $host, string $namespace)
-    {
-        $this->host = $host;
-        $this->namespace = $namespace;
-    }
-
-    public function getHost(): string
-    {
-        return $this->host;
-    }
-
-    public function getNamespace(): string
-    {
-        return $this->namespace;
+    public function __construct(
+        #[Autowire('%env(METRICS_SIDECAR_HOST)%')]
+        public string $host,
+        #[Autowire('%env(METRICS_NAMESPACE)%')]
+        public string $namespace,
+    ) {
     }
 }
