@@ -1,0 +1,8 @@
+---
+-   name: Provision manager
+    hosts: all
+    remote_user: root
+    roles:
+      - docker
+      - deploy
+      - infrastructure

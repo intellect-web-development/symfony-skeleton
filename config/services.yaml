@@ -1,5 +1,5 @@
 parameters:
-    locale: 'en'
+    locale: 'ru'
 
 services:
     _defaults:
@@ -11,3 +11,21 @@ services:
 
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
+
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
+
+    Psr\Container\ContainerInterface: '@service_container'
+
+    security.authorization_checker:
+        class: Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+        public: true
+
+    Redis:
+        # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
+        class: Redis
+        calls:
+            -   connect:
+                    - '%env(REDIS_HOST)%'
+                    - '%env(int:REDIS_PORT)%'
+            -   auth:
+                    - '%env(REDIS_PASSWORD)%'

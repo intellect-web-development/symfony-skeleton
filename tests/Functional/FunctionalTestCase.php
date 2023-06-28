@@ -4,26 +4,32 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
+use App\Auth\Core\User\Domain\User;
+use App\Auth\Core\User\Domain\ValueObject\Id;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class FunctionalTestCase extends WebTestCase
 {
     use AssertsTrait;
 
     protected static Container $containerTool;
+    protected static Generator $faker;
+    private static KernelBrowser $clientBlank;
+    private static User $user;
+
     protected EntityManagerInterface $entityManager;
     protected KernelBrowser $client;
-    protected static Generator $faker;
-
-    private static KernelBrowser $clientBlank;
 
     public static function setUpBeforeClass(): void
     {
@@ -44,6 +50,21 @@ class FunctionalTestCase extends WebTestCase
 
         $this->client = clone self::$clientBlank;
         $this->client->disableReboot();
+
+        /** @var PasswordHasherInterface $passwordHasher */
+        $passwordHasher = self::$containerTool->get(PasswordHasherInterface::class);
+        self::$user = User::create(
+            id: new Id('99999999'),
+            createdAt: new DateTimeImmutable(),
+            updatedAt: new DateTimeImmutable(),
+            email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
+            roles: [User::ROLE_ADMIN],
+            name: 'admin@dev.com'
+        );
+        self::$user->changePassword($passwordHasher->hash('12345'));
+        $this->entityManager->persist(self::$user);
+        $this->entityManager->flush();
+        $this->client->loginUser(self::$user);
 
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var TestFixture $fixture */
@@ -68,7 +89,7 @@ class FunctionalTestCase extends WebTestCase
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     protected function parseEntityData(?string $content = null): array
     {
@@ -80,7 +101,7 @@ class FunctionalTestCase extends WebTestCase
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     protected function parseEntitiesData(?string $content = null): array
     {
