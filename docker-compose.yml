@@ -58,8 +58,6 @@ services:
   prometheus:
     build: docker/common/metrics/prometheus
     restart: always
-    volumes:
-      - ./../prometheus:/opt/
 
   grafana:
     image: grafana/grafana:latest

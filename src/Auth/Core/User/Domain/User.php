@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Core\User\Domain;
 
+use App\Auth\Core\User\Domain\Event\UserCreated;
 use App\Auth\Core\User\Domain\Type\IdType;
 use App\Auth\Core\User\Domain\ValueObject\Id;
 use App\Common\Service\Core\AggregateRoot;
@@ -23,6 +24,7 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
 {
     use EventsTrait;
 
+    public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     #[ORM\Id]
@@ -57,6 +59,12 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+
+        $this->recordEvent(
+            new UserCreated(
+                id: $id->getValue(),
+            )
+        );
     }
 
     public static function create(

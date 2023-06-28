@@ -11,6 +11,7 @@ use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractEx
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -66,6 +67,26 @@ class HttpExceptionSubscriber
 
         $exception = $event->getThrowable();
         if ($exception instanceof AccessDeniedException) {
+            /** @var \Symfony\Component\HttpFoundation\Request|null $request */
+            $request = $exception->getSubject();
+            if (null !== $request && Request::METHOD_GET === $request->getMethod()) {
+                return;
+            }
+            $response = new Response();
+            $response->setContent(
+                $this->serializer->serialize(
+                    ApiFormatter::prepare(
+                        null,
+                        Response::HTTP_UNAUTHORIZED,
+                        $exception->getMessage(),
+                    ),
+                    $format
+                )
+            );
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
+
             return;
         }
 

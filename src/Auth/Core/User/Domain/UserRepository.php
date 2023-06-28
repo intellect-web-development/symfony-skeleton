@@ -49,4 +49,12 @@ class UserRepository extends EntityRepository
     {
         return null !== $this->findOneBy(['email' => $email]);
     }
+
+    public function findByEmail(string $email): ?User
+    {
+        /** @var User|null $user */
+        $user = $this->findOneBy(['email' => $email]);
+
+        return $user;
+    }
 }

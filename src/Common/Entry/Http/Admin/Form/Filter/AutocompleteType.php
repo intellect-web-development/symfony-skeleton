@@ -42,7 +42,7 @@ class AutocompleteType extends AbstractType
         $rawSuggesterName = $options['suggester'];
         $suggesterName = str_replace('-', '_', $rawSuggesterName);
         if (!isset($this->suggesters[$suggesterName])) {
-            throw new RuntimeException(\sprintf('There is no suggester with name %s', $rawSuggesterName));
+            throw new RuntimeException(sprintf('There is no suggester with name %s', $rawSuggesterName));
         }
 
         $fieldName = $options['field_name'] ?? '';
