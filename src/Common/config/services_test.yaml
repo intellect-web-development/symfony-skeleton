@@ -2,9 +2,3 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-
-    App\Common\EventSubscriber\Exception\HttpExceptionSubscriber:
-        public: true
-        arguments:
-            $env: '%env(APP_ENV)%'
-            $debug: '%env(LOCAL_TEST)%'

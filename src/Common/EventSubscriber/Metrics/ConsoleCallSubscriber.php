@@ -28,10 +28,19 @@ class ConsoleCallSubscriber
         );
 
         $command = $event->getCommand();
-        if (null !== $command) {
+        if (null !== $command && !in_array($command->getName(), self::getIgnoreCommandList())) {
             $counter->inc([
                 (string) $command->getName(),
             ]);
         }
+    }
+
+    public static function getIgnoreCommandList(): array
+    {
+        return [
+            'cache:clear',
+            'assets:install',
+            'fos:js-routing:dump',
+        ];
     }
 }

@@ -4,26 +4,37 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
+use App\Auth\Core\User\Domain\User;
+use App\Auth\Core\User\Domain\ValueObject\Id;
+use App\Auth\Security\JwtTokenizer;
+use App\Auth\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Faker\Generator;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class FunctionalTestCase extends WebTestCase
 {
     use AssertsTrait;
 
     protected static Container $containerTool;
-    protected EntityManagerInterface $entityManager;
-    protected KernelBrowser $client;
     protected static Generator $faker;
 
     private static KernelBrowser $clientBlank;
+    private static User $user;
+    private static UserIdentity $userIdentity;
+    private static JwtTokenizer $jwtTokenizer;
+
+    protected EntityManagerInterface $entityManager;
+    protected KernelBrowser $client;
 
     public static function setUpBeforeClass(): void
     {
@@ -38,6 +49,8 @@ class FunctionalTestCase extends WebTestCase
         parent::setUp();
         self::$containerTool = new Container(parent::getContainer());
 
+        self::$jwtTokenizer = self::$containerTool->get(JwtTokenizer::class);
+
         $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->beginTransaction();
         $this->entityManager->getConnection()->setAutoCommit(false);
@@ -45,11 +58,63 @@ class FunctionalTestCase extends WebTestCase
         $this->client = clone self::$clientBlank;
         $this->client->disableReboot();
 
+        /** @var PasswordHasherInterface $passwordHasher */
+        $passwordHasher = self::$containerTool->get(PasswordHasherInterface::class);
+        self::$user = User::create(
+            id: new Id('99999999'),
+            createdAt: new DateTimeImmutable(),
+            updatedAt: new DateTimeImmutable(),
+            email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
+            roles: [User::ROLE_ADMIN],
+            name: 'admin@dev.com'
+        );
+        self::$user->changePassword($passwordHasher->hash('12345'));
+        self::$userIdentity = new UserIdentity(
+            id: self::$user->getId()->getValue(),
+            username: self::$user->getUsername(),
+            password: self::$user->getPassword(),
+            display: self::$user->getUsername(),
+            role: self::$user->getRole(),
+        );
+        $this->entityManager->persist(self::$user);
+        $this->entityManager->flush();
+        $this->client->loginUser(self::$user);
+
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var TestFixture $fixture */
             $fixture = self::$containerTool->get($fixtureClass);
             $fixture->load($this->entityManager);
         }
+    }
+
+    /**
+     * @param array<string> $headers
+     * @param array<string> $jwtPayload
+     *
+     * @throws \Exception
+     */
+    protected function requestAuthJWT(
+        string $method,
+        string $url,
+        string $body = '',
+        array $headers = [],
+        array $jwtPayload = []
+    ): Response {
+        return $this->request(
+            $method,
+            $url,
+            $body,
+            array_merge(
+                $headers,
+                [
+                    'CONTENT_TYPE' => 'application/json',
+                    'HTTP_AUTHORIZATION' => sprintf(
+                        'Bearer %s',
+                        self::$jwtTokenizer->generateAccessToken(self::$userIdentity, $jwtPayload)
+                    ),
+                ]
+            )
+        );
     }
 
     /**
@@ -68,7 +133,7 @@ class FunctionalTestCase extends WebTestCase
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     protected function parseEntityData(?string $content = null): array
     {
@@ -80,7 +145,7 @@ class FunctionalTestCase extends WebTestCase
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     protected function parseEntitiesData(?string $content = null): array
     {

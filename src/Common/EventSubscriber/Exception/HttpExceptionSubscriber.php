@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Common\EventSubscriber\Exception;
 
 use App\Common\Exception\Domain\DomainException;
+use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
 use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\SerializerInterface;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
@@ -24,7 +28,10 @@ class HttpExceptionSubscriber
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
+        private readonly AdapterInterface $metrics,
+        #[Autowire('%env(APP_ENV)%')]
         private readonly string $env,
+        #[Autowire('%env(LOCAL_TEST)%')]
         private readonly bool $debug,
     ) {
     }
@@ -32,6 +39,10 @@ class HttpExceptionSubscriber
     public function logException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+        $this->metrics->createCounter(
+            name: 'error:http',
+            help: 'error in http'
+        )->inc();
         try {
             throw $exception;
         } catch (DeserializePayloadToInputContractException $exception) {
@@ -55,6 +66,29 @@ class HttpExceptionSubscriber
         $event->allowCustomResponseCode();
 
         $exception = $event->getThrowable();
+        if ($exception instanceof AccessDeniedException) {
+            /** @var \Symfony\Component\HttpFoundation\Request|null $request */
+            $request = $exception->getSubject();
+            if (null !== $request && Request::METHOD_GET === $request->getMethod()) {
+                return;
+            }
+            $response = new Response();
+            $response->setContent(
+                $this->serializer->serialize(
+                    ApiFormatter::prepare(
+                        null,
+                        Response::HTTP_UNAUTHORIZED,
+                        $exception->getMessage(),
+                    ),
+                    $format
+                )
+            );
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
+
+            return;
+        }
 
         try {
             $previous = $exception->getPrevious();
