@@ -4,7 +4,7 @@ app:
             id: Id
             edit: Редактировать
             common:
-                project: Futures Trader
+                project: Skeleton
                 repeat: Повторить
                 save: Сохранить
                 login: Войти
