@@ -112,7 +112,7 @@ psalm:
 	docker compose run --rm app-php-fpm ./vendor/bin/psalm --no-cache $(ARGS)
 
 doctrine-schema-validate:
-	docker compose run --rm php bin/console --env=test doctrine:schema:validate
+	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:schema:validate
 
 composer-install:
 	docker compose run --rm app-php-fpm composer install
