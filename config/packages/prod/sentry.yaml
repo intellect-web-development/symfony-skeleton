@@ -8,14 +8,6 @@ monolog:
             type: sentry
             level: !php/const Monolog\Logger::ERROR
             hub_id: Sentry\State\HubInterface
-#
-#when@dev:
-#    sentry:
-#        dsn: '%env(SENTRY_DSN)%'
-#
-#when@prod:
-#    sentry:
-#        dsn: '%env(SENTRY_DSN)%'
 
 #        If you are using Monolog, you also need these additional configuration and services to log the errors correctly:
 #        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration

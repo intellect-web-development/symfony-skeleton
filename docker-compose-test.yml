@@ -8,14 +8,14 @@ services:
   nginx:
     build:
       context: docker
-      dockerfile: development/nginx/Dockerfile
+      dockerfile: test/nginx/Dockerfile
     volumes:
       - ./:/app
 
   app-php-fpm:
     build:
       context: docker
-      dockerfile: development/php-fpm/Dockerfile
+      dockerfile: test/php-fpm/Dockerfile
     volumes:
       - ./:/app
       - app_cache:/var/cache/app
@@ -45,7 +45,6 @@ services:
     image: redis:5
     volumes:
       - redis_data:/data
-    restart: unless-stopped
     environment:
       REDIS_PASSWORD: none
 
@@ -54,14 +53,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
-
-  prometheus:
-    build: docker/common/metrics/prometheus
-    restart: always
-
-  grafana:
-    image: grafana/grafana:latest
-    restart: always
 
 volumes:
   db:
