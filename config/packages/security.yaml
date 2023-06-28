@@ -29,6 +29,14 @@ security:
             pattern: ^/api/token
             stateless: true
 
+        client:
+            security: true
+            pattern: ^/api/client
+            stateless: true
+            user_checker: App\Auth\Security\UserChecker
+            custom_authenticators:
+                - App\Auth\Security\TokenAuthenticator
+
         admin:
             security: true
             pattern: ^/api/admin
