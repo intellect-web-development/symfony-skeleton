@@ -18,7 +18,7 @@
     </projectFiles>
     <issueHandlers>
         <MissingTemplateParam errorLevel="suppress" />
-        <RedundantCast errorLevel="suppress" />
         <MoreSpecificImplementedParamType errorLevel="suppress" />
+        <RedundantCast errorLevel="suppress" />
     </issueHandlers>
 <plugins><pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/></plugins></psalm>

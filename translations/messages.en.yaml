@@ -4,7 +4,7 @@ app:
             id: Id
             edit: Edit
             common:
-                project: Application
+                project: Skeleton
                 repeat: Repeat
                 save: Save
                 login: Log in
