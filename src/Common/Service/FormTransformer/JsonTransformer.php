@@ -27,7 +27,8 @@ class JsonTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string|null $value
+     * @param  string|null    $value
+     * @throws \JsonException
      */
     public function reverseTransform($value): ?array
     {
@@ -36,6 +37,6 @@ class JsonTransformer implements DataTransformerInterface
             return null;
         }
 
-        return json_decode($value, true);
+        return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
     }
 }
