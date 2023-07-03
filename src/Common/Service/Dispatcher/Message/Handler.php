@@ -9,13 +9,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class Handler
+readonly class Handler
 {
-    private EventDispatcherInterface $dispatcher;
-
-    public function __construct(EventDispatcherInterface $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
+    public function __construct(
+        private EventDispatcherInterface $dispatcher
+    ) {
     }
 
     public function __invoke(Message $message): void
