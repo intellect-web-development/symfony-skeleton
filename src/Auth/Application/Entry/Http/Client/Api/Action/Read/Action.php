@@ -6,7 +6,7 @@ namespace App\Auth\Application\Entry\Http\Client\Api\Action\Read;
 
 use App\Auth\Application\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
 use App\Auth\Domain\User\User;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;

@@ -20,4 +20,4 @@ services:
         tags: [ 'controller.service_arguments' ]
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
-        class: App\Auth\Security\UserProvider
+        class: App\Auth\Infrastructure\Security\UserProvider

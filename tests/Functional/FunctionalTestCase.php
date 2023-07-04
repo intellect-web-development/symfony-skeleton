@@ -6,8 +6,8 @@ namespace App\Tests\Functional;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\Id;
-use App\Auth\Security\JwtTokenizer;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;

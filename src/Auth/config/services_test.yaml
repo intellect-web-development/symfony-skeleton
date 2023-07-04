@@ -3,8 +3,8 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\Auth\Security\JWT:
+    App\Auth\Infrastructure\Security\JWT:
         public: true
 
-    App\Auth\Security\JwtTokenizer:
+    App\Auth\Infrastructure\Security\JwtTokenizer:
         public: true

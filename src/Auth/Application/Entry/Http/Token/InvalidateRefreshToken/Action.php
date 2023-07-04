@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\Entry\Http\Token\InvalidateRefreshToken;
 
-use App\Auth\Security\JwtTokenizer;
-use App\Auth\Security\RefreshTokenCache;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\RefreshTokenCache;
 use App\Common\Exception\Domain\DomainException;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;

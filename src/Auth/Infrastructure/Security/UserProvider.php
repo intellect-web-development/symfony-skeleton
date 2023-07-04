@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Security;
+namespace App\Auth\Infrastructure\Security;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\UserRepository;

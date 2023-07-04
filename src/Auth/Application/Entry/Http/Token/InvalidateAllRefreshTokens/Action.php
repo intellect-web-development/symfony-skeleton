@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\Entry\Http\Token\InvalidateAllRefreshTokens;
 
-use App\Auth\Security\RefreshTokenCache;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Infrastructure\Security\RefreshTokenCache;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;

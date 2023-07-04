@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Security;
+namespace App\Auth\Infrastructure\Security;
 
-use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
