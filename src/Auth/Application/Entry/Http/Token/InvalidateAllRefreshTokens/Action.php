@@ -51,7 +51,7 @@ class Action extends AbstractController
         RefreshTokenCache $refreshTokenCache,
         UserIdentity $user
     ): Response {
-        $refreshTokenCache->invalidateAll($user->getId());
+        $refreshTokenCache->invalidateAll($user->id);
 
         return $presenter->present(
             data: ApiFormatter::prepare(

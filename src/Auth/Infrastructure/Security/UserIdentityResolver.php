@@ -12,11 +12,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserIdentityResolver implements ValueResolverInterface
+readonly class UserIdentityResolver implements ValueResolverInterface
 {
     public function __construct(
-        private readonly UserProviderInterface $userProvider,
-        private readonly JwtTokenizer $jwtTokenizer,
+        private UserProviderInterface $userProvider,
+        private JwtTokenizer $jwtTokenizer,
     ) {
     }
 

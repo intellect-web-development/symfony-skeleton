@@ -76,7 +76,7 @@ class Action
         Presenter $presenter,
         UserIdentity $userIdentity,
     ): Response {
-        if ($userIdentity->getId() !== $id) {
+        if ($userIdentity->id !== $id) {
             throw new AccessDeniedException('Access Denied.');
         }
         $query = new Query($id, User::class);

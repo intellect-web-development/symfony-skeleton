@@ -34,7 +34,7 @@ class JwtTokenizer
             [
                 'iat' => (new DateTime())->getTimestamp(),
                 'exp' => (new DateTime())->add(new DateInterval('PT60M'))->getTimestamp(),
-                'id' => $user->getId(),
+                'id' => $user->id,
                 'username' => $user->getUserIdentifier(),
                 'roles' => $user->getRoles(),
             ],
@@ -55,7 +55,7 @@ class JwtTokenizer
         $payload = [
             'iat' => (new DateTime())->getTimestamp(),
             'exp' => (new DateTime())->add(new DateInterval('P30D'))->getTimestamp(),
-            'refresh.userId' => $user->getId(),
+            'refresh.userId' => $user->id,
         ];
 
         /** @var resource $privateKey */

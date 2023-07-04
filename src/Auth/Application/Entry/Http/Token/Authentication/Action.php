@@ -85,7 +85,7 @@ class Action extends AbstractController
             refresh: $refresh = $jwtTokenizer->generateRefreshToken($userIdentity)
         );
 
-        $refreshTokenCache->cache($userIdentity->getId(), $refresh);
+        $refreshTokenCache->cache($userIdentity->id, $refresh);
 
         return $presenter->present(
             data: ApiFormatter::prepare(

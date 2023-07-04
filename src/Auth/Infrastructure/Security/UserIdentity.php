@@ -9,44 +9,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserIdentity implements UserInterface, EquatableInterface
 {
-    private string $id;
-    private string $username;
-    private string $password;
-    private string $display;
-    private string $role;
-
     public function __construct(
-        string $id,
-        string $username,
-        string $password,
-        string $display,
-        string $role,
+        public string $id,
+        public string $username,
+        public string $password,
+        public string $display,
+        public string $role,
     ) {
-        $this->id = $id;
-        $this->username = $username;
-        $this->password = $password;
-        $this->display = $display;
-        $this->role = $role;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getDisplay(): string
-    {
-        return $this->display;
     }
 
     public function getUserIdentifier(): string
     {
         return $this->username;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
     }
 
     public function getRoles(): array
