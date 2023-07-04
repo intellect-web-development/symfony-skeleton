@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Core\User\Domain;
 
-use App\Auth\Core\User\Domain\Event\UserCreated;
+use App\Auth\Core\User\Domain\Event\UserCreatedEvent;
 use App\Auth\Core\User\Domain\Type\IdType;
 use App\Auth\Core\User\Domain\ValueObject\Id;
 use App\Common\Service\Core\AggregateRoot;
@@ -61,7 +61,7 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
         $this->updatedAt = $updatedAt;
 
         $this->recordEvent(
-            new UserCreated(
+            new UserCreatedEvent(
                 id: $id->getValue(),
             )
         );
