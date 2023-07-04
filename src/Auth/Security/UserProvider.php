@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Security;
 
-use App\Auth\Core\User\Domain\User;
-use App\Auth\Core\User\Domain\UserRepository;
+use App\Auth\Domain\User\User;
+use App\Auth\Domain\User\UserRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;

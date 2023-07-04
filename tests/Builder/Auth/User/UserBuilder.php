@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Builder\Auth\User;
 
-use App\Auth\Core\User\Domain\User;
-use App\Auth\Core\User\Domain\ValueObject\Id;
+use App\Auth\Domain\User\User;
+use App\Auth\Domain\User\ValueObject\Id;
 use App\Tests\Builder\AbstractBuilder;
 use DateTimeImmutable;
 

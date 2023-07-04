@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use App\Auth\Core\User\Domain\User;
-use App\Auth\Core\User\Domain\ValueObject\Id;
+use App\Auth\Domain\User\User;
+use App\Auth\Domain\User\ValueObject\Id;
 use App\Auth\Security\JwtTokenizer;
 use App\Auth\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;

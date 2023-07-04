@@ -4,5 +4,5 @@ sylius_resource:
             templates: admin/layout/crud
             driver: doctrine/orm
             classes:
-                model: App\Auth\Core\User\Domain\User
-                controller: App\Auth\Entry\Http\Admin\User\UserController
+                model: App\Auth\Domain\User\User
+                controller: App\Auth\Application\Entry\Http\Admin\User\UserController

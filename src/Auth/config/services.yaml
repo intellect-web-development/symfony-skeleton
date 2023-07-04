@@ -15,8 +15,8 @@ services:
             - '../config'
             - '../translations'
 
-    App\Auth\Entry\Http\:
-        resource: '../Entry/Http/'
+    App\Auth\Application\Entry\Http\:
+        resource: '../Application/Entry/Http/'
         tags: [ 'controller.service_arguments' ]
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
