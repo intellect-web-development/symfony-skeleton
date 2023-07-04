@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class Handler
+readonly class MessageBusHandler
 {
     public function __construct(
         private EventDispatcherInterface $dispatcher
