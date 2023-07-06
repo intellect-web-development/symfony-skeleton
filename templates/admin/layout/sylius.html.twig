@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{% block title %} | Skeleton {% endblock %}</title>
+    <title>{% block title %} | {{ 'app.admin.ui.common.project'|trans }} {% endblock %}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -36,12 +36,6 @@
         {{ knp_menu_render('ec.main', {'depth': 3, 'template': 'admin/layout/menu/sidebar.html.twig', 'currentClass': 'active'}) }}
     {% endblock %}
 </div>
-
-<style>
-    .ui.vertical.menu {
-        background: #1d1d1d;
-    }
-</style>
 
 <div class="ui borderless fixed menu">
     {% block topbar %}

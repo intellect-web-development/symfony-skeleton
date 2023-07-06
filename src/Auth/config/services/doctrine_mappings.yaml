@@ -4,6 +4,6 @@ doctrine:
             App\Auth:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/Auth/Core'
-                prefix: App\Auth\Core
+                dir: '%kernel.project_dir%/src/Auth/Domain'
+                prefix: App\Auth\Domain
                 alias: App_Auth

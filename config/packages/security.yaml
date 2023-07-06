@@ -2,12 +2,12 @@ security:
 #    enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Auth\Core\User\Domain\User:
+        App\Auth\Domain\User\User:
             algorithm: auto
     providers:
         app_user_provider:
             entity:
-                class: App\Auth\Core\User\Domain\User
+                class: App\Auth\Domain\User\User
                 property: email
     firewalls:
         dev:

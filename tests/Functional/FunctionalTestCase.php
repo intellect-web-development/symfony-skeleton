@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use App\Auth\Core\User\Domain\User;
-use App\Auth\Core\User\Domain\ValueObject\Id;
+use App\Auth\Domain\User\User;
+use App\Auth\Domain\User\ValueObject\Id;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
@@ -25,6 +25,7 @@ class FunctionalTestCase extends WebTestCase
 
     protected static Container $containerTool;
     protected static Generator $faker;
+
     private static KernelBrowser $clientBlank;
     private static User $user;
 
