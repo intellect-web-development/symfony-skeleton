@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use App\Common\Exception\SystemException;
 use DateInterval;
 use DateTime;
 use Exception;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
 use OpenSSLAsymmetricKey;
+use RuntimeException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UnexpectedValueException;
 
@@ -81,7 +81,7 @@ class JwtTokenizer
     {
         $publicKey = file_get_contents($this->jwt->publicKey);
         if (false === $publicKey) {
-            throw new SystemException('Public key not found');
+            throw new RuntimeException('Public key not found');
         }
 
         return (array) \Firebase\JWT\JWT::decode($token, new Key($publicKey, 'RS256'));
