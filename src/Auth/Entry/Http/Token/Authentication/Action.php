@@ -64,7 +64,7 @@ class Action extends AbstractController
         RefreshTokenCache $refreshTokenCache
     ): Response {
         $user = $userRepository->findByEmail($contract->email);
-        if ($user === null) {
+        if (null === $user) {
             throw new DomainException('Invalid credentials', 401);
         }
 

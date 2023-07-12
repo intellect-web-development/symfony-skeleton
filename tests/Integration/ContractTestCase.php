@@ -65,7 +65,7 @@ class ContractTestCase extends IntegrationTestCase
             );
         }
 
-        if (!empty($violations) || $expectedErrors !== []) {
+        if (!empty($violations) || [] !== $expectedErrors) {
             self::assertCount(
                 count($violations),
                 $expectedErrors,

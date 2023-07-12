@@ -1,5 +1,6 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
-before-deploy: php-lint rector-dry-run php-cs php-stan psalm doctrine-schema-validate test
+before-deploy: php-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+fix-linters: rector-fix php-cs-fix
 
 first-init: jwt-keys chmod-password-key init
 
@@ -112,20 +113,22 @@ test-integration:
 test-acceptance:
 	docker compose run --rm app-php-fpm ./vendor/bin/phpunit --testsuite=acceptance
 
-rector-dry-run:
-	docker compose run --rm app-php-fpm ./vendor/bin/rector --dry-run
-
-rector:
-	docker compose run --rm app-php-fpm ./vendor/bin/rector
-
 php-stan:
 	docker compose run --rm app-php-fpm ./vendor/bin/phpstan --memory-limit=-1
 
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
-php-cs:
+rector-dry-run:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector --dry-run
+
+rector-fix:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector
+
+php-cs-fix:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix -v --using-cache=no
+
+php-cs-dry-run:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
 psalm:
