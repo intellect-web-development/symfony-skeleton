@@ -48,10 +48,10 @@ class TokenAuthenticator extends AbstractAuthenticator
                     )
                 );
             }
-        } catch (\Throwable $exception) {
+        } catch (\Throwable $throwable) {
             throw new CustomUserMessageAuthenticationException(
-                message: $exception->getMessage(),
-                previous: $exception
+                message: $throwable->getMessage(),
+                previous: $throwable
             );
         }
 

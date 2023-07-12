@@ -16,7 +16,7 @@ use UnexpectedValueException;
 
 class JwtTokenizer
 {
-    private JWT $jwt;
+    private readonly JWT $jwt;
 
     public function __construct(JWT $jwt)
     {
@@ -66,8 +66,8 @@ class JwtTokenizer
     {
         try {
             $tokenDecode = $this->decode($refreshToken);
-        } catch (UnexpectedValueException $exception) {
-            throw new AccessDeniedException($exception->getMessage(), $exception);
+        } catch (UnexpectedValueException $unexpectedValueException) {
+            throw new AccessDeniedException($unexpectedValueException->getMessage(), $unexpectedValueException);
         }
 
         if (!isset($tokenDecode['refresh.userId'])) {
@@ -91,7 +91,7 @@ class JwtTokenizer
     {
         try {
             return $this->decode($token)['exp'] < (new DateTime())->getTimestamp();
-        } catch (ExpiredException $exception) {
+        } catch (ExpiredException $expiredException) {
             return true;
         }
     }

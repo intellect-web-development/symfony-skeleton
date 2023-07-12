@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    private UserRepository $userRepository;
+    private readonly UserRepository $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -23,7 +23,7 @@ class UserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof UserIdentity) {
-            throw new UnsupportedUserException('Invalid user class ' . get_class($user));
+            throw new UnsupportedUserException('Invalid user class ' . $user::class);
         }
 
         return self::identityByUser(
@@ -50,7 +50,7 @@ class UserProvider implements UserProviderInterface
 
     private function loadUser(string $username): User
     {
-        if ($user = $this->userRepository->findByEmail($username)) {
+        if (($user = $this->userRepository->findByEmail($username)) !== null) {
             return $user;
         }
 

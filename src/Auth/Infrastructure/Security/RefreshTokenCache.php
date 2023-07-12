@@ -10,8 +10,8 @@ class RefreshTokenCache
 {
     public const PREFIX = 'auth:jwt:refresh:';
 
-    private RedisConnection $redisConnection;
-    private JwtTokenizer $jwtTokenizer;
+    private readonly RedisConnection $redisConnection;
+    private readonly JwtTokenizer $jwtTokenizer;
 
     public function __construct(
         RedisConnection $redisConnection,
@@ -97,13 +97,7 @@ class RefreshTokenCache
             $this->getAllTokens($userId)
         );
 
-        foreach ($tokens as $tokenItem) {
-            if ($token === $tokenItem) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($token, $tokens, true);
     }
 
     protected function getAllTokens(string $userId): array

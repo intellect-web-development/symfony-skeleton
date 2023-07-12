@@ -101,8 +101,8 @@ class Action extends AbstractController
                 ),
                 outputFormat: new OutputFormat('json')
             );
-        } catch (AccessDeniedException $exception) {
-            throw new DomainException('Access denied', 400, $exception);
+        } catch (AccessDeniedException $accessDeniedException) {
+            throw new DomainException('Access denied', 400, $accessDeniedException);
         }
     }
 }
