@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Client\Api\Contract\User;
 
-use App\Auth\Core\User\Domain\User;
+use App\Auth\Domain\User\User;
 use DateTimeInterface;
 
 class CommonOutputContract

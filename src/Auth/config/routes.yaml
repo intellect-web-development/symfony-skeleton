@@ -1,3 +1,0 @@
-auth_http:
-    resource: ../Entry/Http/
-    type: annotation

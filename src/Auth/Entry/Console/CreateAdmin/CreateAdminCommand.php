@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Console\CreateAdmin;
 
-use App\Auth\Core\User\Application\UseCase\Create\Command;
-use App\Auth\Core\User\Application\UseCase\Create\Handler;
+use App\Auth\Application\User\UseCase\Create\Command;
+use App\Auth\Application\User\UseCase\Create\Handler;
 use IWD\Symfony\PresentationBundle\Attribute\CliContract;
 use IWD\Symfony\PresentationBundle\Console\CliCommand;
 use IWD\Symfony\PresentationBundle\Interfaces\InputContractInterface;

@@ -32,7 +32,7 @@ class MetricsAction extends AbstractController
 
         return new Response(
             (new RenderTextFormat())->render($adapter->collect()),
-            200,
+            Response::HTTP_OK,
             ['Content-Type' => 'text/plain']
         );
     }

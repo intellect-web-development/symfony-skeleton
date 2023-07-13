@@ -8,7 +8,7 @@ use Redis;
 
 class RedisConnection
 {
-    private Redis $redis;
+    private readonly Redis $redis;
     private bool $isConnection = false;
 
     public function __construct(
