@@ -3,6 +3,8 @@ before-deploy: php-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-sc
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
 
+first-init: jwt-keys chmod-password-key init
+
 up: docker-up
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
@@ -20,6 +22,14 @@ consume:
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
+
+jwt-keys:
+	mkdir -p config/jwt
+	ssh-keygen -t rsa -b 4096 -m PEM -f ./config/jwt/jwtRS256.key
+	openssl rsa -in ./config/jwt/jwtRS256.key -pubout -outform PEM -out ./config/jwt/jwtRS256.key.pub
+
+chmod-password-key:
+	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
 
 create-default-admin:
 	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"

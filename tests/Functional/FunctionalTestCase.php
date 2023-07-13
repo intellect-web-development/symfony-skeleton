@@ -6,6 +6,8 @@ namespace App\Tests\Functional;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
@@ -28,6 +30,8 @@ class FunctionalTestCase extends WebTestCase
 
     private static KernelBrowser $clientBlank;
     private static User $user;
+    private static UserIdentity $userIdentity;
+    private static JwtTokenizer $jwtTokenizer;
 
     protected EntityManagerInterface $entityManager;
     protected KernelBrowser $client;
@@ -44,6 +48,8 @@ class FunctionalTestCase extends WebTestCase
     {
         parent::setUp();
         self::$containerTool = new Container(parent::getContainer());
+
+        self::$jwtTokenizer = self::$containerTool->get(JwtTokenizer::class);
 
         $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->beginTransaction();
@@ -63,6 +69,13 @@ class FunctionalTestCase extends WebTestCase
             name: 'admin@dev.com'
         );
         self::$user->changePassword($passwordHasher->hash('12345'));
+        self::$userIdentity = new UserIdentity(
+            id: self::$user->getId()->getValue(),
+            username: self::$user->getUsername(),
+            password: self::$user->getPassword(),
+            display: self::$user->getUsername(),
+            role: self::$user->getRole(),
+        );
         $this->entityManager->persist(self::$user);
         $this->entityManager->flush();
         $this->client->loginUser(self::$user);
@@ -72,6 +85,36 @@ class FunctionalTestCase extends WebTestCase
             $fixture = self::$containerTool->get($fixtureClass);
             $fixture->load($this->entityManager);
         }
+    }
+
+    /**
+     * @param array<string> $headers
+     * @param array<string> $jwtPayload
+     *
+     * @throws \Exception
+     */
+    protected function requestAuthJWT(
+        string $method,
+        string $url,
+        string $body = '',
+        array $headers = [],
+        array $jwtPayload = []
+    ): Response {
+        return $this->request(
+            $method,
+            $url,
+            $body,
+            array_merge(
+                $headers,
+                [
+                    'CONTENT_TYPE' => 'application/json',
+                    'HTTP_AUTHORIZATION' => sprintf(
+                        'Bearer %s',
+                        self::$jwtTokenizer->generateAccessToken(self::$userIdentity, $jwtPayload)
+                    ),
+                ]
+            )
+        );
     }
 
     /**
