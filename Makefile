@@ -1,12 +1,17 @@
-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app phpmetrics
-before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
+init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
+before-deploy: php-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+fix-linters: rector-fix php-cs-fix
+init-and-check: init before-deploy
+
+first-init: jwt-keys chmod-password-key init
 
 up: docker-up
-init-app: env-init composer-install database-create migrations-up fixtures
+init-app: env-init composer-install database-create migrations-up create-default-admin
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create make-migration-no-interaction migrations-up create-default-admin before-deploy docker-down-clear
+	composer-install database-create make-migration-no-interaction migrations-up create-default-admin \
+	before-deploy docker-down-clear
 
 make-migration-no-interaction:
 	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
@@ -17,6 +22,14 @@ consume:
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
+
+jwt-keys:
+	mkdir -p config/jwt
+	ssh-keygen -t rsa -b 4096 -m PEM -f ./config/jwt/jwtRS256.key
+	openssl rsa -in ./config/jwt/jwtRS256.key -pubout -outform PEM -out ./config/jwt/jwtRS256.key.pub
+
+chmod-password-key:
+	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
 
 create-default-admin:
 	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
@@ -33,6 +46,9 @@ docker-compose-override-init:
 cache-clear:
 	docker compose run --rm app-php-fpm php bin/console cache:clear
 	docker compose run --rm app-php-fpm php bin/console cache:warmup
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-metadata
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-query
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-result
 
 env-init:
 	docker compose run --rm app-php-fpm rm -f .env.local
@@ -104,8 +120,16 @@ php-stan:
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
-php-cs:
+rector-dry-run:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector --dry-run
+
+rector-fix:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector
+
+php-cs-fix:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix -v --using-cache=no
+
+php-cs-dry-run:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
 psalm:

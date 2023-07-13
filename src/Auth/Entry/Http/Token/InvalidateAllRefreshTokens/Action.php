@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Token\InvalidateAllRefreshTokens;
 
-use App\Auth\Security\RefreshTokenCache;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Infrastructure\Security\RefreshTokenCache;
+use App\Auth\Infrastructure\Security\UserIdentity;
+use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
+use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
+use IWD\Symfony\PresentationBundle\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
 
 class Action extends AbstractController
 {
@@ -51,7 +51,7 @@ class Action extends AbstractController
         RefreshTokenCache $refreshTokenCache,
         UserIdentity $user
     ): Response {
-        $refreshTokenCache->invalidateAll($user->getId());
+        $refreshTokenCache->invalidateAll($user->id);
 
         return $presenter->present(
             data: ApiFormatter::prepare(

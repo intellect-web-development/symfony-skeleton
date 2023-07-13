@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Client\Api\Action\Read;
 
-use App\Auth\Core\User\Domain\User;
+use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;
@@ -76,7 +76,7 @@ class Action
         Presenter $presenter,
         UserIdentity $userIdentity,
     ): Response {
-        if ($userIdentity->getId() !== $id) {
+        if ($userIdentity->id !== $id) {
             throw new AccessDeniedException('Access Denied.');
         }
         $query = new Query($id, User::class);

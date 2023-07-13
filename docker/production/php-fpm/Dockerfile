@@ -30,13 +30,9 @@ COPY ./docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/production/php/${run_env}/.env.local ./
 
 # Combine package installation commands
-RUN apk add --no-cache nodejs yarn \
+RUN apk add --no-cache \
     && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
-    && bin/console cache:clear \
-    && php bin/console assets:install \
-    && yarn \
-    && yarn encore prod \
-    && rm -rf node_modules
+    && bin/console cache:clear
 
 FROM php-fpm-base
 

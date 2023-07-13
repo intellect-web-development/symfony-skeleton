@@ -2,15 +2,15 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Auth\Core\User\Domain\User:
+        App\Auth\Domain\User\User:
             algorithm: auto
     providers:
         app_user_provider:
             entity:
-                class: App\Auth\Core\User\Domain\User
+                class: App\Auth\Domain\User\User
                 property: email
         main:
-            id: App\Auth\Security\UserProvider
+            id: App\Auth\Infrastructure\Security\UserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,9 +20,9 @@ security:
             security: true
             pattern: ^/api/token/invalidateAllRefreshTokens
             stateless: true
-            user_checker: App\Auth\Security\UserChecker
+            user_checker: App\Auth\Infrastructure\Security\UserChecker
             custom_authenticators:
-                - App\Auth\Security\TokenAuthenticator
+                - App\Auth\Infrastructure\Security\TokenAuthenticator
 
         token:
             security: false
@@ -33,17 +33,17 @@ security:
             security: true
             pattern: ^/api/client
             stateless: true
-            user_checker: App\Auth\Security\UserChecker
+            user_checker: App\Auth\Infrastructure\Security\UserChecker
             custom_authenticators:
-                - App\Auth\Security\TokenAuthenticator
+                - App\Auth\Infrastructure\Security\TokenAuthenticator
 
         admin:
             security: true
             pattern: ^/api/admin
             stateless: true
-            user_checker: App\Auth\Security\UserChecker
+            user_checker: App\Auth\Infrastructure\Security\UserChecker
             custom_authenticators:
-                - App\Auth\Security\TokenAuthenticator
+                - App\Auth\Infrastructure\Security\TokenAuthenticator
 
     access_control:
         - { path: ^/api/admin, roles: ROLE_ADMIN }

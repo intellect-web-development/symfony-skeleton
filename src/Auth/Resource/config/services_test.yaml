@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Auth\Infrastructure\Security\JWT:
+        public: true
+
+    App\Auth\Infrastructure\Security\JwtTokenizer:
+        public: true
+
+    App\Auth\Application\User\UseCase\Edit\Handler:
+        public: true
+
+    App\Auth\Application\User\UseCase\Delete\Handler:
+        public: true
+
+    App\Auth\Application\User\UseCase\ChangePassword\Handler:
+        public: true
