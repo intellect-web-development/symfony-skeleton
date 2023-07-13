@@ -6,8 +6,7 @@ namespace App\Auth\Domain\User;
 
 use App\Auth\Domain\User\ValueObject\Id;
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
@@ -16,14 +15,14 @@ class UserRepository extends EntityRepository
         parent::__construct($em, $em->getClassMetadata(User::class));
     }
 
-    public function add(ResourceInterface $resource): void
+    public function add(User $user): void
     {
-        $this->getEntityManager()->persist($resource);
+        $this->getEntityManager()->persist($user);
     }
 
-    public function remove(ResourceInterface $resource): void
+    public function remove(User $user): void
     {
-        $this->getEntityManager()->remove($resource);
+        $this->getEntityManager()->remove($user);
     }
 
     public function findById(Id $id): ?User

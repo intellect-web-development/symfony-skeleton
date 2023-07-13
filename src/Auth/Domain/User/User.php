@@ -11,7 +11,6 @@ use App\Common\Service\Core\AggregateRoot;
 use App\Common\Service\Core\EventsTrait;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: 'auth_users')]
 #[UniqueEntity(fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
-class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUserInterface, AggregateRoot
+class User implements UserInterface, PasswordAuthenticatedUserInterface, AggregateRoot
 {
     use EventsTrait;
 
