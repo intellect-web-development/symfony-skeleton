@@ -33,7 +33,7 @@ security:
                 path: admin_logout
                 target: admin_login
     access_control:
-        - { path: ^/api, roles: PUBLIC_ACCESS }
+        - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/metrics, roles: PUBLIC_ACCESS }
         - { path: ^/logout, roles: ROLE_ADMIN }

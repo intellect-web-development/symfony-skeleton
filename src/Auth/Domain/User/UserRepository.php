@@ -38,7 +38,7 @@ class UserRepository extends EntityRepository
     {
         $id = $this->getEntityManager()
             ->getConnection()
-            ->prepare('SELECT nextval(\'auth_user_id_seq\')')
+            ->prepare("SELECT nextval('auth_user_id_seq')")
             ->executeQuery()
             ->fetchOne();
 

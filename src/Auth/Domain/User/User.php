@@ -115,7 +115,7 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
 
     public function getUsername(): string
     {
-        return $this->getUserIdentifier();
+        return $this->email;
     }
 
     public function getRoles(): array

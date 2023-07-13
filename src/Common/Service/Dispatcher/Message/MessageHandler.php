@@ -19,7 +19,7 @@ readonly class MessageHandler
     public function __invoke(Message $message): void
     {
         $event = $message->getEvent();
-        $eventName = $event instanceof NamedEvent ? $event::getEventName() : get_class($event);
+        $eventName = $event instanceof NamedEvent ? $event::getEventName() : $event::class;
         $this->dispatcher->dispatch(
             $event,
             $eventName

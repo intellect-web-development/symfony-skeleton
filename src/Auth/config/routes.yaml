@@ -1,3 +1,0 @@
-auth_http:
-    resource: ../Application/Entry/Http/
-    type: annotation

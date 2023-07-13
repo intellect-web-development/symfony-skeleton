@@ -47,7 +47,7 @@ class AutocompleteType extends AbstractType
 
         $fieldName = $options['field_name'] ?? '';
 
-        $builder->add($fieldName, get_class($this->suggesters[$suggesterName]), [
+        $builder->add($fieldName, $this->suggesters[$suggesterName]::class, [
             'label' => $options['label'],
         ]);
     }
