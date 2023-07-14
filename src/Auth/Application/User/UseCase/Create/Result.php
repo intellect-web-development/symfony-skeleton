@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Application\User\UseCase\Delete\Result;
+namespace App\Auth\Application\User\UseCase\Create;
 
 use App\Auth\Domain\User\User;
 
@@ -19,9 +19,9 @@ class Result
         return new Result(case: ResultCase::Success, user: $user);
     }
 
-    public static function userNotExists(): self
+    public static function emailIsBusy(): self
     {
-        return new Result(case: ResultCase::UserNotExists);
+        return new Result(case: ResultCase::EmailIsBusy);
     }
 
     public function isSuccess(): bool
@@ -29,8 +29,8 @@ class Result
         return $this->case->isEqual(ResultCase::Success);
     }
 
-    public function isUserNotExists(): bool
+    public function isEmailIsBusy(): bool
     {
-        return $this->case->isEqual(ResultCase::UserNotExists);
+        return $this->case->isEqual(ResultCase::EmailIsBusy);
     }
 }

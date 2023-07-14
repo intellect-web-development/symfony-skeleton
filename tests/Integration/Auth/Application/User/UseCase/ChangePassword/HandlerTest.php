@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\ChangePassword;
 
 use App\Auth\Application\User\UseCase\ChangePassword\Command;
 use App\Auth\Application\User\UseCase\ChangePassword\Handler;
-use App\Auth\Application\User\UseCase\ChangePassword\Result\ResultCase;
+use App\Auth\Application\User\UseCase\ChangePassword\ResultCase;
 use App\Auth\Domain\User\ValueObject\Id;
 use App\Tests\Integration\IntegrationTestCase;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;

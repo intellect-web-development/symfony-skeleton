@@ -15,13 +15,19 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     public const SKELETON_PATHS = [
-        'Common/config',
+        'Common/Resource/config',
         'Auth/Resource/config',
     ];
     public const PATHS = ConfigPaths::PATHS;
 //    public const PATHS = [
 //        // You can move the paths here
 //    ];
+
+    public function __construct(string $environment, bool $debug)
+    {
+        date_default_timezone_set('Europe/Moscow');
+        parent::__construct($environment, $debug);
+    }
 
     protected function configureContainer(ContainerConfigurator $container): void
     {

@@ -10,12 +10,12 @@ services:
                 connection: default
 
     App\Common\:
-        resource: '../'
+        resource: '%kernel.project_dir%/src/Common/'
         exclude:
-            - '../config'
+            - '../Resource'
 
     App\Common\Entry\Http\:
-        resource: '../Entry/Http/'
+        resource: '%kernel.project_dir%/src/Common/Entry/Http/'
         tags: [ 'controller.service_arguments' ]
 
     App\Common\Service\Core\Flusher: ~
@@ -26,3 +26,7 @@ services:
     Symfony\Component\Serializer\SerializerInterface:
         factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
 
+    app.menu_builder:
+        class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder
+        arguments:
+            $factory: "@knp_menu.factory"

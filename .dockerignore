@@ -2,6 +2,7 @@
 .git
 .gitignore
 /.idea
+/.deploy
 /vendor
 /var/cache/*
 /var/log/*

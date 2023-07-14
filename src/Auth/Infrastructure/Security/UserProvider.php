@@ -11,13 +11,11 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserProvider implements UserProviderInterface
+readonly class UserProvider implements UserProviderInterface
 {
-    private readonly UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private UserRepository $userRepository
+    ) {
     }
 
     public function refreshUser(UserInterface $user): UserInterface
