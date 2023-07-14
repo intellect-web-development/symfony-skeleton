@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\User\UseCase\Delete;
 
-use App\Auth\Application\User\UseCase\Delete\Result\Result;
 use App\Auth\Domain\User\UserRepository;
 use App\Common\Service\Core\Flusher;
 
-class Handler
+final readonly class Handler
 {
     public function __construct(
-        private readonly Flusher $flusher,
-        private readonly UserRepository $userRepository,
+        private Flusher $flusher,
+        private UserRepository $userRepository,
     ) {
     }
 

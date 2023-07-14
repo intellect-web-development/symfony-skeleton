@@ -22,11 +22,10 @@
         </div>
     </div>
 
-
 {{ sonata_block_render_event(event_prefix ~ '.after_header', {'resource': resource}) }}
 
     <div class="ui segment">
-        {{ form_start(form, {'action': path(configuration.vars.route.name|default(configuration.getRouteName('create')), configuration.vars.route.parameters|default({})), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+        {{ form_start(form, {'action': path(configuration.vars.route.name|default(self_route ?? configuration.getRouteName('create')), configuration.vars.route.parameters|default({})), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
         {% if configuration.vars.templates.create is defined %}
             {% include configuration.vars.templates.create %}
             {{ form_row(form._token) }}
@@ -40,7 +39,6 @@
         {{ sonata_block_render_event(event_prefix ~ '.form', {'resource': resource}) }}
 
         {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
-
 
         {{ form_end(form, {'render_rest': false}) }}
     </div>
