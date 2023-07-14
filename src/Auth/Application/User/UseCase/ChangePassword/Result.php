@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Application\User\UseCase\ChangePassword\Result;
+namespace App\Auth\Application\User\UseCase\ChangePassword;
 
 use App\Auth\Domain\User\User;
 

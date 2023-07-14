@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\Create;
 
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
-use App\Auth\Application\User\UseCase\Create\Result\ResultCase;
+use App\Auth\Application\User\UseCase\Create\ResultCase;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\Id;
 use App\Tests\Integration\IntegrationTestCase;

@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Application\User\UseCase\Edit\Result;
+namespace App\Auth\Application\User\UseCase\ChangePassword;
 
 enum ResultCase
 {
     case Success;
-    case EmailIsBusy;
-    case UserNotExists;
+    case InvalidCredentials;
 
     public function isEqual(self $enum): bool
     {
