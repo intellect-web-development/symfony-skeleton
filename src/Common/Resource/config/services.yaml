@@ -25,8 +25,3 @@ services:
 
     Symfony\Component\Serializer\SerializerInterface:
         factory: [ 'App\Common\Container\SerializerFactory', 'create' ]
-
-    app.menu_builder:
-        class: App\Common\Entry\Http\Admin\Menu\MainMenuBuilder
-        arguments:
-            $factory: "@knp_menu.factory"
