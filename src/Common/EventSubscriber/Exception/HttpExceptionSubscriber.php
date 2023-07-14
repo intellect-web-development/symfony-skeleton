@@ -49,7 +49,7 @@ class HttpExceptionSubscriber
             $this->logger->warning(
                 sprintf(
                     'Failed deserialize request to InputContract. Payload: %s, Error: %s',
-                    json_encode($exception->getPayload()),
+                    json_encode($exception->getPayload(), JSON_THROW_ON_ERROR),
                     $exception->getPrevious()?->getMessage()
                 )
             );

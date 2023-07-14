@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Application\User\UseCase\Edit\Result;
+namespace App\Auth\Application\User\UseCase\Edit;
 
 use App\Auth\Domain\User\User;
 

@@ -6,12 +6,12 @@ namespace App\Auth\Application\User\UseCase\ChangePassword;
 
 use App\Auth\Domain\User\ValueObject\Id;
 
-class Command
+final readonly class Command
 {
     public function __construct(
-        public readonly Id $id,
-        public readonly string $newPassword,
-        public readonly string $oldPassword,
+        public Id $id,
+        public string $newPassword,
+        public string $oldPassword,
     ) {
     }
 }
