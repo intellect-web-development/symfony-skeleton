@@ -10,12 +10,12 @@ services:
                 connection: default
 
     App\Auth\:
-        resource: '../../'
+        resource: '%kernel.project_dir%/src/Auth/'
         exclude:
             - '../Resource'
 
     App\Auth\Entry\Http\:
-        resource: '../../Entry/Http/'
+        resource: '%kernel.project_dir%/src/Auth/Entry/Http/'
         tags: [ 'controller.service_arguments' ]
 
     Symfony\Component\Security\Core\User\UserProviderInterface:

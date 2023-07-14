@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\Delete;
 
 use App\Auth\Application\User\UseCase\Delete\Command;
 use App\Auth\Application\User\UseCase\Delete\Handler;
-use App\Auth\Application\User\UseCase\Delete\Result\ResultCase;
+use App\Auth\Application\User\UseCase\Delete\ResultCase;
 use App\Auth\Domain\User\UserRepository;
 use App\Auth\Domain\User\ValueObject\Id;
 use App\Tests\Integration\IntegrationTestCase;

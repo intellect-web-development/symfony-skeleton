@@ -6,12 +6,12 @@ namespace App\Auth\Application\User\UseCase\Edit;
 
 use App\Auth\Domain\User\ValueObject\Id;
 
-class Command
+final readonly class Command
 {
     public function __construct(
-        public readonly Id $id,
-        public readonly ?string $name,
-        public readonly ?string $email,
+        public Id $id,
+        public ?string $name,
+        public ?string $email,
     ) {
     }
 }
