@@ -57,7 +57,7 @@ class UserController extends ResourceController
         }
 
         return $this->render(
-            'admin/layout/crud/create.html.twig',
+            '@app/admin/layout/crud/create.html.twig',
             [
                 'metadata' => $this->metadata,
                 'form' => $form->createView(),
@@ -112,7 +112,7 @@ class UserController extends ResourceController
         }
 
         return $this->render(
-            'admin/auth/user/update.html.twig',
+            '@auth/admin/user/update.html.twig',
             [
                 'metadata' => $this->metadata,
                 'form' => $form->createView(),
@@ -221,7 +221,7 @@ class UserController extends ResourceController
             return $this->redirectToRoute('app_user_account');
         }
 
-        return $this->render('admin/auth/user/account.html.twig', [
+        return $this->render('@auth/admin/user/account.html.twig', [
             'configuration' => $configuration,
             'metadata' => $this->metadata,
             'resource' => $user,

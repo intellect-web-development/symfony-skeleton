@@ -1,19 +1,19 @@
-{% extends 'admin/layout/sylius.html.twig' %}
+{% extends '@app/admin/layout/sylius.html.twig' %}
 
 {% set header = configuration.vars.header|default(metadata.applicationName~'.admin.ui.new_'~metadata.name) %}
 {% set event_prefix = metadata.applicationName ~ '.admin.' ~ metadata.name ~ '.create' %}
 
 {% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
 
-{% form_theme form 'admin/layout/form.html.twig' %}
+{% form_theme form '@app/admin/layout/form.html.twig' %}
 
 {% block content %}
 {{ sonata_block_render_event(event_prefix ~ '.before_header', {'resource': resource}) }}
 
     <div class="ui stackable two column grid">
         <div class="column">
-            {% include configuration.vars.templates.header_title|default('admin/layout/crud/create/_header_title.html.twig') %}
-            {% include configuration.vars.templates.breadcrumb|default('admin/layout/crud/create/_breadcrumb.html.twig') %}
+            {% include configuration.vars.templates.header_title|default('@app/admin/layout/crud/create/_header_title.html.twig') %}
+            {% include configuration.vars.templates.breadcrumb|default('@app/admin/layout/crud/create/_breadcrumb.html.twig') %}
 
             {{ sonata_block_render_event(event_prefix ~ '.header', {'resource': resource}) }}
         </div>

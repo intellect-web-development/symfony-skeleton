@@ -8,7 +8,7 @@ app_user:
         vars:
             all:
                 templates:
-                    show: "admin/auth/user/show.html.twig"
+                    show: "@auth/admin/user/show.html.twig"
             index:
                 icon: 'icon users'
     type: sylius.resource

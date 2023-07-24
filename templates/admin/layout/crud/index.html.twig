@@ -1,4 +1,4 @@
-{% extends 'admin/layout/sylius.html.twig' %}
+{% extends '@app/admin/layout/sylius.html.twig' %}
 
 {% set definition = resources.definition %}
 {% set data = resources.data %}
@@ -13,8 +13,8 @@
 
     <div class="ui stackable two column grid">
         <div class="column">
-            {% include configuration.vars.templates.header_title|default('admin/layout/crud/index/_header_title.html.twig') %}
-            {% include configuration.vars.templates.breadcrumb|default('admin/layout/crud/index/_breadcrumb.html.twig') %}
+            {% include configuration.vars.templates.header_title|default('@app/admin/layout/crud/index/_header_title.html.twig') %}
+            {% include configuration.vars.templates.breadcrumb|default('@app/admin/layout/crud/index/_breadcrumb.html.twig') %}
 
             {{ sonata_block_render_event(event_prefix ~ '.header', {'resources': resources}) }}
         </div>
@@ -34,7 +34,7 @@
 
     {{ sonata_block_render_event(event_prefix ~ '.after_header', {'resources': resources}) }}
 
-    {{ sylius_grid_render(resources, 'admin/layout/crud/grid.html.twig') }}
+    {{ sylius_grid_render(resources, '@app/admin/layout/crud/grid.html.twig') }}
 
     {{ sonata_block_render_event(event_prefix ~ '.after_content', {'resources': resources}) }}
 {% endblock %}
