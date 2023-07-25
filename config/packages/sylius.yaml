@@ -34,3 +34,4 @@ sylius_grid:
             uuid: "@app/admin/layout/grid/filter/uuid.html.twig"
             like: "@app/admin/layout/grid/filter/like.html.twig"
             autocomplete: "@app/admin/layout/grid/filter/autocomplete.html.twig"
+            measurement: "@app/admin/layout/grid/filter/measurement.html.twig"
