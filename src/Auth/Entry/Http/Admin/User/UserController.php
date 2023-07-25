@@ -13,7 +13,7 @@ use App\Auth\Application\User\UseCase\Delete\Handler as DeleteHandler;
 use App\Auth\Application\User\UseCase\Edit\Command as EditCommand;
 use App\Auth\Application\User\UseCase\Edit\Handler as EditHandler;
 use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Auth\Entry\Http\Admin\User\Form\ChangePasswordType;
 use App\Auth\Entry\Http\Admin\User\Form\CreateUserType;
 use App\Auth\Entry\Http\Admin\User\Form\MainInfoType;
@@ -134,7 +134,7 @@ class UserController extends ResourceController
     ): Response {
         $result = $handler->handle(
             new DeleteCommand(
-                id: new Id($id)
+                id: new UserId($id)
             )
         );
         if ($result->isUserNotExists()) {

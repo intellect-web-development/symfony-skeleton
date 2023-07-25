@@ -8,7 +8,7 @@ use App\Auth\Application\User\UseCase\Delete\Command;
 use App\Auth\Application\User\UseCase\Delete\Handler;
 use App\Auth\Application\User\UseCase\Delete\ResultCase;
 use App\Auth\Domain\User\UserRepository;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
 
 /** @covers \App\Auth\Application\User\UseCase\Delete\Handler */
@@ -35,7 +35,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
             )
         );
         self::assertTrue(
@@ -50,7 +50,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                id: new Id('100000'),
+                id: new UserId('100000'),
             )
         );
         self::assertTrue(

@@ -8,7 +8,7 @@ use App\Auth\Application\User\UseCase\Edit\Command;
 use App\Auth\Application\User\UseCase\Edit\Handler;
 use App\Auth\Application\User\UseCase\Edit\ResultCase;
 use App\Auth\Domain\User\UserRepository;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
 
 /** @covers \App\Auth\Application\User\UseCase\Edit\Handler */
@@ -33,7 +33,7 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWithNullPayloadWhenSuccess(): void
     {
-        $user = self::$userRepository->findById($wallId = new Id(Fixture::ID));
+        $user = self::$userRepository->findById($wallId = new UserId(Fixture::ID));
         self::assertNotNull($user);
         $expectedName = $user->getName();
         $expectedEmail = $user->getEmail();
@@ -49,7 +49,7 @@ class HandlerTest extends IntegrationTestCase
             $result->case->isEqual(ResultCase::Success)
         );
         self::assertNotNull($result->user);
-        self::assertInstanceOf(Id::class, $result->user->getId());
+        self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($expectedName, $result->user->getName());
         self::assertSame($expectedEmail, $result->user->getEmail());
     }
@@ -58,7 +58,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
                 name: self::$faker->name() . self::$faker->sha1(),
                 email: self::$faker->email() . self::$faker->sha1()
             )
@@ -67,7 +67,7 @@ class HandlerTest extends IntegrationTestCase
             $result->case->isEqual(ResultCase::Success)
         );
         self::assertNotNull($result->user);
-        self::assertInstanceOf(Id::class, $result->user->getId());
+        self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
     }
@@ -76,7 +76,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                id: new Id('100000'),
+                id: new UserId('100000'),
                 name: self::$faker->name() . self::$faker->sha1(),
                 email: self::$faker->email() . self::$faker->sha1()
             )
@@ -91,7 +91,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
                 name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::SELF_EMAIL,
             )
@@ -100,7 +100,7 @@ class HandlerTest extends IntegrationTestCase
             $result->case->isEqual(ResultCase::Success)
         );
         self::assertNotNull($result->user);
-        self::assertInstanceOf(Id::class, $result->user->getId());
+        self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
     }
@@ -109,7 +109,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
                 name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::BUSY_EMAIL,
             )

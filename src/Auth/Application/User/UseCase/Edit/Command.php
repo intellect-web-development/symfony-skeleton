@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\User\UseCase\Edit;
 
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 
 final readonly class Command
 {
     public function __construct(
-        public Id $id,
+        public UserId $id,
         public ?string $name,
         public ?string $email,
     ) {

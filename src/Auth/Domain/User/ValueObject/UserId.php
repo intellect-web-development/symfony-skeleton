@@ -6,10 +6,10 @@ namespace App\Auth\Domain\User\ValueObject;
 
 use Webmozart\Assert\Assert;
 
-class Id
+readonly class UserId
 {
     public function __construct(
-        private readonly string $value
+        private string $value
     ) {
         Assert::notEmpty($value);
     }
