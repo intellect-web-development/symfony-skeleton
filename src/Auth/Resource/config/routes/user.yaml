@@ -1,6 +1,6 @@
 app_user:
     resource: |
-        path: users
+        path: auth/users
         alias: app.user
         only: ['index', 'show']
         redirect: show
@@ -8,7 +8,7 @@ app_user:
         vars:
             all:
                 templates:
-                    show: "@auth/admin/user/show.html.twig"
+                    show: '@auth/admin/user/show.html.twig'
             index:
                 icon: 'icon users'
     type: sylius.resource
