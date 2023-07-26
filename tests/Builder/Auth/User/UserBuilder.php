@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Builder\Auth\User;
 
 use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Builder\AbstractBuilder;
 use DateTimeImmutable;
 
 class UserBuilder extends AbstractBuilder
 {
-    protected Id $id;
+    protected UserId $id;
     protected DateTimeImmutable $createdAt;
     protected DateTimeImmutable $updatedAt;
     protected string $email;
@@ -37,7 +37,7 @@ class UserBuilder extends AbstractBuilder
     {
         $payload = [];
 
-        $payload['id'] = new Id((string) self::$faker->numberBetween(100000, 999999));
+        $payload['id'] = new UserId((string) self::$faker->numberBetween(100000, 999999));
         $payload['createdAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
         $payload['updatedAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
         $payload['email'] = self::$faker->email();
@@ -48,7 +48,7 @@ class UserBuilder extends AbstractBuilder
         return $payload;
     }
 
-    public function withId(Id $id): self
+    public function withId(UserId $id): self
     {
         $clone = clone $this;
         $clone->id = $id;

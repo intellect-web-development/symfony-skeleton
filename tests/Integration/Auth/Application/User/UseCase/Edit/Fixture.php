@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Auth\Application\User\UseCase\Edit;
 
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Builder\Auth\User\UserBuilder;
 use App\Tests\Tools\TestFixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,7 +18,7 @@ class Fixture extends TestFixture
     public function load(ObjectManager $manager): void
     {
         $user = (new UserBuilder())
-            ->withId(new Id(self::ID))
+            ->withId(new UserId(self::ID))
             ->withEmail(self::SELF_EMAIL)
             ->build();
         $otherUser = (new UserBuilder())

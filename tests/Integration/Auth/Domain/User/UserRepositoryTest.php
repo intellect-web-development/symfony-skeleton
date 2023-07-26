@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Domain\User;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\UserRepository;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Builder\Auth\User\UserBuilder;
 use App\Tests\Integration\IntegrationTestCase;
 
@@ -42,7 +42,7 @@ class UserRepositoryTest extends IntegrationTestCase
     {
         $id = self::$userRepository->nextId();
 
-        self::assertInstanceOf(Id::class, $id);
+        self::assertInstanceOf(UserId::class, $id);
         self::assertEquals(
             (int) $id->getValue() + 1,
             (int) self::$userRepository->nextId()->getValue()
@@ -66,7 +66,7 @@ class UserRepositoryTest extends IntegrationTestCase
     public function testRemove(): void
     {
         $user = self::$userRepository->findById(
-            new Id(CommonFixture::ID)
+            new UserId(CommonFixture::ID)
         );
         self::assertEquals(
             expected: CommonFixture::ID,
@@ -80,7 +80,7 @@ class UserRepositoryTest extends IntegrationTestCase
 
         self::assertNull(
             actual: self::$userRepository->findById(
-                new Id(CommonFixture::ID)
+                new UserId(CommonFixture::ID)
             )
         );
     }
@@ -90,14 +90,14 @@ class UserRepositoryTest extends IntegrationTestCase
         self::assertEquals(
             expected: CommonFixture::ID,
             actual: self::$userRepository->findById(
-                new Id(CommonFixture::ID)
+                new UserId(CommonFixture::ID)
             )?->getId()->getValue()
         );
     }
 
     public function testFindByIdThenNull(): void
     {
-        $id = new Id(
+        $id = new UserId(
             (string) self::$faker->numberBetween(
                 '1000000',
                 '2000000',
