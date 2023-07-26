@@ -31,7 +31,7 @@ class MainInfoType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Email(),
-                    new NotBlank(),
+                    new NotBlank(allowNull: false),
                     new Length(max: 255),
                 ],
                 'empty_data' => '',

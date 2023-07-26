@@ -1,12 +1,12 @@
-{% extends 'admin/layout/crud/show.html.twig' %}
+{% extends '@app/admin/layout/crud/show.html.twig' %}
 
 {% block content %}
     {{ sonata_block_render_event(event_prefix ~ '.before_header', {'resource': resource}) }}
 
     <div class="ui stackable two column grid">
         <div class="column">
-            {% include configuration.vars.templates.header_title|default('admin/layout/crud/show/_header_title.html.twig') %}
-            {% include configuration.vars.templates.breadcrumb|default('admin/layout/crud/show/_breadcrumb.html.twig') %}
+            {% include configuration.vars.templates.header_title|default('@app/admin/layout/crud/show/_header_title.html.twig') %}
+            {% include configuration.vars.templates.breadcrumb|default('@app/admin/layout/crud/show/_breadcrumb.html.twig') %}
 
             {{ sonata_block_render_event(event_prefix ~ '.header', {'resource': resource}) }}
         </div>
@@ -17,7 +17,7 @@
 
     {{ sonata_block_render_event(event_prefix ~ '.after_header', {'resource': resource}) }}
 
-    {% form_theme form 'admin/layout/form.html.twig' %}
+    {% form_theme form '@app/admin/layout/form.html.twig' %}
 
     <div class="ui segment">
         {% block top_buttons %}{% endblock %}

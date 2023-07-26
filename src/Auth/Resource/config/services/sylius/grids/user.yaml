@@ -9,10 +9,10 @@ sylius_grid:
             fields:
                 id:
                     type: twig
-                    label: app.admin.ui.show_user
+                    label: app.admin.ui.id
                     sortable: ~
                     options:
-                        template: admin/auth/user/link-to-show.html.twig
+                        template: '@auth/admin/user/link-to-show.html.twig'
                 createdAt:
                     type: datetime
                     label: app.admin.ui.modules.auth.user.properties.created_at

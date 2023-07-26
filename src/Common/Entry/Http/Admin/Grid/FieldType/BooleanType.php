@@ -19,8 +19,8 @@ use Twig\Environment;
 )]
 class BooleanType implements FieldTypeInterface
 {
-    private const TEMPLATE = 'admin/layout/grid/field/boolean.html.twig';
-    private const TEMPLATE_INVERSE = 'admin/layout/grid/field/boolean_inverse.html.twig';
+    private const TEMPLATE = '@app/admin/layout/grid/field/boolean.html.twig';
+    private const TEMPLATE_INVERSE = '@app/admin/layout/grid/field/boolean_inverse.html.twig';
 
     /**
      * BooleanFieldType constructor.

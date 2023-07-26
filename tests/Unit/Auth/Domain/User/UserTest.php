@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Auth\Domain\User;
 
 use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Builder\Auth\User\UserBuilder;
 use App\Tests\Unit\UnitTestCase;
 use DateTimeImmutable;
@@ -18,7 +18,7 @@ class UserTest extends UnitTestCase
     public function testConstruct(): void
     {
         $user = new User(
-            id: $id = new Id((string) self::$faker->numberBetween(1)),
+            id: $id = new UserId((string) self::$faker->numberBetween(1)),
             createdAt: $createdAt = new DateTimeImmutable(self::$faker->dateTime()->format(DATE_ATOM)),
             updatedAt: $updatedAt = new DateTimeImmutable(self::$faker->dateTime()->format(DATE_ATOM)),
         );
@@ -30,7 +30,7 @@ class UserTest extends UnitTestCase
     public function testCreate(): void
     {
         $user = User::create(
-            id: $id = new Id((string) self::$faker->numberBetween(1)),
+            id: $id = new UserId((string) self::$faker->numberBetween(1)),
             createdAt: $createdAt = new DateTimeImmutable(self::$faker->dateTime()->format(DATE_ATOM)),
             updatedAt: $updatedAt = new DateTimeImmutable(self::$faker->dateTime()->format(DATE_ATOM)),
             email: $email = self::$faker->email(),
@@ -70,7 +70,7 @@ class UserTest extends UnitTestCase
 
     public function testGetId(): void
     {
-        $expected = new Id((string) self::$faker->numberBetween(1));
+        $expected = new UserId((string) self::$faker->numberBetween(1));
         $user = (new UserBuilder())->withId($expected)->build();
         self::assertSame($expected, $user->getId());
     }

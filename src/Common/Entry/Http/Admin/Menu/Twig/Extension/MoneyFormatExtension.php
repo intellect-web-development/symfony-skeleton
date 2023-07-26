@@ -10,7 +10,7 @@ use Twig\TwigFilter;
 
 class MoneyFormatExtension extends AbstractExtension
 {
-    private const TEMPLATE = 'admin/layout/crud/show/_money.html.twig';
+    private const TEMPLATE = '@app/admin/layout/crud/show/_money.html.twig';
     private const AVAILABLE_POSITIONS = [
         'left',
         'right',

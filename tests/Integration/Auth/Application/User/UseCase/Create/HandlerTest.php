@@ -8,7 +8,7 @@ use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
 use App\Auth\Application\User\UseCase\Create\ResultCase;
 use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
@@ -45,7 +45,7 @@ class HandlerTest extends IntegrationTestCase
             $result->case->isEqual(ResultCase::Success)
         );
         self::assertNotNull($result->user);
-        self::assertInstanceOf(Id::class, $result->user->getId());
+        self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
         self::assertSame([User::ROLE_ADMIN], $result->user->getRoles());
