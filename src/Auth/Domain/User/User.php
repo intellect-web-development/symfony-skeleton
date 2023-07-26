@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\Domain\User;
 
 use App\Auth\Domain\User\Event\UserCreatedEvent;
-use App\Auth\Domain\User\Type\IdType;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\Type\UserIdType;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Common\Service\Core\AggregateRoot;
 use App\Common\Service\Core\EventsTrait;
 use DateTimeImmutable;
@@ -27,8 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     #[ORM\Id]
-    #[ORM\Column(type: IdType::NAME, nullable: false)]
-    private Id $id;
+    #[ORM\Column(type: UserIdType::NAME, nullable: false)]
+    private UserId $id;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
     private string $name;
 
     public function __construct(
-        Id $id,
+        UserId $id,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
     ) {
@@ -67,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
     }
 
     public static function create(
-        Id $id,
+        UserId $id,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
         string $email,
@@ -97,7 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
         $this->password = $password;
     }
 
-    public function getId(): Id
+    public function getId(): UserId
     {
         return $this->id;
     }

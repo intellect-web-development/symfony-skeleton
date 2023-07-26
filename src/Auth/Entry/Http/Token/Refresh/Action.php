@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Auth\Entry\Http\Token\Refresh;
 
 use App\Auth\Domain\User\UserRepository;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Auth\Entry\Http\Token\TokenOutputContract;
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
@@ -74,7 +74,7 @@ class Action extends AbstractController
                 throw new DomainException('Token is not valid', 400);
             }
 
-            $user = $userRepository->findById(new Id($userId));
+            $user = $userRepository->findById(new UserId($userId));
             if (null === $user) {
                 throw new DomainException('User not found', 400);
             }

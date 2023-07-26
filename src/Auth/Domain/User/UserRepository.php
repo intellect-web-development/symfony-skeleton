@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\User;
 
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -25,7 +25,7 @@ class UserRepository extends EntityRepository
         $this->getEntityManager()->remove($user);
     }
 
-    public function findById(Id $id): ?User
+    public function findById(UserId $id): ?User
     {
         /** @var User|null $user */
         $user = $this->findOneBy(['id' => $id]);
@@ -33,7 +33,7 @@ class UserRepository extends EntityRepository
         return $user;
     }
 
-    public function nextId(): Id
+    public function nextId(): UserId
     {
         $id = $this->getEntityManager()
             ->getConnection()
@@ -41,7 +41,7 @@ class UserRepository extends EntityRepository
             ->executeQuery()
             ->fetchOne();
 
-        return new Id((string) $id);
+        return new UserId((string) $id);
     }
 
     public function hasByEmail(string $email): bool

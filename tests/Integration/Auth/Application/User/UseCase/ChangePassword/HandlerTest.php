@@ -7,7 +7,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\ChangePassword;
 use App\Auth\Application\User\UseCase\ChangePassword\Command;
 use App\Auth\Application\User\UseCase\ChangePassword\Handler;
 use App\Auth\Application\User\UseCase\ChangePassword\ResultCase;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
@@ -35,7 +35,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
                 newPassword: self::$faker->password(),
                 oldPassword: Fixture::PASSWORD
             )
@@ -56,7 +56,7 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                id: new Id(Fixture::ID),
+                id: new UserId(Fixture::ID),
                 newPassword: self::$faker->password(),
                 oldPassword: self::$faker->password() . self::$faker->sha1()
             )

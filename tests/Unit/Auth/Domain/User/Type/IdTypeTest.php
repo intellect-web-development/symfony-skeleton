@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Auth\Domain\User\Type;
 
-use App\Auth\Domain\User\Type\IdType;
-use App\Auth\Domain\User\ValueObject\Id;
+use App\Auth\Domain\User\Type\UserIdType;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Unit\UnitTestCase;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-/** @covers \App\Auth\Domain\User\Type\IdType */
+/** @covers \App\Auth\Domain\User\Type\UserIdType */
 class IdTypeTest extends UnitTestCase
 {
     public function testConvertToPHPValueSuccess(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
+        $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
         $value = '708';
 
-        /** @var Id|null $phpValue */
+        /** @var UserId|null $phpValue */
         $phpValue = $idType->convertToPHPValue($value, $abstractPlatformMock);
 
         self::assertSame($value, $phpValue?->getValue());
-        self::assertInstanceOf(Id::class, $phpValue);
+        self::assertInstanceOf(UserId::class, $phpValue);
     }
 
     public function testConvertToPHPValueWithEmptyValue(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
+        $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
 
         self::assertNull(
@@ -40,9 +40,9 @@ class IdTypeTest extends UnitTestCase
     public function testConvertToDatabaseValueSuccess(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
+        $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
-        $value = new Id('697');
+        $value = new UserId('697');
 
         $convertedDatabaseValue = $idType->convertToDatabaseValue($value, $abstractPlatformMock);
         self::assertSame($value->getValue(), $convertedDatabaseValue);
@@ -51,7 +51,7 @@ class IdTypeTest extends UnitTestCase
     public function testConvertToDatabaseValueWithEmptyValue(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
+        $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
 
         self::assertNull(
@@ -62,14 +62,14 @@ class IdTypeTest extends UnitTestCase
     public function testGetName(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
-        self::assertSame(IdType::NAME, $idType->getName());
+        $idType = new UserIdType();
+        self::assertSame(UserIdType::NAME, $idType->getName());
     }
 
     public function testRequiresSQLCommentHint(): void
     {
         /** @psalm-suppress InternalMethod */
-        $idType = new IdType();
+        $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
         self::assertTrue(
             $idType->requiresSQLCommentHint($abstractPlatformMock)
