@@ -23,6 +23,7 @@ class ChangePasswordType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new UserPassword(),
+                    new NotBlank(allowNull: false),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [

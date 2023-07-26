@@ -1,3 +1,6 @@
+sylius:
+  ui:
+    administration: Main
 app:
     admin:
         ui:

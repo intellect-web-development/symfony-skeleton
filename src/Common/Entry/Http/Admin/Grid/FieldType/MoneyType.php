@@ -19,7 +19,7 @@ use Twig\Environment;
 )]
 class MoneyType implements FieldTypeInterface
 {
-    private const TEMPLATE = 'admin/layout/grid/field/money.html.twig';
+    private const TEMPLATE = '@app/admin/layout/grid/field/money.html.twig';
 
     public function __construct(
         private readonly DataExtractorInterface $dataExtractor,

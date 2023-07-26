@@ -31,5 +31,5 @@ docker-login:
 ping-host:
 	ansible all -i hosts.yml -u ${DEPLOY_USERNAME} -m ping
 
-ad-hoc-command:
+check-nginx:
 	ansible all -i hosts.yml -u ${DEPLOY_USERNAME} -m command -a 'systemctl status nginx'
