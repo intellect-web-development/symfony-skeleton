@@ -6,6 +6,7 @@ init-and-check: init before-deploy
 first-init: jwt-keys chmod-password-key init
 
 up: docker-up
+down: docker-down
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
 
