@@ -178,6 +178,7 @@ class UserController extends ResourceController
                     id: $user->getId(),
                     name: $payload['name'],
                     email: $payload['email'],
+                    role: $payload['role']
                 )
             );
             if ($result->isEmailIsBusy()) {
