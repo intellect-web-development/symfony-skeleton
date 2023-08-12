@@ -14,6 +14,7 @@ app:
                             updated_at: Updated at
                             password: Password
                             name: Name
+                            role: Role
                             email: Email
                         flash:
                             error_user_not_exists: User not exists
@@ -28,6 +29,10 @@ app:
                             change_password: Change password
                         other_labels:
                             old_password: Old password
+                        enums:
+                            role:
+                              user: User
+                              admin: Admin
             menu:
                 main:
                     auth:

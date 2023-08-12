@@ -14,6 +14,7 @@ app:
                             updated_at: Дата обновления
                             password: Пароль
                             name: Имя
+                            role: Роль
                             email: Email
                         flash:
                             error_user_not_exists: Пользователь не существует
@@ -28,6 +29,10 @@ app:
                             change_password: Изменить пароль
                         other_labels:
                             old_password: Старый пароль
+                        enums:
+                            role:
+                              user: Пользователь
+                              admin: Администратор
             menu:
                 main:
                     auth:

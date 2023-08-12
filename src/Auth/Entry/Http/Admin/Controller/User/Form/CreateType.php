@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Entry\Http\Admin\User\Form;
+namespace App\Auth\Entry\Http\Admin\Controller\User\Form;
 
+use App\Auth\Domain\User\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -14,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CreateUserType extends AbstractType
+class CreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -63,6 +65,19 @@ class CreateUserType extends AbstractType
                         ]),
                     ],
                 ],
+            ])
+            ->add('role', ChoiceType::class, [
+                'required' => true,
+                'label' => 'app.admin.ui.modules.auth.user.properties.role',
+                'choices' => [
+                    'app.admin.ui.modules.auth.user.enums.role.user' => User::ROLE_USER,
+                    'app.admin.ui.modules.auth.user.enums.role.admin' => User::ROLE_ADMIN,
+                ],
+                'constraints' => [
+                    new NotBlank(allowNull: false),
+                ],
+                'empty_data' => '',
+                'autocomplete' => true,
             ])
         ;
     }

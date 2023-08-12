@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Entry\Http\Admin\User\Form;
+namespace App\Auth\Entry\Http\Admin\Controller\User\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
