@@ -22,10 +22,6 @@
         {{ sonata_block_render_event('sylius.admin.layout.stylesheets') }}
         <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
     {% endblock %}
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
 </head>
 
 <body data-controller="main" class="pushable">
@@ -129,6 +125,9 @@
 
 {% include '@SyliusUi/Modal/_confirmation.html.twig' %}
 
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>
 
