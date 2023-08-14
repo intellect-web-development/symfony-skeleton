@@ -2,8 +2,8 @@ app:
     admin:
         ui:
             users: Пользователи
-            new_user: Добавить Пользователя
-            edit_user: Редактировать Пользователя
+            new_user: Добавить пользователя
+            edit_user: Редактировать пользователя
             show_user: Пользователь
             modules:
                 auth:
