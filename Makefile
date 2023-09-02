@@ -178,8 +178,3 @@ docker-build:
 
 phpmetrics:
 	docker compose run --rm app-php-fpm php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
-
-test-ci:
-	docker compose -f docker-compose-test.yml pull
-	make init
-	make before-deploy
