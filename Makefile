@@ -182,3 +182,18 @@ phpmetrics:
 init-assets:
 	docker compose run node sh -c "yarn"
 	docker compose run node sh -c "yarn encore dev"
+
+test-ci:
+	docker compose -f docker-compose-test.yml pull
+	docker compose -f docker-compose-test.yml up --build -d
+	docker compose run --rm app-php-fpm rm -f .env.test.local
+	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
+	docker compose run --rm app-php-fpm composer install
+	docker compose run --rm app-php-fpm php bin/console assets:install
+	docker compose run --rm app-php-fpm sh -c "yarn"
+	docker compose run --rm app-php-fpm sh -c "yarn encore prod"
+	make database-create
+	make migrations-up
+	make make-migration-no-interaction
+	make migrations-up
+	make before-deploy
