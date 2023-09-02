@@ -1,55 +1,87 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine AS php-fpm-base
-
-# Combine package installation commands and configure and install PHP extensions
-RUN apk add --update linux-headers \
-    postgresql-dev bash coreutils libmcrypt-dev git autoconf libpng-dev g++ pcre-dev $PHPIZE_DEPS rabbitmq-c-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql sockets intl bcmath opcache gd \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini \
-    && pecl install redis \
-    && docker-php-ext-enable redis.so \
-    && mkdir -p /usr/src/php/ext/amqp \
-    && curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 \
-    && docker-php-ext-install amqp
-
-FROM php-fpm-base AS builder
-
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-# composer
-RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --2
+FROM --platform=linux/amd64 node:14 as node
 
 WORKDIR /app
 
+FROM --platform=linux/amd64 php:8.2-fpm as base
+
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y unzip git libfcgi0ldbl gettext
+
+# php-opcache
+RUN docker-php-ext-install opcache \
+    && docker-php-ext-enable opcache
+
+# php-pgsql
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
+
+# php-gd
+RUN apt-get install -y libpng-dev \
+    && docker-php-ext-install gd
+
+# php-intl
+RUN apt-get install -y libicu-dev \
+    && docker-php-ext-install intl
+
+# php-zip
+RUN apt-get install -y libzip-dev \
+    && docker-php-ext-install zip
+
+# php-memcached
+RUN apt-get install -y libzip-dev libmemcached-dev \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached
+
+# php-redis
+RUN pecl install redis \
+    && docker-php-ext-enable redis
+
+# php-bcmath
+RUN docker-php-ext-install \
+    bcmath \
+    sockets
+
+# php-amqp
+RUN apt-get install -y librabbitmq-dev \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
+
+# composer
+RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
+
+FROM base as modules
+
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /opt /opt
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && yarn_dir=$(ls -d /opt/yarn*) \
+    && ln -sf ${yarn_dir}/bin/yarn /usr/local/bin/yarn \
+    && ln -sf ${yarn_dir}/bin/yarnpkg /usr/local/bin/yarnpkg
+
+ARG run_env
+
 COPY . .
-COPY ./composer.json ./composer.lock ./
 
-COPY ./docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
-COPY ./docker/production/php/${run_env}/.env.local ./
+COPY docker/production/php/php.ini /usr/local/etc/php/php.ini
+COPY docker/production/php/.env.local /app/.env.local
 
-# Combine package installation commands
-RUN apk add --no-cache nodejs yarn \
-    && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
+RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
     && bin/console cache:clear \
     && php bin/console assets:install \
     && yarn \
     && yarn encore prod \
     && rm -rf node_modules
 
-FROM php-fpm-base
+FROM modules as app
 
-# Rename production INI file
-RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
-
-COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
-COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
-
-WORKDIR /app
-
-COPY --from=builder /app ./
-COPY ./ ./
-
-# Change owner of directory
-RUN chown www-data:www-data ./var -R
+#FROM base as app
+#
+#COPY --from=modules /usr/local/bin/composer /usr/local/bin/composer
+#COPY --from=modules /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
+#COPY --from=modules /usr/local/lib/php/extensions /usr/local/lib/php/extensions
+#COPY --from=modules /app /app

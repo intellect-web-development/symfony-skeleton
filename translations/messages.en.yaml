@@ -14,3 +14,6 @@ app:
                 create: Create
                 yes_label: 'Yes'
                 no_label: 'No'
+                download: Download
+                show: Show
+                details: Details

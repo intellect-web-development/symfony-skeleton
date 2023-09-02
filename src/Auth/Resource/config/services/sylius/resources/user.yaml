@@ -5,4 +5,4 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model: App\Auth\Domain\User\User
-                controller: App\Auth\Entry\Http\Admin\User\UserController
+                controller: App\Auth\Entry\Http\Admin\Controller\User\UserController

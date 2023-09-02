@@ -61,11 +61,14 @@ class UserTest extends UnitTestCase
 
         $user->edit(
             name: $name = self::$faker->name(),
-            email: $email = self::$faker->email()
+            email: $email = self::$faker->email(),
+            roles: $roles = [User::ROLE_ADMIN],
         );
 
         self::assertSame($name, $user->getName());
         self::assertSame($email, $user->getEmail());
+        self::assertSame($roles, $user->getRoles());
+        self::assertSame(User::ROLE_ADMIN, $user->getRole());
     }
 
     public function testGetId(): void

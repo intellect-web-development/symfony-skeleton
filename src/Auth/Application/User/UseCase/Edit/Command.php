@@ -12,6 +12,7 @@ final readonly class Command
         public UserId $id,
         public ?string $name,
         public ?string $email,
+        public ?string $role,
     ) {
     }
 }

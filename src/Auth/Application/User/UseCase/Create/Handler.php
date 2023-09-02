@@ -31,7 +31,7 @@ final readonly class Handler
             createdAt: $now,
             updatedAt: $now,
             email: $command->email,
-            roles: [User::ROLE_ADMIN],
+            roles: [$command->role],
             name: $command->name
         );
         $this->userRepository->add($user);

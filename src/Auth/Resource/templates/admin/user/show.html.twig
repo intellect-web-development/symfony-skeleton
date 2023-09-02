@@ -14,6 +14,10 @@
             <td>{{ user.email|trans }}</td>
         </tr>
         <tr class="item">
+            <td><strong>{{ 'app.admin.ui.modules.auth.user.properties.role'|trans }}:</strong></td>
+            <td>{{ user.role|trans }}</td>
+        </tr>
+        <tr class="item">
             <td><strong>{{ 'app.admin.ui.modules.auth.user.properties.created_at'|trans }}:</strong></td>
             <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
         </tr>

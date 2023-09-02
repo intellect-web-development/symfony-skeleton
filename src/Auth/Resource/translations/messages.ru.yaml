@@ -2,8 +2,8 @@ app:
     admin:
         ui:
             users: Пользователи
-            new_user: Добавить Пользователя
-            edit_user: Редактировать Пользователя
+            new_user: Добавить пользователя
+            edit_user: Редактировать пользователя
             show_user: Пользователь
             modules:
                 auth:
@@ -14,6 +14,7 @@ app:
                             updated_at: Дата обновления
                             password: Пароль
                             name: Имя
+                            role: Роль
                             email: Email
                         flash:
                             error_user_not_exists: Пользователь не существует
@@ -23,11 +24,17 @@ app:
                             success_created: Пользователь создан
                             success_deleted: Пользователь удален
                             success_password_was_updated: Пароль успешно изменен
+                            password_is_short: Пароль слишком короткий
+                            password_is_not_equals: Пароли не совпадают
                         actions:
                             password_repeat: Повторите пароль
                             change_password: Изменить пароль
                         other_labels:
                             old_password: Старый пароль
+                        enums:
+                            role:
+                              user: Пользователь
+                              admin: Администратор
             menu:
                 main:
                     auth:

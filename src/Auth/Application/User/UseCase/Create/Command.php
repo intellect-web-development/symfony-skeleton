@@ -10,6 +10,7 @@ final readonly class Command
         public string $plainPassword,
         public string $name,
         public string $email,
+        public string $role,
     ) {
     }
 }

@@ -14,6 +14,7 @@ app:
                             updated_at: Updated at
                             password: Password
                             name: Name
+                            role: Role
                             email: Email
                         flash:
                             error_user_not_exists: User not exists
@@ -23,11 +24,17 @@ app:
                             success_created: User created
                             success_deleted: User deleted
                             success_password_was_updated: Password was updated
+                            password_is_short: Password is short
+                            password_is_not_equals: Password is not equals
                         actions:
                             password_repeat: Password repeat
                             change_password: Change password
                         other_labels:
                             old_password: Old password
+                        enums:
+                            role:
+                              user: User
+                              admin: Admin
             menu:
                 main:
                     auth:
