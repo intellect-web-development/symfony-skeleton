@@ -170,8 +170,8 @@ init-assets:
 	docker compose run node sh -c "yarn encore dev"
 
 test-ci:
-	docker compose -f docker-compose-test.yml pull
-	docker compose -f docker-compose-test.yml up --build -d
+	docker compose pull
+	docker compose up --build -d
 	docker compose run --rm app-php-fpm rm -f .env.test.local
 	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
 	docker compose run --rm app-php-fpm composer install
