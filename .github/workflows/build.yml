@@ -15,4 +15,4 @@ jobs:
 
     - name: Up-Test-Down
       run: |
-        up-test-down
+        make up-test-down
