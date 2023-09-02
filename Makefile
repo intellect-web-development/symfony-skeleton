@@ -1,11 +1,12 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
-before-deploy: php-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
 
 first-init: jwt-keys chmod-password-key init
 
 up: docker-up
+down: docker-down
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
 
@@ -116,6 +117,9 @@ test-acceptance:
 
 php-stan:
 	docker compose run --rm app-php-fpm ./vendor/bin/phpstan --memory-limit=-1
+
+twig-lint:
+	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
 
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint

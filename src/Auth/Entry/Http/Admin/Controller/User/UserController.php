@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Entry\Http\Admin\User;
+namespace App\Auth\Entry\Http\Admin\Controller\User;
 
 use App\Auth\Application\User\UseCase\ChangePassword\Command as ChangePasswordCommand;
 use App\Auth\Application\User\UseCase\ChangePassword\Handler as ChangePasswordHandler;
@@ -14,10 +14,10 @@ use App\Auth\Application\User\UseCase\Edit\Command as EditCommand;
 use App\Auth\Application\User\UseCase\Edit\Handler as EditHandler;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\UserId;
-use App\Auth\Entry\Http\Admin\User\Form\ChangePasswordType;
-use App\Auth\Entry\Http\Admin\User\Form\CreateUserType;
-use App\Auth\Entry\Http\Admin\User\Form\MainInfoType;
-use App\Auth\Entry\Http\Admin\User\Form\UserType;
+use App\Auth\Entry\Http\Admin\Controller\User\Form\ChangePasswordType;
+use App\Auth\Entry\Http\Admin\Controller\User\Form\CreateType;
+use App\Auth\Entry\Http\Admin\Controller\User\Form\MainInfoType;
+use App\Auth\Entry\Http\Admin\Controller\User\Form\EditType;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +34,7 @@ class UserController extends ResourceController
         TranslatorInterface $translator,
     ): Response {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $form = $this->createForm(CreateUserType::class);
+        $form = $this->createForm(CreateType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,6 +44,7 @@ class UserController extends ResourceController
                     plainPassword: $payload['plainPassword'],
                     name: $payload['name'],
                     email: $payload['email'],
+                    role: $payload['role'],
                 )
             );
             if ($result->isEmailIsBusy()) {
@@ -82,9 +83,9 @@ class UserController extends ResourceController
         /** @var User $user */
         $user = $this->findOr404($configuration);
         if (Request::METHOD_GET === $request->getMethod()) {
-            $form = $this->createForm(UserType::class, $user);
+            $form = $this->createForm(EditType::class, $user);
         } else {
-            $form = $this->createForm(UserType::class);
+            $form = $this->createForm(EditType::class);
         }
 
         $form->handleRequest($request);
@@ -96,6 +97,7 @@ class UserController extends ResourceController
                     id: $user->getId(),
                     name: $payload['name'],
                     email: $payload['email'],
+                    role: $payload['role'],
                 )
             );
             if ($result->isEmailIsBusy()) {
@@ -176,6 +178,7 @@ class UserController extends ResourceController
                     id: $user->getId(),
                     name: $payload['name'],
                     email: $payload['email'],
+                    role: $payload['role']
                 )
             );
             if ($result->isEmailIsBusy()) {

@@ -14,3 +14,6 @@ app:
                 create: Создать
                 yes_label: Да
                 no_label: Нет
+                download: Cкачать
+                show: Показать
+                details: Детали

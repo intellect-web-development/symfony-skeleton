@@ -6,6 +6,7 @@ namespace App\Auth\Entry\Console\CreateAdmin;
 
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
+use App\Auth\Domain\User\User;
 use IWD\Symfony\PresentationBundle\Attribute\CliContract;
 use IWD\Symfony\PresentationBundle\Console\CliCommand;
 use IWD\Symfony\PresentationBundle\Interfaces\InputContractInterface;
@@ -37,6 +38,7 @@ class CreateAdminCommand extends CliCommand
                 plainPassword: $inputContract->password,
                 name: $inputContract->name,
                 email: $inputContract->email,
+                role: User::ROLE_ADMIN,
             )
         );
 

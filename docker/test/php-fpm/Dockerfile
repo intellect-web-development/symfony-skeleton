@@ -13,9 +13,8 @@ RUN apk add --no-cache postgresql-dev fcgi libpng-dev bash coreutils libmcrypt-d
     && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
 
 RUN apk add --no-cache rabbitmq-c-dev && \
-    mkdir -p /usr/src/php/ext/amqp && \
-    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
-    docker-php-ext-install amqp
+    pecl install amqp && \
+    docker-php-ext-enable amqp
 
 RUN pecl install -o -f redis \
     && rm -rf /tmp/pear \

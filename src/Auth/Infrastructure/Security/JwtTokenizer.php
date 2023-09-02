@@ -11,16 +11,28 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
 use OpenSSLAsymmetricKey;
 use RuntimeException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UnexpectedValueException;
 
 class JwtTokenizer
 {
-    private readonly JWT $jwt;
+    private string $accessJwtTokenExpiredInterval = 'PT60M';
+    private string $refreshJwtTokenExpiredInterval = 'P30D';
 
-    public function __construct(JWT $jwt)
-    {
-        $this->jwt = $jwt;
+    public function __construct(
+        private readonly JWT $jwt,
+        #[Autowire('%env(ACCESS_JWT_TOKEN_EXPIRED_INTERVAL)%')]
+        string $accessJwtTokenExpiredInterval,
+        #[Autowire('%env(REFRESH_JWT_TOKEN_EXPIRED_INTERVAL)%')]
+        string $refreshJwtTokenExpiredInterval,
+    ) {
+        if (!empty($accessJwtTokenExpiredInterval)) {
+            $this->accessJwtTokenExpiredInterval = $accessJwtTokenExpiredInterval;
+        }
+        if (empty($refreshJwtTokenExpiredInterval)) {
+            $this->refreshJwtTokenExpiredInterval = $refreshJwtTokenExpiredInterval;
+        }
     }
 
     /**
@@ -33,7 +45,7 @@ class JwtTokenizer
         $payload = array_merge(
             [
                 'iat' => (new DateTime())->getTimestamp(),
-                'exp' => (new DateTime())->add(new DateInterval('PT60M'))->getTimestamp(),
+                'exp' => (new DateTime())->add(new DateInterval($this->accessJwtTokenExpiredInterval))->getTimestamp(),
                 'id' => $user->id,
                 'username' => $user->getUserIdentifier(),
                 'roles' => $user->getRoles(),
@@ -54,8 +66,9 @@ class JwtTokenizer
 
         $payload = [
             'iat' => (new DateTime())->getTimestamp(),
-            'exp' => (new DateTime())->add(new DateInterval('P30D'))->getTimestamp(),
+            'exp' => (new DateTime())->add(new DateInterval($this->refreshJwtTokenExpiredInterval))->getTimestamp(),
             'refresh.userId' => $user->id,
+            'role' => $user->role,
         ];
 
         /** @var resource $privateKey */
