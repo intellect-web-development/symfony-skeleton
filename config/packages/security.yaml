@@ -18,7 +18,7 @@ security:
 
         token_invalidate_all_refresh:
             security: true
-            pattern: ^/api/token/invalidateAllRefreshTokens
+            pattern: ^/api/token/invalidate-all-refresh-tokens
             stateless: true
             user_checker: App\Auth\Infrastructure\Security\UserChecker
             custom_authenticators:
