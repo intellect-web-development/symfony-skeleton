@@ -118,6 +118,9 @@ test-acceptance:
 php-stan:
 	docker compose run --rm app-php-fpm ./vendor/bin/phpstan --memory-limit=-1
 
+twig-lint:
+	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
+
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
