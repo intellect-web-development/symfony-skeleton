@@ -26,3 +26,5 @@
 ###< symfony/phpunit-bridge ###
 /provisioning/hosts.yml
 /config/jwt/
+/node_modules
+/public/assets
