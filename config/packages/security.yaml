@@ -9,41 +9,10 @@ security:
             entity:
                 class: App\Auth\Domain\User\User
                 property: email
-        main:
-            id: App\Auth\Infrastructure\Security\UserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        token_invalidate_all_refresh:
-            security: true
-            pattern: ^/api/token/invalidate-all-refresh-tokens
-            stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
-            custom_authenticators:
-                - App\Auth\Infrastructure\Security\TokenAuthenticator
-
-        token:
-            security: false
-            pattern: ^/api/token
-            stateless: true
-
-        client:
-            security: true
-            pattern: ^/api/client
-            stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
-            custom_authenticators:
-                - App\Auth\Infrastructure\Security\TokenAuthenticator
-
-        admin:
-            security: true
-            pattern: ^/api/admin
-            stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
-            custom_authenticators:
-                - App\Auth\Infrastructure\Security\TokenAuthenticator
 
         main:
             pattern: '^/'
