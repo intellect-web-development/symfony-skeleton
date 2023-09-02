@@ -15,4 +15,4 @@ jobs:
 
     - name: Up-Test-Down
       run: |
-        make test-ci
+        make up-test-down
