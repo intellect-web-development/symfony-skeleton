@@ -178,8 +178,8 @@ test-ci:
 	docker compose run --rm app-php-fpm php bin/console assets:install
 	docker compose run --rm app-php-fpm sh -c "yarn"
 	docker compose run --rm app-php-fpm sh -c "yarn encore prod"
-	docker compose run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --env=test --if-not-exists
-	docker compose run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction --env=test
+	make database-create
+	make migrations-up
 	make make-migration-no-interaction
 	make migrations-up
 	make before-deploy
