@@ -86,10 +86,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
         return $user;
     }
 
-    public function edit(string $name, string $email): void
+    public function edit(string $name, string $email, array $roles): void
     {
         $this->email = $email;
         $this->name = $name;
+        $this->userRoles = $roles;
     }
 
     public function changePassword(string $password): void
@@ -119,11 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
 
     public function getRoles(): array
     {
-        $roles = $this->userRoles;
-        // guarantee every user at least has ROLE_ADMIN
-        $roles[] = self::ROLE_ADMIN;
-
-        return array_unique($roles);
+        return $this->userRoles;
     }
 
     public function getPassword(): string
