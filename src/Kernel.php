@@ -25,7 +25,8 @@ class Kernel extends BaseKernel
 
     public function __construct(string $environment, bool $debug)
     {
-        date_default_timezone_set('Europe/Moscow');
+        # You can set need timezone here:
+//        date_default_timezone_set('Europe/Moscow');
         parent::__construct($environment, $debug);
     }
 
@@ -64,7 +65,7 @@ class Kernel extends BaseKernel
     public function configureRoutesForPath(RoutingConfigurator $routes, string $pathToConfig): void
     {
         $routes->import($pathToConfig . '/{routes}/' . $this->environment . '/*.yaml');
-        $routes->import($pathToConfig . '/{routes}/*.yaml');
+        $routes->import($pathToConfig . '/{routes}/**/*.yaml');
 
         if (is_file($pathToConfig . '/routes.yaml')) {
             $routes->import($pathToConfig . '/routes.yaml');
