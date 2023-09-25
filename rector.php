@@ -20,7 +20,6 @@ use Rector\CodeQuality\Rector\Identical\SimplifyConditionsRector;
 use Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQueueRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
-use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector;
 use Rector\CodeQuality\Rector\NullsafeMethodCall\CleanupUnneededNullsafeOperatorRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
@@ -120,7 +119,6 @@ return static function (RectorConfig $rectorConfig): void {
         InlineIfToExplicitIfRector::class,
         InlineIsAInstanceOfRector::class,
         IntvalToTypeCastRector::class,
-        IssetOnPropertyObjectToPropertyExistsRector::class,
         JoinStringConcatRector::class,
         ReturnTypeFromStrictScalarReturnExprRector::class,
         ShortenElseIfRector::class,
