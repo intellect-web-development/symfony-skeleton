@@ -155,7 +155,7 @@ composer-dump:
 	docker compose run --rm app-php-fpm composer dump-autoload
 
 composer-update:
-	docker compose run --rm app-php-fpm composer update guzzlehttp/psr7
+	docker compose run --rm app-php-fpm composer update
 
 composer-outdated:
 	docker compose run --rm app-php-fpm composer outdated
