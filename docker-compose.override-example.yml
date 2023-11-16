@@ -3,11 +3,11 @@ version: "3.7"
 services:
   nginx:
     ports:
-      - "8079:80"
+      - "8081:80"
 
   app-postgres-db:
     ports:
-      - "54323:5432"
+      - "54324:5432"
 
   rabbitmq:
     ports:
@@ -16,8 +16,8 @@ services:
 
   prometheus:
     ports:
-      - "9090:9090"
+      - "9001:9090"
 
   grafana:
     ports:
-      - "3000:3000"
+      - "3001:3000"
