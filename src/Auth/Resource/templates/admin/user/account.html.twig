@@ -56,5 +56,12 @@
         {{ form_end(changePasswordForm, {'render_rest': false}) }}
     </div>
 
+    <div class="ui segment">
+        <p>JWT:</p>
+        <p style="word-break: break-all;">
+            {{ accessToken }}
+        </p>
+    </div>
+
     {{ sonata_block_render_event(event_prefix ~ '.after_content', {'resource': resource}) }}
 {% endblock %}
