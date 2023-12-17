@@ -18,6 +18,8 @@ use App\Auth\Entry\Http\Admin\Controller\User\Form\ChangePasswordType;
 use App\Auth\Entry\Http\Admin\Controller\User\Form\CreateType;
 use App\Auth\Entry\Http\Admin\Controller\User\Form\MainInfoType;
 use App\Auth\Entry\Http\Admin\Controller\User\Form\EditType;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,10 +43,10 @@ class UserController extends ResourceController
             $payload = $form->getData();
             $result = $handler->handle(
                 new CreateCommand(
-                    plainPassword: $payload['plainPassword'],
-                    name: $payload['name'],
                     email: $payload['email'],
+                    plainPassword: $payload['plainPassword'],
                     role: $payload['role'],
+                    name: $payload['name'],
                 )
             );
             if ($result->isEmailIsBusy()) {
@@ -154,7 +156,9 @@ class UserController extends ResourceController
         Request $request,
         TranslatorInterface $translator,
         ChangePasswordHandler $changePasswordHandler,
-        EditHandler $editHandler
+        EditHandler $editHandler,
+        JwtTokenizer $jwtTokenizer,
+        UserIdentity $userIdentity,
     ): Response {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         /** @var User $user */
@@ -231,6 +235,7 @@ class UserController extends ResourceController
             $this->metadata->getName() => $user,
             'mainInfoForm' => $mainInfoForm->createView(),
             'changePasswordForm' => $changePasswordForm->createView(),
+            'accessToken' => $jwtTokenizer->generateAccessToken($userIdentity),
         ]);
     }
 }

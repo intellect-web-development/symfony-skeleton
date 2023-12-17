@@ -7,10 +7,10 @@ namespace App\Auth\Application\User\UseCase\Create;
 final readonly class Command
 {
     public function __construct(
-        public string $plainPassword,
-        public string $name,
         public string $email,
+        public string $plainPassword,
         public string $role,
+        public string $name,
     ) {
     }
 }

@@ -17,6 +17,9 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 make-migration-no-interaction:
 	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
 
+consume-cron:
+	docker compose exec app-php-fpm bin/console messenger:consume -vv scheduler_base
+
 consume:
 	docker compose exec app-php-fpm bin/console messenger:consume -vv
 
@@ -144,6 +147,9 @@ doctrine-schema-validate:
 
 composer-install:
 	docker compose run --rm app-php-fpm composer install
+
+composer-audit:
+	docker compose run --rm app-php-fpm composer audit
 
 composer-dump:
 	docker compose run --rm app-php-fpm composer dump-autoload

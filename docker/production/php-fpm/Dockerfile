@@ -11,47 +11,11 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y unzip git libfcgi0ldbl gettext
 
-# php-opcache
-RUN docker-php-ext-install opcache \
-    && docker-php-ext-enable opcache
+RUN apt-get install -y libpq-dev libpng-dev libicu-dev libzip-dev librabbitmq-dev
 
-# php-pgsql
-RUN apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-# php-gd
-RUN apt-get install -y libpng-dev \
-    && docker-php-ext-install gd
-
-# php-intl
-RUN apt-get install -y libicu-dev \
-    && docker-php-ext-install intl
-
-# php-zip
-RUN apt-get install -y libzip-dev \
-    && docker-php-ext-install zip
-
-# php-memcached
-RUN apt-get install -y libzip-dev libmemcached-dev \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached
-
-# php-redis
-RUN pecl install redis \
-    && docker-php-ext-enable redis
-
-# php-bcmath
-RUN docker-php-ext-install \
-    bcmath \
-    sockets
-
-# php-amqp
-RUN apt-get install -y librabbitmq-dev \
-    && pecl install amqp \
-    && docker-php-ext-enable amqp
-
-# composer
-RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
+RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis @composer-2
 
 FROM base as modules
 
@@ -78,10 +42,3 @@ RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interacti
     && rm -rf node_modules
 
 FROM modules as app
-
-#FROM base as app
-#
-#COPY --from=modules /usr/local/bin/composer /usr/local/bin/composer
-#COPY --from=modules /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
-#COPY --from=modules /usr/local/lib/php/extensions /usr/local/lib/php/extensions
-#COPY --from=modules /app /app

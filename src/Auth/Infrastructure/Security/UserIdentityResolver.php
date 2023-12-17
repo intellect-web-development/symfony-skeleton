@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
+use App\Auth\Domain\User\User;
 use Generator;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -17,6 +19,7 @@ readonly class UserIdentityResolver implements ValueResolverInterface
     public function __construct(
         private UserProviderInterface $userProvider,
         private JwtTokenizer $jwtTokenizer,
+        private Security $security,
     ) {
     }
 
@@ -25,7 +28,19 @@ readonly class UserIdentityResolver implements ValueResolverInterface
         if (!$this->supports($request, $argument)) {
             return [];
         }
+        if (($user = $this->security->getUser()) !== null) {
+            /** @var User $user */
+            $userIdentity = UserProvider::identityByUser($user);
+        }
+        if (!isset($userIdentity)) {
+            $userIdentity = $this->getFromBearerToken($request);
+        }
 
+        yield $userIdentity;
+    }
+
+    private function getFromBearerToken(Request $request): UserIdentity
+    {
         $authorization = $request->headers->get('Authorization');
         if (null === $authorization) {
             throw new AccessDeniedException('Authorization token not found');
@@ -34,10 +49,10 @@ readonly class UserIdentityResolver implements ValueResolverInterface
             throw new AccessDeniedException('Invalid authorization token');
         }
         [$type, $token] = explode(' ', $authorization);
-        /** @var UserIdentity $user */
-        $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
+        /** @var UserIdentity $userIdentity */
+        $userIdentity = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
 
-        yield $user;
+        return $userIdentity;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
