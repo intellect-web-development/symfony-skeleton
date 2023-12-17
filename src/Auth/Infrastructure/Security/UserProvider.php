@@ -55,7 +55,7 @@ readonly class UserProvider implements UserProviderInterface
         throw new UserNotFoundException();
     }
 
-    private static function identityByUser(User $user): UserIdentity
+    public static function identityByUser(User $user): UserIdentity
     {
         return new UserIdentity(
             id: $user->getId()->getValue(),
