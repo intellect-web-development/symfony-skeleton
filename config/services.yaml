@@ -1,5 +1,7 @@
 parameters:
     locale: 'ru'
+    path.src: '%kernel.project_dir%/src'
+    path.root: '%kernel.project_dir%'
 
 services:
     _defaults:

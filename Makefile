@@ -17,6 +17,9 @@ up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-
 make-migration-no-interaction:
 	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
 
+consume-cron:
+	docker compose exec app-php-fpm bin/console messenger:consume -vv scheduler_base
+
 consume:
 	docker compose exec app-php-fpm bin/console messenger:consume -vv
 
@@ -145,6 +148,9 @@ doctrine-schema-validate:
 composer-install:
 	docker compose run --rm app-php-fpm composer install
 
+composer-audit:
+	docker compose run --rm app-php-fpm composer audit
+
 composer-dump:
 	docker compose run --rm app-php-fpm composer dump-autoload
 
@@ -178,3 +184,15 @@ docker-build:
 
 phpmetrics:
 	docker compose run --rm app-php-fpm php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
+
+test-ci:
+	docker compose -f docker-compose-test.yml pull
+	docker compose -f docker-compose-test.yml up --build -d
+	docker compose run --rm app-php-fpm rm -f .env.test.local
+	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
+	docker compose run --rm app-php-fpm composer install
+	make database-create
+	make migrations-up
+	make make-migration-no-interaction
+	make migrations-up
+	make before-deploy

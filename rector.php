@@ -20,7 +20,6 @@ use Rector\CodeQuality\Rector\Identical\SimplifyConditionsRector;
 use Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQueueRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
-use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector;
 use Rector\CodeQuality\Rector\NullsafeMethodCall\CleanupUnneededNullsafeOperatorRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
@@ -51,7 +50,6 @@ use Rector\Doctrine\Rector\Class_\InitializeDefaultEntityCollectionRector;
 use Rector\Doctrine\Rector\ClassMethod\MakeEntitySetterNullabilityInSyncWithPropertyRector;
 use Rector\Doctrine\Rector\Property\ChangeBigIntEntityPropertyToIntTypeRector;
 use Rector\Doctrine\Rector\Property\CorrectDefaultTypesOnEntityPropertyRector;
-use Rector\Doctrine\Rector\Property\ImproveDoctrineCollectionDocTypeInEntityRector;
 use Rector\Doctrine\Rector\Property\TypedPropertyFromColumnTypeRector;
 use Rector\Doctrine\Rector\Property\TypedPropertyFromDoctrineCollectionRector;
 use Rector\Doctrine\Rector\Property\TypedPropertyFromToManyRelationTypeRector;
@@ -121,7 +119,6 @@ return static function (RectorConfig $rectorConfig): void {
         InlineIfToExplicitIfRector::class,
         InlineIsAInstanceOfRector::class,
         IntvalToTypeCastRector::class,
-        IssetOnPropertyObjectToPropertyExistsRector::class,
         JoinStringConcatRector::class,
         ReturnTypeFromStrictScalarReturnExprRector::class,
         ShortenElseIfRector::class,
@@ -181,8 +178,6 @@ return static function (RectorConfig $rectorConfig): void {
         PrivatizeFinalClassMethodRector::class,
         PrivatizeFinalClassPropertyRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
-//        FinalizeClassesWithoutChildrenRector::class,
-//        JsonThrowOnErrorRector::class,
         // Symfony rules:
         ChangeStringCollectionOptionToConstantRector::class,
         CommandConstantReturnCodeRector::class,
@@ -200,7 +195,6 @@ return static function (RectorConfig $rectorConfig): void {
         // Doctrine:
         ChangeBigIntEntityPropertyToIntTypeRector::class,
         CorrectDefaultTypesOnEntityPropertyRector::class,
-        ImproveDoctrineCollectionDocTypeInEntityRector::class,
         InitializeDefaultEntityCollectionRector::class,
         MakeEntitySetterNullabilityInSyncWithPropertyRector::class,
         TypedPropertyFromColumnTypeRector::class,
@@ -208,9 +202,4 @@ return static function (RectorConfig $rectorConfig): void {
         TypedPropertyFromToManyRelationTypeRector::class,
         TypedPropertyFromToOneRelationTypeRector::class,
     ]);
-
-    // define sets of rules
-    //    $rectorConfig->sets([
-    //        LevelSetList::UP_TO_PHP_82
-    //    ]);
 };
