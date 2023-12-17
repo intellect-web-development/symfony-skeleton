@@ -41,10 +41,10 @@ class UserController extends ResourceController
             $payload = $form->getData();
             $result = $handler->handle(
                 new CreateCommand(
-                    plainPassword: $payload['plainPassword'],
-                    name: $payload['name'],
                     email: $payload['email'],
+                    plainPassword: $payload['plainPassword'],
                     role: $payload['role'],
+                    name: $payload['name'],
                 )
             );
             if ($result->isEmailIsBusy()) {
@@ -154,7 +154,7 @@ class UserController extends ResourceController
         Request $request,
         TranslatorInterface $translator,
         ChangePasswordHandler $changePasswordHandler,
-        EditHandler $editHandler
+        EditHandler $editHandler,
     ): Response {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         /** @var User $user */
