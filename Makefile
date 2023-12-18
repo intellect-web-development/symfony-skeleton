@@ -7,11 +7,11 @@ first-init: jwt-keys chmod-password-key init
 
 up: docker-up
 down: docker-down
-init-app: env-init composer-install database-create migrations-up create-default-admin
+init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create make-migration-no-interaction migrations-up create-default-admin \
+	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
 	before-deploy docker-down-clear
 
 make-migration-no-interaction:
@@ -42,7 +42,7 @@ debug-router:
 	docker compose run --rm app-php-fpm bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-fpm bin/console assets:install
+	docker compose run --rm app-php-fpm composer require ...
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
@@ -185,12 +185,19 @@ docker-build:
 phpmetrics:
 	docker compose run --rm app-php-fpm php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
 
+init-assets:
+	docker compose run node sh -c "yarn"
+	docker compose run node sh -c "yarn encore dev"
+
 test-ci:
 	docker compose -f docker-compose-test.yml pull
 	docker compose -f docker-compose-test.yml up --build -d
 	docker compose run --rm app-php-fpm rm -f .env.test.local
 	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
 	docker compose run --rm app-php-fpm composer install
+	docker compose run --rm app-php-fpm php bin/console assets:install
+	docker compose run --rm app-php-fpm sh -c "yarn"
+	docker compose run --rm app-php-fpm sh -c "yarn encore prod"
 	make database-create
 	make migrations-up
 	make make-migration-no-interaction
