@@ -1,0 +1,24 @@
+{% extends 'SonataAdminBundle/standard_layout.html.twig' %}
+{% block sonata_admin_content %}
+    <style>
+        table {
+            border: 1px solid;
+        }
+
+        td, th {
+            padding: 5px;
+        }
+    </style>
+    <h2>Заголовок</h2>
+    <p><b>Подзаголовок:</b> описание</p>
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

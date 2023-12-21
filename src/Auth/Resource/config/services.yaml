@@ -20,3 +20,24 @@ services:
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
         class: App\Auth\Infrastructure\Security\UserProvider
+
+#    App\Auth\Entry\Http\Admin\Controller\User\AuthUsersAdmin:
+#        arguments: [~, ~, App\Auth\Entry\Http\Admin\Controller\User\UserController]
+#        tags:
+#          - { name: sonata.admin, model_class: App\Auth\Domain\User\User, manager_type: orm, label: Пользователи, label_translator_strategy: sonata.admin.label.strategy.underscore, group: report }
+#        public: true
+
+    app.admin.auth.user:
+        class: App\Auth\Entry\Http\Admin\Controller\User\AuthUsersAdmin
+        public: true
+        calls:
+            - [setTranslationDomain, ['App']]
+        tags:
+            - { name: sonata.admin, model_class: App\Auth\Domain\User\User, controller: App\Auth\Entry\Http\Admin\Controller\User\UserController, manager_type: orm, group: 'Content', label: 'User' }
+
+#    App\Auth\Entry\Http\Admin\Controller\User\AuthUsersAdmin:
+#      class: App\Auth\Entry\Http\Admin\Controller\User\UserController
+#      calls:
+#          - [setTranslationDomain, ['App']]
+#      tags:
+#          - { name: sonata.admin, model_class: App\Auth\Domain\User\User, controller: App\Auth\Entry\Http\Admin\Controller\User\UserController, manager_type: orm, group: 'Content', label: 'User' }
