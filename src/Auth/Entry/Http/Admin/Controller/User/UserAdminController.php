@@ -13,8 +13,7 @@ final class UserAdminController extends CRUDController
 {
     public function listAction(Request $request): Response
     {
-        dd($request);
-        return $this->renderWithExtraParams('Admin/Support/creditcard.html.twig');
+        return parent::listAction($request);
     }
 
     public function showAction(Request $request): Response
