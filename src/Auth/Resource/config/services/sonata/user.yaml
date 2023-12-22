@@ -1,5 +1,7 @@
 services:
     admin.auth.user:
+        arguments: [~, -, App\Auth\Entry\Http\Admin\Controller\User\UserAdminController]
         class: App\Auth\Entry\Http\Admin\Controller\User\UserAdmin
         tags:
             - { name: sonata.admin, model_class: App\Auth\Domain\User\User, manager_type: orm, label: User, group: Auth }
+        public: true
