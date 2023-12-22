@@ -200,4 +200,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
     {
         return $this->password;
     }
+
+    /**
+     * @internal Only for Sonata
+     */
+    public function __toString(): string
+    {
+        return $this->email;
+    }
 }
