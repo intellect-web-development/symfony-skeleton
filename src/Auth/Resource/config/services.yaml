@@ -20,9 +20,3 @@ services:
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
         class: App\Auth\Infrastructure\Security\UserProvider
-
-#todo: убрать глубже
-    admin.auth.user:
-        class: App\Auth\Entry\Http\Admin\Controller\User\UserAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Auth\Domain\User\User, manager_type: orm, label: User }

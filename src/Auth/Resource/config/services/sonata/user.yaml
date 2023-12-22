@@ -1,0 +1,5 @@
+services:
+    admin.auth.user:
+        class: App\Auth\Entry\Http\Admin\Controller\User\UserAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Auth\Domain\User\User, manager_type: orm, label: User, group: Auth }
