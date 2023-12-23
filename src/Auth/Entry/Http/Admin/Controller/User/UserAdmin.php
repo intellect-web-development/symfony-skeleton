@@ -15,13 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class UserAdmin extends AbstractAdmin
 {
-    protected $baseRouteName = 'auth/users';
+    protected $baseRouteName = 'app_auth_users';
     protected $baseRoutePattern = 'auth/users';
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->add('name', TextType::class);
-        $form->add('email', EmailType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void

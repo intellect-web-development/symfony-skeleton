@@ -36,19 +36,20 @@ class EditType extends AbstractType
                 ],
                 'empty_data' => '',
             ])
-            ->add('role', ChoiceType::class, [
-                'required' => true,
-                'label' => 'app.admin.ui.modules.auth.user.properties.role',
-                'choices' => [
-                    'app.admin.ui.modules.auth.user.enums.role.user' => User::ROLE_USER,
-                    'app.admin.ui.modules.auth.user.enums.role.admin' => User::ROLE_ADMIN,
-                ],
-                'constraints' => [
-                    new NotBlank(allowNull: false),
-                ],
-                'empty_data' => '',
-                'autocomplete' => true,
-            ])
+            //todo: подключить автокомплит и ChoiceType, потом настроить прокидывание в контроллере
+//            ->add('role', ChoiceType::class, [
+//                'required' => true,
+//                'label' => 'app.admin.ui.modules.auth.user.properties.role',
+//                'choices' => [
+//                    'app.admin.ui.modules.auth.user.enums.role.user' => User::ROLE_USER,
+//                    'app.admin.ui.modules.auth.user.enums.role.admin' => User::ROLE_ADMIN,
+//                ],
+//                'constraints' => [
+//                    new NotBlank(allowNull: false),
+//                ],
+//                'empty_data' => '',
+//                'autocomplete' => true,
+//            ])
         ;
     }
 }
