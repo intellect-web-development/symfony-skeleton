@@ -15,6 +15,7 @@ use App\Auth\Entry\Http\Admin\Controller\User\Form\CreateType;
 use App\Auth\Entry\Http\Admin\Controller\User\Form\EditType;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -132,6 +133,9 @@ final class UserAdminController extends CRUDController
         return $this->redirectToRoute('app_auth_users_list');
     }
 
+    /**
+     * @param ProxyQuery $query
+     */
     public function batchActionDelete(ProxyQueryInterface $query): Response
     {
         /** @var User $user */
