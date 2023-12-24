@@ -40,7 +40,7 @@ final class UserAdminController extends CRUDController
                 new UserCreateCommand(
                     email: $payload['email'],
                     plainPassword: $payload['plainPassword'],
-                    role: User::ROLE_ADMIN,
+                    role: $payload['role'],
                     name: $payload['name'],
                 )
             );
@@ -85,7 +85,7 @@ final class UserAdminController extends CRUDController
                     id: $user->getId(),
                     name: $payload['name'],
                     email: $payload['email'],
-                    role: $user->getRole(),
+                    role: $payload['role'],
                 )
             );
             if ($result->isEmailIsBusy()) {
