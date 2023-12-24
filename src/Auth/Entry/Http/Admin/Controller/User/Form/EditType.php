@@ -47,7 +47,7 @@ class EditType extends AbstractType
                     new NotBlank(allowNull: false),
                 ],
                 'empty_data' => '',
-//                'autocomplete' => true,
+                'autocomplete' => true,
             ])
         ;
     }
