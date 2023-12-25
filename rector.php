@@ -78,7 +78,6 @@ use Rector\Php80\Rector\FuncCall\ClassOnObjectRector;
 use Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector;
 use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
-use Rector\Php82\Rector\Class_\ReadOnlyClassRector;
 use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -108,7 +107,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rules([
         // Common rules:
         InlineConstructorDefaultToPropertyRector::class,
-        ReadOnlyClassRector::class,
+//        ReadOnlyClassRector::class,
         CleanupUnneededNullsafeOperatorRector::class,
         CombinedAssignRector::class,
         CommonNotEqualRector::class,
