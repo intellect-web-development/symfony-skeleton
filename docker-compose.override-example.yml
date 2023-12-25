@@ -7,7 +7,7 @@ services:
 
   app-postgres-db:
     ports:
-      - "54324:5432"
+      - "54323:5432"
 
   rabbitmq:
     ports:
