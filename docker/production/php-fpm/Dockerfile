@@ -17,8 +17,6 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis @composer-2
 
-FROM base as modules
-
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /opt /opt
@@ -31,14 +29,16 @@ ARG run_env
 
 COPY . .
 
-COPY docker/production/php/php.ini /usr/local/etc/php/php.ini
-COPY docker/production/php/.env.local /app/.env.local
+COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/production/php-fpm/php.ini /usr/local/etc/php/php.ini
+COPY docker/production/php-fpm/.env.local /app/.env.local
+COPY docker/production/php-fpm/conf.d /usr/local/etc/php/conf.d
 
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
+RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-interaction --no-scripts \
     && bin/console cache:clear \
     && php bin/console assets:install \
     && yarn \
     && yarn encore prod \
     && rm -rf node_modules
 
-FROM modules as app
+FROM base as app
