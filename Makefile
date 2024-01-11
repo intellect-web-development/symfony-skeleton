@@ -9,6 +9,7 @@ up: docker-up
 down: docker-down
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
+update-deps: composer-update yarn-upgrade
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
 	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
@@ -162,6 +163,12 @@ composer-outdated:
 
 composer-dry-run:
 	docker compose run --rm app-php-fpm composer update --dry-run
+
+yarn-install:
+	docker compose run node sh -c "yarn install"
+
+yarn-upgrade:
+	docker compose run node sh -c "yarn upgrade"
 
 docker-up:
 	docker compose up -d
