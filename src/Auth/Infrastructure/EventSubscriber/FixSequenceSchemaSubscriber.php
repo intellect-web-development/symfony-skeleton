@@ -13,9 +13,6 @@ use Doctrine\ORM\Tools\ToolEvents;
  */
 class FixSequenceSchemaSubscriber implements EventSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

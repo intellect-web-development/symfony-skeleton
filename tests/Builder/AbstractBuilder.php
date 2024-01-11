@@ -106,8 +106,6 @@ abstract class AbstractBuilder
     }
 
     /**
-     * @return mixed
-     *
      * @throws ReflectionException
      */
     protected static function getProperty(object $object, string $property)

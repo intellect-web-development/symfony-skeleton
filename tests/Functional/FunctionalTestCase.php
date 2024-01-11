@@ -135,7 +135,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntityData(?string $content = null): array
+    protected function parseEntityData(string $content = null): array
     {
         if (null === $content) {
             return [];
@@ -147,7 +147,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntitiesData(?string $content = null): array
+    protected function parseEntitiesData(string $content = null): array
     {
         if (null === $content) {
             return [];

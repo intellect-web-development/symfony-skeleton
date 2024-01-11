@@ -27,9 +27,6 @@ class MoneyType implements FieldTypeInterface
     ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function render(Field $field, mixed $data, array $options): string
     {
         $data = $this->dataExtractor->get($field, $data);
@@ -37,9 +34,6 @@ class MoneyType implements FieldTypeInterface
         return $this->twig->render(self::TEMPLATE, ['data' => $data, 'options' => $options]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
     }

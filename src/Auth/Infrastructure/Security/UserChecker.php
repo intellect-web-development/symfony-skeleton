@@ -15,11 +15,11 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-//        if (!$user->isActive()) {
-//            $exception = new DisabledException('User account is disabled.');
-//            $exception->setUser($user);
-//            throw $exception;
-//        }
+        //        if (!$user->isActive()) {
+        //            $exception = new DisabledException('User account is disabled.');
+        //            $exception->setUser($user);
+        //            throw $exception;
+        //        }
     }
 
     public function checkPostAuth(UserInterface $user): void

@@ -31,9 +31,6 @@ class BooleanType implements FieldTypeInterface
     ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function render(Field $field, mixed $data, array $options): string
     {
         $data = $this->dataExtractor->get($field, $data);
@@ -46,9 +43,6 @@ class BooleanType implements FieldTypeInterface
         return $this->twig->render($tpl, ['data' => (bool) $data, 'options' => $options]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('inverse', false);
