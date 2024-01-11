@@ -108,7 +108,7 @@ abstract class AbstractBuilder
     /**
      * @throws ReflectionException
      */
-    protected static function getProperty(object $object, string $property)
+    protected static function getProperty(object $object, string $property): mixed
     {
         $className = $object::class;
 
