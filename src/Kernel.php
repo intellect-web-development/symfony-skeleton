@@ -26,7 +26,7 @@ class Kernel extends BaseKernel
     public function __construct(string $environment, bool $debug)
     {
         # You can set need timezone here:
-        //        date_default_timezone_set('Europe/Moscow');
+        date_default_timezone_set('Europe/Moscow');
         parent::__construct($environment, $debug);
     }
 
