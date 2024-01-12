@@ -5,6 +5,9 @@ init-and-check: init before-deploy
 
 first-init: jwt-keys chmod-password-key init
 
+asset-watch:
+	yarn watch
+
 up: docker-up
 down: docker-down
 init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
