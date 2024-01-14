@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FROM nginx:1.17-alpine
+FROM nginx:1.25-alpine
 
 RUN apk add --no-cache curl
 
