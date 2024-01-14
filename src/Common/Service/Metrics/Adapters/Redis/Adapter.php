@@ -9,7 +9,7 @@ use Prometheus\Counter;
 
 class Adapter implements AdapterInterface
 {
-    private \Prometheus\Storage\Redis $adapter;
+    private readonly \Prometheus\Storage\Redis $adapter;
 
     public function __construct(
         private readonly Config $config

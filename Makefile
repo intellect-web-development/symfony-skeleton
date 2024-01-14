@@ -1,15 +1,28 @@
-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app phpmetrics
-before-deploy: php-lint php-cs php-stan psalm doctrine-schema-validate test
+init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
+before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+fix-linters: rector-fix php-cs-fix
+init-and-check: init before-deploy
+
+first-init: jwt-keys chmod-password-key init
+
+asset-watch:
+	yarn watch
 
 up: docker-up
-init-app: env-init composer-install database-create migrations-up fixtures
+down: docker-down
+init-app: env-init composer-install database-create migrations-up create-default-admin init-assets
 recreate-database: database-drop database-create
+update-deps: composer-update before-deploy composer-outdated
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
-	composer-install database-create make-migration-no-interaction migrations-up create-default-admin before-deploy docker-down-clear
+	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
+	before-deploy docker-down-clear
 
 make-migration-no-interaction:
 	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
+
+consume-cron:
+	docker compose exec app-php-fpm bin/console messenger:consume -vv scheduler_base
 
 consume:
 	docker compose exec app-php-fpm bin/console messenger:consume -vv
@@ -17,6 +30,14 @@ consume:
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
+
+jwt-keys:
+	mkdir -p config/jwt
+	ssh-keygen -t rsa -b 4096 -m PEM -f ./config/jwt/jwtRS256.key
+	openssl rsa -in ./config/jwt/jwtRS256.key -pubout -outform PEM -out ./config/jwt/jwtRS256.key.pub
+
+chmod-password-key:
+	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
 
 create-default-admin:
 	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
@@ -33,6 +54,9 @@ docker-compose-override-init:
 cache-clear:
 	docker compose run --rm app-php-fpm php bin/console cache:clear
 	docker compose run --rm app-php-fpm php bin/console cache:warmup
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-metadata
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-query
+	docker compose run --rm app-php-fpm php bin/console doctrine:cache:clear-result
 
 env-init:
 	docker compose run --rm app-php-fpm rm -f .env.local
@@ -101,11 +125,22 @@ test-acceptance:
 php-stan:
 	docker compose run --rm app-php-fpm ./vendor/bin/phpstan --memory-limit=-1
 
+twig-lint:
+	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
+
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
-php-cs:
+rector-dry-run:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector --dry-run
+
+rector-fix:
+	docker compose run --rm app-php-fpm ./vendor/bin/rector
+
+php-cs-fix:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix -v --using-cache=no
+
+php-cs-dry-run:
 	docker compose run --rm app-php-fpm ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
 psalm:
@@ -116,6 +151,9 @@ doctrine-schema-validate:
 
 composer-install:
 	docker compose run --rm app-php-fpm composer install
+
+composer-audit:
+	docker compose run --rm app-php-fpm composer audit
 
 composer-dump:
 	docker compose run --rm app-php-fpm composer dump-autoload
@@ -128,6 +166,12 @@ composer-outdated:
 
 composer-dry-run:
 	docker compose run --rm app-php-fpm composer update --dry-run
+
+yarn-install:
+	docker compose run node sh -c "yarn install"
+
+yarn-upgrade:
+	docker compose run node sh -c "yarn upgrade"
 
 docker-up:
 	docker compose up -d
@@ -150,3 +194,22 @@ docker-build:
 
 phpmetrics:
 	docker compose run --rm app-php-fpm php ./vendor/bin/phpmetrics --report-html=var/myreport ./src
+
+init-assets:
+	docker compose run node sh -c "yarn"
+	docker compose run node sh -c "yarn encore dev"
+
+test-ci:
+	docker compose -f docker-compose-test.yml pull
+	docker compose -f docker-compose-test.yml up --build -d
+	docker compose run --rm app-php-fpm rm -f .env.test.local
+	docker compose run --rm app-php-fpm cp .env.test.local.example .env.test.local
+	docker compose run --rm app-php-fpm composer install
+	docker compose run --rm app-php-fpm php bin/console assets:install
+	docker compose run --rm app-php-fpm sh -c "yarn"
+	docker compose run --rm app-php-fpm sh -c "yarn encore prod"
+	make database-create
+	make migrations-up
+	make make-migration-no-interaction
+	make migrations-up
+	make before-deploy

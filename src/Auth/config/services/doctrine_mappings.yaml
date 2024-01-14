@@ -1,9 +1,0 @@
-doctrine:
-    orm:
-        mappings:
-            App\Auth:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/Auth/Core'
-                prefix: App\Auth\Core
-                alias: App_Auth

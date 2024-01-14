@@ -44,14 +44,14 @@ trait AssertsTrait
     public static function assertIsUuid4(?string $uuid): void
     {
         $pattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/';
-        $isUuid = !(!is_string($uuid) || 1 !== preg_match($pattern, $uuid));
+        $isUuid = is_string($uuid) && 1 === preg_match($pattern, $uuid);
 
-        self::assertTrue($isUuid, "\"$uuid\" is not UUID v4");
+        self::assertTrue($isUuid, "\"{$uuid}\" is not UUID v4");
     }
 
     public static function assertHasProperty(string|object $class, string $property): void
     {
-        $className = is_string($class) ? $class : get_class($class);
+        $className = is_string($class) ? $class : $class::class;
         self::assertTrue(
             property_exists($className, $property),
             "\"{$className}\" hasn't property \"{$property}\""

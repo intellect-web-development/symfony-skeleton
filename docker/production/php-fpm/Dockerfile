@@ -1,55 +1,56 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine AS php-fpm-base
-
-# Combine package installation commands and configure and install PHP extensions
-RUN apk add --update linux-headers \
-    postgresql-dev bash coreutils libmcrypt-dev git autoconf libpng-dev g++ pcre-dev $PHPIZE_DEPS rabbitmq-c-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql sockets intl bcmath opcache gd \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini \
-    && pecl install redis \
-    && docker-php-ext-enable redis.so \
-    && mkdir -p /usr/src/php/ext/amqp \
-    && curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 \
-    && docker-php-ext-install amqp
-
-FROM php-fpm-base AS builder
-
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-# composer
-RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --2
+FROM php:8.2-fpm-alpine as base
 
 WORKDIR /app
 
+RUN apk add --update linux-headers
+
+RUN apk add --no-cache \
+    postgresql-dev \
+    fcgi \
+    libpng-dev \
+    rabbitmq-c-dev \
+    redis
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis
+
+FROM base as modules
+
+RUN install-php-extensions @composer-2
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+RUN apk add --update nodejs yarn
+
+ARG run_env
+
+COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/production/php-fpm/php.ini /usr/local/etc/php/php.ini
+COPY docker/production/php-fpm/.env.local /app/.env.local
+COPY docker/production/php-fpm/conf.d /usr/local/etc/php/conf.d
+
 COPY . .
-COPY ./composer.json ./composer.lock ./
 
-COPY ./docker/production/php/${run_env}/php.ini /usr/local/etc/php/php.ini
-COPY ./docker/production/php/${run_env}/.env.local ./
-
-# Combine package installation commands
-RUN apk add --no-cache nodejs yarn \
-    && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-scripts \
+RUN composer install --no-dev --prefer-dist --no-progress --optimize-autoloader --no-interaction --no-scripts \
     && bin/console cache:clear \
-    && php bin/console assets:install \
+    && bin/console assets:install \
     && yarn \
     && yarn encore prod \
     && rm -rf node_modules
 
-FROM php-fpm-base
+FROM base as app
 
-# Rename production INI file
-RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
+ARG run_env
 
-COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
-COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/production/php-fpm/php.ini /usr/local/etc/php/php.ini
+COPY docker/production/php-fpm/.env.local /app/.env.local
+COPY docker/production/php-fpm/conf.d /usr/local/etc/php/conf.d
 
-WORKDIR /app
-
-COPY --from=builder /app ./
-COPY ./ ./
-
-# Change owner of directory
-RUN chown www-data:www-data ./var -R
+COPY --from=modules /usr/local/bin/composer /usr/local/bin/composer
+COPY --from=modules /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
+COPY --from=modules /usr/local/lib/php/extensions /usr/local/lib/php/extensions
+COPY --from=modules /app /app

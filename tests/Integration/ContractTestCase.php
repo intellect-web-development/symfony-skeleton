@@ -35,7 +35,7 @@ class ContractTestCase extends IntegrationTestCase
 
         foreach ($expectedErrors as $expectedProperty => $expectedMessage) {
             if (!isset($violations[$expectedProperty])) {
-                throw new Exception("Undefined array key '$expectedProperty'");
+                throw new Exception("Undefined array key '{$expectedProperty}'");
             }
             $violationMessage = $violations[$expectedProperty];
             if (is_int($expectedProperty)) {
@@ -65,7 +65,7 @@ class ContractTestCase extends IntegrationTestCase
             );
         }
 
-        if (!empty($violations) || !empty($expectedErrors)) {
+        if (!empty($violations) || [] !== $expectedErrors) {
             self::assertCount(
                 count($violations),
                 $expectedErrors,

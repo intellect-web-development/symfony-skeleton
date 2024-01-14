@@ -1,4 +1,0 @@
-doctrine:
-    dbal:
-        types:
-            auth_user_id: 'App\Auth\Core\User\Domain\Type\IdType'

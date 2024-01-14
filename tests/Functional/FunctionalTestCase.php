@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use App\Auth\Core\User\Domain\User;
-use App\Auth\Core\User\Domain\ValueObject\Id;
-use App\Auth\Security\JwtTokenizer;
-use App\Auth\Security\UserIdentity;
+use App\Auth\Domain\User\User;
+use App\Auth\Domain\User\ValueObject\UserId;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
 use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
@@ -61,7 +61,7 @@ class FunctionalTestCase extends WebTestCase
         /** @var PasswordHasherInterface $passwordHasher */
         $passwordHasher = self::$containerTool->get(PasswordHasherInterface::class);
         self::$user = User::create(
-            id: new Id('99999999'),
+            id: new UserId('99999999'),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
             email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
@@ -135,7 +135,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntityData(?string $content = null): array
+    protected function parseEntityData(string $content = null): array
     {
         if (null === $content) {
             return [];
@@ -147,7 +147,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntitiesData(?string $content = null): array
+    protected function parseEntitiesData(string $content = null): array
     {
         if (null === $content) {
             return [];

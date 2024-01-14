@@ -25,11 +25,18 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     image: postgres:13-alpine
-    restart: always
+    restart: on-failure
     environment:
       POSTGRES_DB: application-db
       POSTGRES_USER: default
       POSTGRES_PASSWORD: secret
+
+  node:
+    build: docker/common/node
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./:/app
 
   app-metrics-sidecar:
     image: redis:alpine
@@ -38,7 +45,7 @@ services:
     image: redis:5
     volumes:
       - redis_data:/data
-    restart: unless-stopped
+    restart: on-failure
     environment:
       REDIS_PASSWORD: none
 
@@ -50,11 +57,11 @@ services:
 
   prometheus:
     build: docker/common/metrics/prometheus
-    restart: always
+    restart: on-failure
 
   grafana:
     image: grafana/grafana:latest
-    restart: always
+    restart: on-failure
 
 volumes:
   db:

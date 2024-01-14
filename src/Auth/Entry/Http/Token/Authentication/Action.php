@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Token\Authentication;
 
-use App\Auth\Core\User\Domain\UserRepository;
+use App\Auth\Domain\User\UserRepository;
 use App\Auth\Entry\Http\Token\TokenOutputContract;
+use App\Auth\Infrastructure\Security\JwtTokenizer;
+use App\Auth\Infrastructure\Security\RefreshTokenCache;
+use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Common\Exception\Domain\DomainException;
-use App\Auth\Security\JwtTokenizer;
-use App\Auth\Security\RefreshTokenCache;
-use App\Auth\Security\UserIdentity;
+use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
+use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
+use IWD\Symfony\PresentationBundle\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
 
 class Action extends AbstractController
 {
@@ -64,7 +64,7 @@ class Action extends AbstractController
         RefreshTokenCache $refreshTokenCache
     ): Response {
         $user = $userRepository->findByEmail($contract->email);
-        if (!$user) {
+        if (null === $user) {
             throw new DomainException('Invalid credentials', 401);
         }
 
@@ -85,7 +85,7 @@ class Action extends AbstractController
             refresh: $refresh = $jwtTokenizer->generateRefreshToken($userIdentity)
         );
 
-        $refreshTokenCache->cache($userIdentity->getId(), $refresh);
+        $refreshTokenCache->cache($userIdentity->id, $refresh);
 
         return $presenter->present(
             data: ApiFormatter::prepare(

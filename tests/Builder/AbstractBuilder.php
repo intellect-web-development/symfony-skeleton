@@ -61,7 +61,7 @@ abstract class AbstractBuilder
                 return get_object_vars($this);
             },
             $object,
-            get_class($object)
+            $object::class
         );
 
         foreach ($grabber() as $field => $data) {
@@ -106,13 +106,11 @@ abstract class AbstractBuilder
     }
 
     /**
-     * @return mixed
-     *
      * @throws ReflectionException
      */
-    protected static function getProperty(object $object, string $property)
+    protected static function getProperty(object $object, string $property): mixed
     {
-        $className = get_class($object);
+        $className = $object::class;
 
         try {
             $refProperty = self::getReflectionProperty($className, $property);
@@ -121,15 +119,14 @@ abstract class AbstractBuilder
         } catch (ReflectionException $reflectionException) {
             if ($object instanceof ArrayAccess) {
                 return $object[$property];
-            } else {
-                throw $reflectionException;
             }
+            throw $reflectionException;
         }
     }
 
     public static function setProperty(object $object, string $property, mixed $value): void
     {
-        $className = get_class($object);
+        $className = $object::class;
         try {
             $refProperty = self::getReflectionProperty($className, $property);
             $refProperty->setValue($object, $value);

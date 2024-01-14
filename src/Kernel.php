@@ -15,13 +15,20 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     public const SKELETON_PATHS = [
-        'Common/config',
-        'Auth/config',
+        'Common/Resource/config',
+        'Auth/Resource/config',
     ];
     public const PATHS = ConfigPaths::PATHS;
-//    public const PATHS = [
-//        // You can move the paths here
-//    ];
+    //    public const PATHS = [
+    //        // You can move the paths here
+    //    ];
+
+    public function __construct(string $environment, bool $debug)
+    {
+        # You can set need timezone here:
+        date_default_timezone_set('Europe/Moscow');
+        parent::__construct($environment, $debug);
+    }
 
     protected function configureContainer(ContainerConfigurator $container): void
     {
@@ -58,7 +65,7 @@ class Kernel extends BaseKernel
     public function configureRoutesForPath(RoutingConfigurator $routes, string $pathToConfig): void
     {
         $routes->import($pathToConfig . '/{routes}/' . $this->environment . '/*.yaml');
-        $routes->import($pathToConfig . '/{routes}/*.yaml');
+        $routes->import($pathToConfig . '/{routes}/**/*.yaml');
 
         if (is_file($pathToConfig . '/routes.yaml')) {
             $routes->import($pathToConfig . '/routes.yaml');

@@ -6,11 +6,11 @@ namespace App\Common\Service\Core;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class Flusher
+readonly class Flusher
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly EventDispatcher $dispatcher
+        private EntityManagerInterface $em,
+        private EventDispatcher $dispatcher
     ) {
     }
 

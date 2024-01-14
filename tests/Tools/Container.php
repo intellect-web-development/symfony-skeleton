@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Container
 {
-    private ContainerInterface $container;
+    private readonly ContainerInterface $container;
 
     /**
      * @psalm-suppress ContainerDependency

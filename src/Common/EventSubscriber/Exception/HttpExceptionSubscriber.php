@@ -49,7 +49,7 @@ class HttpExceptionSubscriber
             $this->logger->warning(
                 sprintf(
                     'Failed deserialize request to InputContract. Payload: %s, Error: %s',
-                    json_encode($exception->getPayload()),
+                    json_encode($exception->getPayload(), JSON_THROW_ON_ERROR),
                     $exception->getPrevious()?->getMessage()
                 )
             );
@@ -166,7 +166,7 @@ class HttpExceptionSubscriber
         return 'prod' === $this->env;
     }
 
-    protected function toApiFormat(Exception $exception, ?int $code = null): array
+    protected function toApiFormat(Exception $exception, int $code = null): array
     {
         $errors = $this->isValidJson($exception->getMessage())
             ? json_decode($exception->getMessage(), true, 512, JSON_THROW_ON_ERROR)

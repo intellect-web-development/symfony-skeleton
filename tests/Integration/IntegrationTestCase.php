@@ -65,7 +65,7 @@ class IntegrationTestCase extends KernelTestCase
 
     protected static function bindMock(object $object, string $property, mixed $value): void
     {
-        $className = get_class($object);
+        $className = $object::class;
         try {
             $refProperty = self::getReflectionProperty($className, $property);
             $refProperty->setValue($object, $value);

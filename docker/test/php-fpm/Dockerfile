@@ -1,41 +1,30 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 RUN apk add --update linux-headers
 
-RUN apk add --no-cache postgresql-dev fcgi libpng-dev bash coreutils libmcrypt-dev wget git unzip autoconf g++ make \
-    && pecl install xdebug \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable xdebug \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql sockets gd bcmath intl \
-    && echo 'extension=intl.so' > /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
+RUN apk add --no-cache postgresql-dev fcgi libpng-dev bash coreutils libmcrypt-dev wget git unzip autoconf g++ make rabbitmq-c-dev redis nodejs yarn
 
-RUN apk add --no-cache rabbitmq-c-dev && \
-    mkdir -p /usr/src/php/ext/amqp && \
-    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
-    docker-php-ext-install amqp
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN pecl install -o -f redis \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis
-
-RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
-
-COPY ./common/php/conf.d /usr/local/etc/php/conf.d
-COPY ./development/php/conf.d /usr/local/etc/php/conf.d
-
-COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
-RUN chmod 555 /usr/local/bin/wait-for-it
+RUN install-php-extensions xdebug intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis @composer-2
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/bin --filename=composer --quiet
+RUN apk add --update nodejs yarn
 
-RUN apk add --no-cache nodejs yarn
+RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./development/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/test/php-fpm/php.ini /usr/local/etc/php/php.ini
+COPY docker/test/php-fpm/.env.local /app/.env.local
+COPY docker/test/php-fpm/conf.d /usr/local/etc/php/conf.d
+
+COPY docker/common/wait-for-it.sh /usr/local/bin/wait-for-it
+RUN chmod 555 /usr/local/bin/wait-for-it
+
+COPY docker/test/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 WORKDIR /app
