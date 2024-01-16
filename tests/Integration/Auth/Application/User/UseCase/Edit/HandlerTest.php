@@ -21,8 +21,8 @@ class HandlerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        self::$handler = self::$containerTool->get(Handler::class);
-        self::$userRepository = self::$containerTool->get(UserRepository::class);
+        self::$handler = self::get(Handler::class);
+        self::$userRepository = self::get(UserRepository::class);
     }
 
     protected static function withFixtures(): array

@@ -20,6 +20,11 @@ services:
       - ./:/app
       - app_cache:/var/cache/app
       - app_log:/var/log/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      PHP_IDE_CONFIG: "serverName=app" # Необходимо назвать в Languages & Frameworks -> PHP -> Servers новый сервер как "app"
+      XDEBUG_SESSION: "1"
 
   app-postgres-db:
     volumes:

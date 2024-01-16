@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Integration;
 
 use App\Tests\Tools\AssertsTrait;
-use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
 use ArrayAccess;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,31 +21,43 @@ class IntegrationTestCase extends KernelTestCase
     protected EntityManagerInterface $entityManager;
     protected static Generator $faker;
 
-    protected static Container $containerTool;
-
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::bootKernel();
 
         self::$faker = Factory::create();
-        self::$containerTool = new Container(parent::getContainer());
     }
 
     protected function setUp(): void
     {
         parent::setUp();
-        self::$containerTool = new Container(parent::getContainer());
 
-        $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
+        $this->entityManager = self::get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->beginTransaction();
         $this->entityManager->getConnection()->setAutoCommit(false);
 
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var TestFixture $fixture */
-            $fixture = self::$containerTool->get($fixtureClass);
+            $fixture = self::get($fixtureClass);
             $fixture->load($this->entityManager);
         }
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $id
+     *
+     * @return T
+     * @throws \Exception
+     */
+    public static function get(string $id)
+    {
+        /** @var T $instance */
+        $instance = parent::getContainer()->get($id);
+
+        return $instance;
     }
 
     /**
