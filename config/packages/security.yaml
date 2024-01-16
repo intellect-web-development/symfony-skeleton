@@ -9,6 +9,8 @@ security:
             entity:
                 class: App\Auth\Domain\User\User
                 property: email
+        main:
+            id: App\Auth\Infrastructure\Security\UserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

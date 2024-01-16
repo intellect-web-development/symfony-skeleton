@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
-use Doctrine\ORM\Tools\ToolEvents;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 /**
  * @codeCoverageIgnore
  */
-class FixSequenceSchemaSubscriber implements EventSubscriber
+#[AutoconfigureTag(
+    name: 'doctrine.event_listener',
+    attributes: [
+        'event' => 'postGenerateSchema',
+    ]
+)]
+readonly class FixSequenceSchemaSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [
-            ToolEvents::postGenerateSchema,
-        ];
-    }
-
     public function postGenerateSchema(GenerateSchemaEventArgs $args): void
     {
         $schema = $args->getSchema();
