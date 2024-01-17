@@ -35,10 +35,10 @@ class CreateAdminCommand extends CliCommand
     {
         $this->handler->handle(
             new Command(
-                plainPassword: $inputContract->password,
-                name: $inputContract->name,
                 email: $inputContract->email,
+                plainPassword: $inputContract->password,
                 role: User::ROLE_ADMIN,
+                name: $inputContract->name,
             )
         );
 

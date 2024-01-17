@@ -1,3 +1,6 @@
+/.idea/
+/.vscode/
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -6,6 +9,8 @@
 /public/bundles/
 /var/
 /vendor/
+/node_modules/
+/public/js/
 ###< symfony/framework-bundle ###
 /.idea/
 /docker-compose.override.yml
@@ -21,6 +26,7 @@
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
+.phpunit
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###

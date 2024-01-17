@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 RUN apk add --update linux-headers
 
@@ -10,15 +10,19 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions xdebug intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis @composer-2
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./common/php/conf.d /usr/local/etc/php/conf.d
-COPY ./test/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
+COPY docker/test/php-fpm/php.ini /usr/local/etc/php/php.ini
+COPY docker/test/php-fpm/.env.local /app/.env.local
+COPY docker/test/php-fpm/conf.d /usr/local/etc/php/conf.d
 
-COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
+COPY docker/common/wait-for-it.sh /usr/local/bin/wait-for-it
 RUN chmod 555 /usr/local/bin/wait-for-it
 
-COPY ./test/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY docker/test/php-fpm/entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 WORKDIR /app
