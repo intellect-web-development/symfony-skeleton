@@ -21,8 +21,8 @@ class HandlerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        self::$handler = self::$containerTool->get(Handler::class);
-        self::$passwordHasher = self::$containerTool->get(PasswordHasherInterface::class);
+        self::$handler = self::get(Handler::class);
+        self::$passwordHasher = self::get(PasswordHasherInterface::class);
     }
 
     protected static function withFixtures(): array
@@ -36,10 +36,10 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             $command = new Command(
-                plainPassword: self::$faker->password(),
-                name: self::$faker->name() . md5(random_bytes(255)),
                 email: self::$faker->email() . md5(random_bytes(255)),
+                plainPassword: self::$faker->password(),
                 role: User::ROLE_ADMIN,
+                name: self::$faker->name() . md5(random_bytes(255)),
             )
         );
         self::assertTrue(
@@ -64,10 +64,10 @@ class HandlerTest extends IntegrationTestCase
     {
         $result = self::$handler->handle(
             new Command(
-                plainPassword: self::$faker->password(),
-                name: self::$faker->name() . md5(random_bytes(255)),
                 email: Fixture::EMAIL,
+                plainPassword: self::$faker->password(),
                 role: User::ROLE_ADMIN,
+                name: self::$faker->name() . md5(random_bytes(255)),
             )
         );
         self::assertTrue(

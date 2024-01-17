@@ -30,7 +30,6 @@ use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\StrictArraySearchRector;
 use Rector\CodingStyle\Rector\Plus\UseIncrementAssignRector;
-use Rector\CodingStyle\Rector\Property\NullifyUnionNullableRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveDoubleAssignRector;
@@ -41,7 +40,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
-use Rector\DeadCode\Rector\Plus\RemoveDeadZeroAndOneOperationRector;
 use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
@@ -58,7 +56,6 @@ use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\StmtsAwareInterface\ReturnEarlyIfVariableRector;
 use Rector\Php53\Rector\Ternary\TernaryToElvisRector;
 use Rector\Php54\Rector\Array_\LongArrayToShortArrayRector;
-use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php70\Rector\If_\IfToSpaceshipRector;
 use Rector\Php70\Rector\MethodCall\ThisCallOnStaticMethodToStaticCallRector;
@@ -132,7 +129,6 @@ return static function (RectorConfig $rectorConfig): void {
         CatchExceptionNameMatchingTypeRector::class,
         CountArrayToEmptyArrayComparisonRector::class,
         DataProviderArrayItemsNewlinedRector::class,
-        NullifyUnionNullableRector::class,
         StaticArrowFunctionRector::class,
         StrictArraySearchRector::class,
         SymplifyQuoteEscapeRector::class,
@@ -140,7 +136,6 @@ return static function (RectorConfig $rectorConfig): void {
         WrapEncapsedVariableInCurlyBracesRector::class,
         RemoveConcatAutocastRector::class,
         RemoveDeadTryCatchRector::class,
-        RemoveDeadZeroAndOneOperationRector::class,
         RemoveDoubleAssignRector::class,
         RemoveUnreachableStatementRector::class,
         RemoveUnusedForeachKeyRector::class,
@@ -155,7 +150,6 @@ return static function (RectorConfig $rectorConfig): void {
         ReturnEarlyIfVariableRector::class,
         TernaryToElvisRector::class,
         LongArrayToShortArrayRector::class,
-        AddDefaultValueForUndefinedVariableRector::class,
         IfIssetToCoalescingRector::class,
         IfToSpaceshipRector::class,
         RandomFunctionRector::class,

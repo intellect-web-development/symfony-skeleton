@@ -18,7 +18,7 @@ class UserRepositoryTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        self::$userRepository = self::$containerTool->get(UserRepository::class);
+        self::$userRepository = self::get(UserRepository::class);
     }
 
     protected static function withFixtures(): array

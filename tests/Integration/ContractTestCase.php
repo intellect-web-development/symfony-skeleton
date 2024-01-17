@@ -15,7 +15,7 @@ class ContractTestCase extends IntegrationTestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        self::$validator = self::$containerTool->get(ValidatorInterface::class);
+        self::$validator = self::get(ValidatorInterface::class);
     }
 
     /**

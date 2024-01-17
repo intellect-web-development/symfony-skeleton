@@ -9,7 +9,6 @@ use App\Auth\Domain\User\ValueObject\UserId;
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
-use App\Tests\Tools\Container;
 use App\Tests\Tools\TestFixture;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +24,6 @@ class FunctionalTestCase extends WebTestCase
 {
     use AssertsTrait;
 
-    protected static Container $containerTool;
     protected static Generator $faker;
 
     private static KernelBrowser $clientBlank;
@@ -47,11 +45,10 @@ class FunctionalTestCase extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        self::$containerTool = new Container(parent::getContainer());
 
-        self::$jwtTokenizer = self::$containerTool->get(JwtTokenizer::class);
+        self::$jwtTokenizer = self::get(JwtTokenizer::class);
 
-        $this->entityManager = self::$containerTool->get(EntityManagerInterface::class);
+        $this->entityManager = self::get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->beginTransaction();
         $this->entityManager->getConnection()->setAutoCommit(false);
 
@@ -59,7 +56,7 @@ class FunctionalTestCase extends WebTestCase
         $this->client->disableReboot();
 
         /** @var PasswordHasherInterface $passwordHasher */
-        $passwordHasher = self::$containerTool->get(PasswordHasherInterface::class);
+        $passwordHasher = self::get(PasswordHasherInterface::class);
         self::$user = User::create(
             id: new UserId('99999999'),
             createdAt: new DateTimeImmutable(),
@@ -82,7 +79,7 @@ class FunctionalTestCase extends WebTestCase
 
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var TestFixture $fixture */
-            $fixture = self::$containerTool->get($fixtureClass);
+            $fixture = self::get($fixtureClass);
             $fixture->load($this->entityManager);
         }
     }
@@ -118,6 +115,22 @@ class FunctionalTestCase extends WebTestCase
     }
 
     /**
+     * @template T
+     *
+     * @param class-string<T> $id
+     *
+     * @return T
+     * @throws \Exception
+     */
+    public static function get(string $id)
+    {
+        /** @var T $instance */
+        $instance = parent::getContainer()->get($id);
+
+        return $instance;
+    }
+
+    /**
      * @return class-string<TestFixture>[]
      */
     protected static function withFixtures(): array
@@ -135,7 +148,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntityData(?string $content = null): array
+    protected function parseEntityData(string $content = null): array
     {
         if (null === $content) {
             return [];
@@ -147,7 +160,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntitiesData(?string $content = null): array
+    protected function parseEntitiesData(string $content = null): array
     {
         if (null === $content) {
             return [];
