@@ -10,15 +10,11 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 readonly class UserIdentityResolver implements ValueResolverInterface
 {
     public function __construct(
-        private UserProviderInterface $userProvider,
-        private JwtTokenizer $jwtTokenizer,
         private Security $security,
     ) {
     }
@@ -33,26 +29,10 @@ readonly class UserIdentityResolver implements ValueResolverInterface
             $userIdentity = UserProvider::identityByUser($user);
         }
         if (!isset($userIdentity)) {
-            $userIdentity = $this->getFromBearerToken($request);
+            return [];
         }
 
         yield $userIdentity;
-    }
-
-    private function getFromBearerToken(Request $request): UserIdentity
-    {
-        $authorization = $request->headers->get('Authorization');
-        if (null === $authorization) {
-            throw new AccessDeniedException('Authorization token not found');
-        }
-        if (!(str_contains($authorization, 'Bearer ') && strlen($authorization) > 7)) {
-            throw new AccessDeniedException('Invalid authorization token');
-        }
-        [$type, $token] = explode(' ', $authorization);
-        /** @var UserIdentity $userIdentity */
-        $userIdentity = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
-
-        return $userIdentity;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool

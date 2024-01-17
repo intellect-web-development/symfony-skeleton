@@ -6,6 +6,7 @@ use Rector\CodeQuality\Rector\Assign\CombinedAssignRector;
 use Rector\CodeQuality\Rector\BooleanNot\SimplifyDeMorganBinaryRector;
 use Rector\CodeQuality\Rector\Catch_\ThrowWithPreviousExceptionRector;
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
+use Rector\CodeQuality\Rector\ClassMethod\ReturnTypeFromStrictScalarReturnExprRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
@@ -43,14 +44,14 @@ use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
-use Rector\Doctrine\CodeQuality\Rector\Class_\InitializeDefaultEntityCollectionRector;
-use Rector\Doctrine\CodeQuality\Rector\ClassMethod\MakeEntitySetterNullabilityInSyncWithPropertyRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\ChangeBigIntEntityPropertyToIntTypeRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\CorrectDefaultTypesOnEntityPropertyRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\TypedPropertyFromColumnTypeRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\TypedPropertyFromDoctrineCollectionRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\TypedPropertyFromToManyRelationTypeRector;
-use Rector\Doctrine\CodeQuality\Rector\Property\TypedPropertyFromToOneRelationTypeRector;
+use Rector\Doctrine\Rector\Class_\InitializeDefaultEntityCollectionRector;
+use Rector\Doctrine\Rector\ClassMethod\MakeEntitySetterNullabilityInSyncWithPropertyRector;
+use Rector\Doctrine\Rector\Property\ChangeBigIntEntityPropertyToIntTypeRector;
+use Rector\Doctrine\Rector\Property\CorrectDefaultTypesOnEntityPropertyRector;
+use Rector\Doctrine\Rector\Property\TypedPropertyFromColumnTypeRector;
+use Rector\Doctrine\Rector\Property\TypedPropertyFromDoctrineCollectionRector;
+use Rector\Doctrine\Rector\Property\TypedPropertyFromToManyRelationTypeRector;
+use Rector\Doctrine\Rector\Property\TypedPropertyFromToOneRelationTypeRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\StmtsAwareInterface\ReturnEarlyIfVariableRector;
 use Rector\Php53\Rector\Ternary\TernaryToElvisRector;
@@ -91,7 +92,6 @@ use Rector\Symfony\Symfony51\Rector\ClassMethod\CommandConstantReturnCodeRector;
 use Rector\Symfony\Symfony61\Rector\Class_\CommandPropertyToAttributeRector;
 use Rector\Symfony\Symfony62\Rector\MethodCall\SimplifyFormRenderingRector;
 use Rector\Symfony\Twig134\Rector\Return_\SimpleFunctionAndFilterRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictScalarReturnExprRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
