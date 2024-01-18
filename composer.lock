@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2126bd5077b057e8c3b916a5f9e54072",
+    "content-hash": "82327159040adab6db6e29787ab698b1",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2393,16 +2393,16 @@
         },
         {
             "name": "intellect-web-development/measurement",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/measurement.git",
-                "reference": "96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d"
+                "reference": "35b08cdeeeabc75df276205913898a16b987c9cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/measurement/zipball/96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d",
-                "reference": "96a8963596c7f8b5cd73f5d1817d3f6d7cc94b8d",
+                "url": "https://api.github.com/repos/intellect-web-development/measurement/zipball/35b08cdeeeabc75df276205913898a16b987c9cd",
+                "reference": "35b08cdeeeabc75df276205913898a16b987c9cd",
                 "shasum": ""
             },
             "require": {
@@ -2425,22 +2425,22 @@
             "description": "Package for measurement",
             "support": {
                 "issues": "https://github.com/intellect-web-development/measurement/issues",
-                "source": "https://github.com/intellect-web-development/measurement/tree/1.1.0"
+                "source": "https://github.com/intellect-web-development/measurement/tree/1.1.2"
             },
-            "time": "2023-04-18T10:59:44+00:00"
+            "time": "2023-05-11T20:22:51+00:00"
         },
         {
             "name": "intellect-web-development/symfony-presentation-bundle",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
-                "reference": "58b0f3586eae3de57b1a470d73988e086ee3694c"
+                "reference": "2b83335fca8ab54c1a97f768969293d173e377cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/58b0f3586eae3de57b1a470d73988e086ee3694c",
-                "reference": "58b0f3586eae3de57b1a470d73988e086ee3694c",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/2b83335fca8ab54c1a97f768969293d173e377cf",
+                "reference": "2b83335fca8ab54c1a97f768969293d173e377cf",
                 "shasum": ""
             },
             "require": {
@@ -2484,9 +2484,9 @@
             "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.4.0"
+                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.4.1"
             },
-            "time": "2023-08-03T08:01:12+00:00"
+            "time": "2023-08-04T17:10:24+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -13056,39 +13056,38 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.15.0",
+            "version": "v3.39.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7306744c63e9cc1337894252b4eec4920c38b053"
+                "reference": "857046d26b0d92dc13c4be769309026b100b517e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7306744c63e9cc1337894252b4eec4920c38b053",
-                "reference": "7306744c63e9cc1337894252b4eec4920c38b053",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/857046d26b0d92dc13c4be769309026b100b517e",
+                "reference": "857046d26b0d92dc13c4be769309026b100b517e",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^3.3",
                 "composer/xdebug-handler": "^3.0.3",
-                "doctrine/annotations": "^2",
-                "doctrine/lexer": "^2 || ^3",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "php": "^7.4 || ^8.0",
                 "sebastian/diff": "^4.0 || ^5.0",
-                "symfony/console": "^5.4 || ^6.0",
-                "symfony/event-dispatcher": "^5.4 || ^6.0",
-                "symfony/filesystem": "^5.4 || ^6.0",
-                "symfony/finder": "^5.4 || ^6.0",
-                "symfony/options-resolver": "^5.4 || ^6.0",
+                "symfony/console": "^5.4 || ^6.0 || ^7.0",
+                "symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0",
+                "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
+                "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+                "symfony/options-resolver": "^5.4 || ^6.0 || ^7.0",
                 "symfony/polyfill-mbstring": "^1.27",
                 "symfony/polyfill-php80": "^1.27",
                 "symfony/polyfill-php81": "^1.27",
-                "symfony/process": "^5.4 || ^6.0",
-                "symfony/stopwatch": "^5.4 || ^6.0"
+                "symfony/process": "^5.4 || ^6.0 || ^7.0",
+                "symfony/stopwatch": "^5.4 || ^6.0 || ^7.0"
             },
             "require-dev": {
+                "facile-it/paraunit": "^1.3 || ^2.0",
                 "justinrainbow/json-schema": "^5.2",
                 "keradus/cli-executor": "^2.0",
                 "mikey179/vfsstream": "^1.6.11",
@@ -13099,10 +13098,8 @@
                 "phpspec/prophecy": "^1.16",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^9.5",
-                "phpunitgoodpractices/polyfill": "^1.6",
-                "phpunitgoodpractices/traits": "^1.9.2",
-                "symfony/phpunit-bridge": "^6.2.3",
-                "symfony/yaml": "^5.4 || ^6.0"
+                "symfony/phpunit-bridge": "^6.2.3 || ^7.0",
+                "symfony/yaml": "^5.4 || ^6.0 || ^7.0"
             },
             "suggest": {
                 "ext-dom": "For handling output formats in XML",
@@ -13140,7 +13137,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.15.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.39.1"
             },
             "funding": [
                 {
@@ -13148,7 +13145,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-12T22:44:55+00:00"
+            "time": "2023-11-24T22:59:03+00:00"
         },
         {
             "name": "masterminds/html5",
