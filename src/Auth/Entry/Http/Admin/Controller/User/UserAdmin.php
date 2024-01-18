@@ -51,10 +51,10 @@ final class UserAdmin extends AbstractAdmin
     {
     }
 
-//    protected function configureActionButtons(array $buttonList, string $action, ?object $object = null): array
-//    {
-//        return [
-//            ...parent::configureActionButtons($buttonList, $action, $object),
-//        ];
-//    }
+    //    protected function configureActionButtons(array $buttonList, string $action, ?object $object = null): array
+    //    {
+    //        return [
+    //            ...parent::configureActionButtons($buttonList, $action, $object),
+    //        ];
+    //    }
 }
