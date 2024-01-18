@@ -19,14 +19,14 @@ class Kernel extends BaseKernel
         'Auth/Resource/config',
     ];
     public const PATHS = ConfigPaths::PATHS;
-//    public const PATHS = [
-//        // You can move the paths here
-//    ];
+    //    public const PATHS = [
+    //        // You can move the paths here
+    //    ];
 
     public function __construct(string $environment, bool $debug)
     {
         # You can set need timezone here:
-//        date_default_timezone_set('Europe/Moscow');
+        //        date_default_timezone_set('Europe/Moscow');
         parent::__construct($environment, $debug);
     }
 
