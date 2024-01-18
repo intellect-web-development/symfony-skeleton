@@ -16,9 +16,12 @@
         [program:messenger_consume]
         directory=/home/deploy/app
         command=docker compose -f docker-compose-production.yml run --rm app-php-fpm bin/console messenger:consume common-command-transport --limit=10
+        process_name=%(program_name)s_%(process_num)02d
         autostart=true
         autorestart=true
         user=deploy
+        startsecs=0
+        numprocs=1
 
 - name: Update supervisor config
   command: supervisorctl update
