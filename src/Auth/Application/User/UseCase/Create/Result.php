@@ -11,22 +11,29 @@ class Result
     public function __construct(
         public readonly ResultCase $case,
         public ?User $user = null,
+        public array $context = [],
     ) {
     }
 
-    public static function success(User $user): self
-    {
-        return new Result(case: ResultCase::Success, user: $user);
-    }
-
-    public static function emailIsBusy(): self
-    {
-        return new Result(case: ResultCase::EmailIsBusy);
+    public static function success(
+        User $user,
+        array $context = [],
+    ): self {
+        return new self(
+            case: ResultCase::Success,
+            user: $user,
+            context: $context
+        );
     }
 
     public function isSuccess(): bool
     {
         return $this->case->isEqual(ResultCase::Success);
+    }
+
+    public static function emailIsBusy(array $context = []): self
+    {
+        return new self(case: ResultCase::EmailIsBusy, context: $context);
     }
 
     public function isEmailIsBusy(): bool

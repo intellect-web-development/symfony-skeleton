@@ -15,7 +15,7 @@ class RootController
     public function getRoot(UrlGeneratorInterface $urlGenerator): Response
     {
         return new RedirectResponse(
-            $urlGenerator->generate('app_user_index')
+            $urlGenerator->generate('app_auth.user_index')
         );
     }
 }

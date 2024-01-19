@@ -12,8 +12,15 @@ class UserIdType extends BigIntType
 {
     public const NAME = 'auth_user_id';
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
+    public function getName(): string
     {
+        return self::NAME;
+    }
+
+    public function convertToDatabaseValue(
+        mixed $value,
+        AbstractPlatform $platform,
+    ): ?string {
         return $value instanceof UserId ? $value->__toString() : $value;
     }
 
@@ -21,14 +28,11 @@ class UserIdType extends BigIntType
      * @psalm-suppress InvalidNullableReturnType
      * @psalm-suppress NullableReturnStatement
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?UserId
-    {
+    public function convertToPHPValue(
+        mixed $value,
+        AbstractPlatform $platform,
+    ): ?UserId {
         return !empty($value) ? new UserId((string) $value) : null;
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool

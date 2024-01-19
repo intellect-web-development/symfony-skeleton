@@ -45,7 +45,7 @@
             {{ app.user.userIdentifier }}
             <i class="dropdown icon"></i>
             <div class="menu">
-                <a href="{{ path('app_user_account') }}" class="item">
+                <a href="{{ path('app_auth.user_account') }}" class="item">
                     <i class="user secret icon"></i>
                     {{ 'app.admin.ui.show_user'|trans }}
                 </a>
@@ -130,4 +130,3 @@
 {% endblock %}
 </body>
 </html>
-
