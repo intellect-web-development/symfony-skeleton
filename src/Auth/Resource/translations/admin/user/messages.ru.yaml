@@ -1,10 +1,10 @@
 app:
     admin:
         ui:
-            users: Пользователи
-            new_user: Добавить пользователя
-            edit_user: Редактировать пользователя
-            show_user: Пользователь
+            auth.users: Пользователи
+            new_auth_user: Добавить пользователя
+            edit_auth_user: Редактировать пользователя
+            show_auth_user: Пользователь
             modules:
                 auth:
                     user:
@@ -36,6 +36,5 @@ app:
                               user: Пользователь
                               admin: Администратор
             menu:
-                main:
-                    auth:
-                        user.list: Пользователи
+                auth:
+                    user.list: Пользователи
