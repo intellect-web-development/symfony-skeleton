@@ -8,15 +8,15 @@ push: production-push
 deploy: deploy-app
 
 production-build:
-	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${BUILD_NUMBER} ../
-	docker --log-level=debug build --pull --file=../docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${BUILD_NUMBER} ../
-	docker --log-level=debug build --pull --file=../docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${BUILD_NUMBER} ../docker/common/metrics/prometheus
+	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER} ../
+	docker --log-level=debug build --pull --file=../docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER} ../
+	docker --log-level=debug build --pull --file=../docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PROMETHEUS}:${BUILD_NUMBER} ../docker/common/metrics/prometheus
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
-	docker push ${REGISTRY}/${NAMESPACE}/nginx:${BUILD_NUMBER}
-	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${BUILD_NUMBER}
-	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PROMETHEUS}:${BUILD_NUMBER}
 
 deploy-app:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
