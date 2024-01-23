@@ -2,24 +2,23 @@ ifneq ("$(wildcard .env)","")
   include .env
 endif
 
+build-push-deploy: build push deploy
+build: production-build
+push: production-push
+deploy: deploy-app
+
 production-build:
-	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG} ./docker/common/metrics/prometheus
+	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${BUILD_NUMBER} ../
+	docker --log-level=debug build --pull --file=../docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${BUILD_NUMBER} ../
+	docker --log-level=debug build --pull --file=../docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${BUILD_NUMBER} ../docker/common/metrics/prometheus
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
-	docker push ${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/nginx:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${BUILD_NUMBER}
 
-try-build:
-	IMAGE_TAG=${BUILD_NUMBER} make production-build
-
-try-push:
-	IMAGE_TAG=${BUILD_NUMBER} make production-push
-
-deploy:
+deploy-app:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
