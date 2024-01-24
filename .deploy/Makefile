@@ -44,6 +44,7 @@ deploy-app:
 recreate-db:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:database:drop --force --no-interaction --if-exists'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --if-not-exists'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction'
 
 create-user-ssh:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"'
