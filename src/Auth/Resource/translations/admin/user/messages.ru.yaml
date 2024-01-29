@@ -2,9 +2,9 @@ app:
     admin:
         ui:
             auth.users: Пользователи
-            new_auth_user: Добавить пользователя
-            edit_auth_user: Редактировать пользователя
-            show_auth_user: Пользователь
+            new_auth.user: Добавить пользователя
+            edit_auth.user: Редактировать пользователя
+            show_auth.user: Пользователь
             modules:
                 auth:
                     user:
