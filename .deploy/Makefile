@@ -8,8 +8,11 @@ push: production-push
 deploy: deploy-app
 
 production-build:
-	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER} ../
 	docker --log-level=debug build --pull --file=../docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER} ../
+	docker create --name temp_build_php_fpm ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER}
+	docker cp temp_build_php_fpm:/app/public ./../
+	docker rm temp_build_php_fpm
+	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER} ../
 	docker --log-level=debug build --pull --file=../docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PROMETHEUS}:${BUILD_NUMBER} ../docker/common/metrics/prometheus
 
 production-push:
