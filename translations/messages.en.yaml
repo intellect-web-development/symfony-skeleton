@@ -12,6 +12,7 @@ app:
                 save: Save
                 login: Log in
                 create: Create
+                remove: Remove
                 yes_label: 'Yes'
                 no_label: 'No'
                 download: Download
