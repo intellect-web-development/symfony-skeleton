@@ -76,6 +76,7 @@ class CreateType extends AbstractType
                 'required' => true,
                 'label' => 'app.admin.ui.modules.auth.user.properties.role',
                 'choices' => [
+                    'app.admin.ui.common.none' => null,
                     'app.admin.ui.modules.auth.user.enums.role.user' => User::ROLE_USER,
                     'app.admin.ui.modules.auth.user.enums.role.admin' => User::ROLE_ADMIN,
                 ],
