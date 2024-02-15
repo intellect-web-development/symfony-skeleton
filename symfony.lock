@@ -101,6 +101,9 @@
             "config/packages/fos_rest.yaml"
         ]
     },
+    "intellect-web-development/symfony-entry-contract-bundle": {
+        "version": "1.0.2"
+    },
     "intellect-web-development/symfony-presentation-bundle": {
         "version": "0.0.10"
     },

@@ -32,4 +32,5 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
+    IWD\SymfonyEntryContract\SymfonyEntryContractBundle::class => ['all' => true],
 ];
