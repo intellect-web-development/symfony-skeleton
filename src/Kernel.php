@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Common\RateLimiter\CompillerPass\RateLimitingPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -72,5 +74,10 @@ class Kernel extends BaseKernel
         } elseif (is_file($path = $pathToConfig . '/routes.php')) {
             (require $path)($routes->withPath($path), $this);
         }
+    }
+
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new RateLimitingPass());
     }
 }

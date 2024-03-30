@@ -58,5 +58,5 @@ services:
             # which defines the prefix to use for the keys to avoid collision on the Redis server
             - { prefix: '%kernel.project_dir%' }
 
-    Symfony\Component\RateLimiter\RateLimiterFactory $anonymousApi: '@limiter.anonymous_api'
-    Symfony\Component\RateLimiter\RateLimiterFactory $authenticatedApi: '@limiter.authenticated_api'
+    Symfony\Component\RateLimiter\RateLimiterFactory $anonymousApiCommon: '@limiter.anonymous_api_common'
+    Symfony\Component\RateLimiter\RateLimiterFactory $authenticatedApiCommon: '@limiter.authenticated_api_common'
