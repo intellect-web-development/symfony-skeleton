@@ -10,6 +10,7 @@ use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
 use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Common\Exception\Domain\DomainException;
+use App\Common\RateLimiter\Attribute\RateLimiting;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;
@@ -19,9 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Action extends AbstractController
 {
+    public const NAME = 'token.authentication';
+
     /**
      * @OA\Tag(name="Auth.Token")
      * @OA\Post(
@@ -54,22 +58,24 @@ class Action extends AbstractController
      *     )
      * )
      */
-    #[Route(path: '/api/token/authentication', name: 'token.authentication', methods: ['POST'])]
+    #[RateLimiting(limiter: 'auth_token_authentication')]
+    #[Route(path: '/api/token/authentication', name: self::NAME, methods: ['POST'])]
     public function authentication(
         UserRepository $userRepository,
         InputContract $contract,
         UserPasswordHasherInterface $passwordHasher,
         JwtTokenizer $jwtTokenizer,
         Presenter $presenter,
-        RefreshTokenCache $refreshTokenCache
+        RefreshTokenCache $refreshTokenCache,
+        TranslatorInterface $translator,
     ): Response {
         $user = $userRepository->findByEmail($contract->email);
         if (null === $user) {
-            throw new DomainException('Invalid credentials', 401);
+            throw new DomainException($translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), 401);
         }
 
         if (!$passwordHasher->isPasswordValid($user, $contract->password)) {
-            throw new DomainException('Invalid credentials', 401);
+            throw new DomainException($translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), 401);
         }
 
         $userIdentity = new UserIdentity(
@@ -91,7 +97,7 @@ class Action extends AbstractController
             data: ApiFormatter::prepare(
                 data: $outputContract,
                 messages: [
-                    'Success authentication',
+                    $translator->trans('app.admin.ui.modules.auth.user.flash.success_authentication'),
                 ]
             ),
             outputFormat: new OutputFormat('json')

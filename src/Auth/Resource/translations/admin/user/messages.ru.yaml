@@ -24,6 +24,7 @@ app:
                             success_created: Пользователь создан
                             success_deleted: Пользователь удален
                             success_password_was_updated: Пароль успешно изменен
+                            success_authentication: Успешный вход в систему
                             password_is_short: Пароль слишком короткий
                             password_is_not_equals: Пароли не совпадают
                         actions:
