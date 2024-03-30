@@ -46,7 +46,7 @@ debug-router:
 	docker compose run --rm app-php-fpm bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-fpm composer require ...
+	docker compose run --rm app-php-fpm composer require symfony/lock symfony/rate-limiter
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
