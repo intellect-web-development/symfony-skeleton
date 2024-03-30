@@ -16,7 +16,6 @@ class Kernel extends BaseKernel
 
     public const SKELETON_PATHS = [
         'Common/Resource/config',
-        'Scheduler/Resource/config',
         'Auth/Resource/config',
     ];
     public const PATHS = ConfigPaths::PATHS;

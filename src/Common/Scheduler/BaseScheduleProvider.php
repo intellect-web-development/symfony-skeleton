@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Scheduler;
+namespace App\Common\Scheduler;
 
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\Schedule;
