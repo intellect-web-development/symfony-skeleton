@@ -57,3 +57,6 @@ services:
             # you can optionally pass an array of options. The only option is 'prefix',
             # which defines the prefix to use for the keys to avoid collision on the Redis server
             - { prefix: '%kernel.project_dir%' }
+
+    Symfony\Component\RateLimiter\RateLimiterFactory $anonymousApi: '@limiter.anonymous_api'
+    Symfony\Component\RateLimiter\RateLimiterFactory $authenticatedApi: '@limiter.authenticated_api'

@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -97,6 +98,18 @@ class HttpExceptionSubscriber
             }
 
             throw $exception;
+        } catch (HttpException $exception) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS);
+            $response->headers->add($exception->getHeaders());
+            $response->setContent(
+                $this->serializer->serialize(
+                    $this->toApiFormat($exception, Response::HTTP_TOO_MANY_REQUESTS),
+                    $format
+                )
+            );
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
         } catch (DomainException|PresentationBundleException $exception) {
             $response = new Response();
             $response->setContent(

@@ -30,7 +30,6 @@ readonly class RateLimitPerHourHttpCallSubscriber
         $userIdentity = $this->userIdentityFetcher->tryFetch($request);
 
         //todo: сделать white-list по IP через env: $request->getClientIp()
-        //todo: сделать механизм навешивания рейт-лимитов на отдельный экшен с гибкой настройкой
 
         if (null === $userIdentity) {
             $limiter = $this->anonymousApiCommon->create($request->getClientIp());

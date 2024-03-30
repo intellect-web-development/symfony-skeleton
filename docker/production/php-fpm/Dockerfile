@@ -17,6 +17,8 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis excimer
 
+RUN docker-php-ext-install sysvmsg sysvsem sysvshm
+
 FROM base as modules
 
 RUN install-php-extensions @composer-2

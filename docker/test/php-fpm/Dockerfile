@@ -14,6 +14,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN apk add --update nodejs yarn
 
+RUN docker-php-ext-install sysvmsg sysvsem sysvshm
+
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
 COPY docker/common/php/conf.d /usr/local/etc/php/conf.d
