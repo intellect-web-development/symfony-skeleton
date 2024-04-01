@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Common\EventSubscriber\RateLimitter;
 
 use App\Auth\Infrastructure\Security\UserIdentityFetcher;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -15,21 +16,28 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 #[AsEventListener(event: KernelEvents::RESPONSE, method: 'onRateLimit', priority: 90)]
 readonly class RateLimitPerHourHttpCallSubscriber
 {
+    private array $whiteListIp;
+
     public function __construct(
         private RateLimiterFactory $anonymousApiCommon,
         private RateLimiterFactory $authenticatedApiCommon,
         private UserIdentityFetcher $userIdentityFetcher,
+        #[Autowire('%env(resolve:RATE_LIMIT_WHITE_LIST_IP)%')]
+        string $whiteListIp,
     ) {
+        $this->whiteListIp = json_decode($whiteListIp, true) ?? [];
     }
 
-//     todo: это заготовка, позже необходимо будет произвести более тонкую настройку рейт-лимитов. Например, смотреть, если
-//      пользователь не авторизован - то работать по $anonymousApi и getClientIp, если авторизован, то по $user->getId и $authenticatedApi
     public function onRateLimit(ResponseEvent $event): void
     {
         $request = $event->getRequest();
-        $userIdentity = $this->userIdentityFetcher->tryFetch($request);
 
-        //todo: сделать white-list по IP через env: $request->getClientIp()
+        $ip = $request->getClientIp();
+        if (null !== $ip && in_array($ip, $this->whiteListIp)) {
+            return;
+        }
+
+        $userIdentity = $this->userIdentityFetcher->tryFetch($request);
 
         if (null === $userIdentity) {
             $limiter = $this->anonymousApiCommon->create($request->getClientIp());

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Common\RateLimiter;
 
 use App\Auth\Infrastructure\Security\UserIdentityFetcher;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -15,11 +16,16 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 #[AsEventListener(event: KernelEvents::RESPONSE, method: 'onRateLimit', priority: 80)]
 readonly class ApplyRateLimitingListener
 {
+    private array $whiteListIp;
+
     public function __construct(
         private UserIdentityFetcher $userIdentityFetcher,
         /** @var RateLimiterFactory[] */
         private array $rateLimiterClassMap,
+        #[Autowire('%env(resolve:RATE_LIMIT_WHITE_LIST_IP)%')]
+        string $whiteListIp,
     ) {
+        $this->whiteListIp = json_decode($whiteListIp, true) ?? [];
     }
 
     public function onRateLimit(KernelEvent $event): void
@@ -29,6 +35,12 @@ readonly class ApplyRateLimitingListener
         }
 
         $request = $event->getRequest();
+
+        $ip = $request->getClientIp();
+        if (null !== $ip && in_array($ip, $this->whiteListIp)) {
+            return;
+        }
+
         /** @var string $controllerClass */
         $controllerClass = $request->attributes->get('_controller');
 
@@ -40,9 +52,6 @@ readonly class ApplyRateLimitingListener
         }
 
         $userIdentity = $this->userIdentityFetcher->tryFetch($request);
-
-        //todo: сделать white-list по IP через env: $request->getClientIp()
-        //todo: сделать механизм навешивания рейт-лимитов на отдельный экшен с гибкой настройкой
 
         if (null === $userIdentity) {
             $limit = $rateLimiter->create($routeName . ':' . $request->getClientIp())->consume();
