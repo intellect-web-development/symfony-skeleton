@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Common\RateLimiter\CompillerPass;
+namespace App\Auth\Infrastructure\CompillerPass;
 
-use App\Common\RateLimiter\ApplyRateLimitingListener;
+use App\Auth\Infrastructure\EventSubscriber\RateLimitter\ApplyRateLimitingListener;
 use App\Common\RateLimiter\Attribute\RateLimiting;
 use LogicException;
 use ReflectionMethod;

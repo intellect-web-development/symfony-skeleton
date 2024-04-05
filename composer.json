@@ -32,6 +32,7 @@
         "promphp/prometheus_client_php": "*",
         "psr/log": "^1.0",
         "psr/simple-cache": "^2.0",
+        "qossmic/deptrac-shim": "^1.0",
         "sentry/sentry": "^3.19.1",
         "sentry/sentry-symfony": "^4.8",
         "sylius/grid-bundle": "^1.11",

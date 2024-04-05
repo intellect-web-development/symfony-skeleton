@@ -46,7 +46,7 @@ debug-router:
 	docker compose run --rm app-php-fpm bin/console debug:router
 
 stub-composer-operation:
-	docker compose run --rm app-php-fpm composer require symfony/lock symfony/rate-limiter
+	docker compose run --rm app-php-fpm composer require ...
 
 docker-compose-override-init:
 	cp docker-compose.override-example.yml docker-compose.override.yml
@@ -127,6 +127,9 @@ php-stan:
 
 twig-lint:
 	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
+
+deptrac-lint:
+	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse
 
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\RateLimiter;
+namespace App\Auth\Infrastructure\EventSubscriber\RateLimitter;
 
 use App\Auth\Infrastructure\Security\UserIdentityFetcher;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;

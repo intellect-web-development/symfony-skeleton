@@ -1,0 +1,10 @@
+parameters:
+  paths: ['./src']
+
+  layers:
+    - {name: Auth, collectors: [{type: directory, regex: '/src/Auth/.*'}]}
+    - {name: Common, collectors: [{type: directory, regex: '/src/Common/.*'}]}
+
+  ruleset:
+    Common: null
+    Auth: ['Common']
