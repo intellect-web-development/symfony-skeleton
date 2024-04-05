@@ -1,5 +1,5 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
-before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test deptrac-lint
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
 
