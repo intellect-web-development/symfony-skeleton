@@ -6,13 +6,15 @@ namespace App\Common\Entry\Http;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HealthCheckAction extends AbstractController
+class ApiInfoAction extends AbstractController
 {
-    public const NAME = 'health_check';
+    public const NAME = 'info';
 
-    #[Route(path: '/health-check', name: self::NAME, methods: ['GET'])]
+    #[Cache(maxage: 3600, public: true, mustRevalidate: true)]
+    #[Route(path: '/api/info', name: self::NAME, methods: ['GET'])]
     public function root(): JsonResponse
     {
         return new JsonResponse([

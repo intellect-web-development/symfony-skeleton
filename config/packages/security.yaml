@@ -24,6 +24,11 @@ security:
             custom_authenticators:
                 - App\Auth\Infrastructure\Security\TokenAuthenticator
 
+        api_info:
+            security: false
+            pattern: ^/api/info
+            stateless: true
+
         token:
             security: false
             pattern: ^/api/token
