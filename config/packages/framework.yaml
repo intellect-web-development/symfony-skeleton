@@ -12,11 +12,6 @@ framework:
     php_errors:
         log: true
 
-# todo: это пока не обкатанно
-when@prod:
-    framework:
-        http_cache: true
-
 when@test:
     framework:
         test: true
