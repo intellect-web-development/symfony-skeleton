@@ -2,7 +2,6 @@ parameters:
     locale: 'ru'
     path.src: '%kernel.project_dir%/src'
     path.root: '%kernel.project_dir%'
-#    todo: это должно немного ускорить приложение, пока не проверено.
     .container.dumper.inline_factories: true
 
 services:
