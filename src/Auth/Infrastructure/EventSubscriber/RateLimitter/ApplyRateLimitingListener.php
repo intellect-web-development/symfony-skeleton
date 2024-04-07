@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Auth\Infrastructure\EventSubscriber\RateLimitter;
 
 use App\Auth\Infrastructure\Security\UserIdentityFetcher;
+use App\Common\Exception\Http\ToManyRequestException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,15 +61,7 @@ readonly class ApplyRateLimitingListener
         }
 
         if (false === $limit->isAccepted()) {
-            throw new HttpException(
-                statusCode: Response::HTTP_TOO_MANY_REQUESTS,
-                message: 'Too many requests',
-                headers: [
-                    'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                    'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp() - time(),
-                    'X-RateLimit-Limit' => $limit->getLimit(),
-                ]
-            );
+            throw new ToManyRequestException($limit);
         }
     }
 }
