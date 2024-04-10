@@ -23,7 +23,7 @@ readonly class Handler
         }
 
         $this->userRepository->remove($user);
-        $this->flusher->flush($user);
+        $this->flusher->flush();
 
         return Result::success(
             user: $user,

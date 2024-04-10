@@ -40,7 +40,7 @@ readonly class Handler
             $this->passwordHasher->hashPassword($user, $command->plainPassword)
         );
 
-        $this->flusher->flush($user);
+        $this->flusher->flush();
 
         return Result::success(
             user: $user,
