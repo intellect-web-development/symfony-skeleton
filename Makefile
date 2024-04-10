@@ -129,7 +129,8 @@ twig-lint:
 	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
 
 deptrac-lint:
-	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse
+	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse --config-file="deptrac-modules.yaml"
+	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse --config-file="deptrac-layers.yaml"
 
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
