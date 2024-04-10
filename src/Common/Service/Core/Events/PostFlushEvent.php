@@ -6,5 +6,4 @@ namespace App\Common\Service\Core\Events;
 
 interface PostFlushEvent
 {
-
 }
