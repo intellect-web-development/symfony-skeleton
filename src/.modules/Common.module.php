@@ -1,5 +1,5 @@
 <?php
 
 return [
-  'Common/Resource/config'
+    'Common/Resource/config',
 ];

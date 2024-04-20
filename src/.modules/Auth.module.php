@@ -1,5 +1,5 @@
 <?php
 
 return [
-  'Auth/Resource/config'
+    'Auth/Resource/config',
 ];
