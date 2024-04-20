@@ -4,9 +4,6 @@ else
   include .env.local
 endif
 
-authorize-root:
-	cat ~/.ssh/id_rsa.pub | ssh root@${DEPLOY_DOMAIN} 'cat >> ~/.ssh/authorized_keys'
-
 app:
 	ansible-playbook -i hosts.yml app.yml
 
