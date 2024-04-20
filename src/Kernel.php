@@ -25,7 +25,11 @@ class Kernel extends BaseKernel
     {
         if (null === $this->paths) {
             $this->paths = [];
+            /** @var false|string[] $phpFiles */
             $phpFiles = glob(__DIR__ . '/.modules/*.php');
+            if (false === $phpFiles) {
+                return [];
+            }
 
             foreach ($phpFiles as $file) {
                 foreach (require_once $file as $path) {
