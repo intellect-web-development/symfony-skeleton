@@ -6,7 +6,6 @@ namespace App\Auth\Entry\Http\Token\InvalidateAllRefreshTokensExceptCurrent;
 
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
-use App\Common\Exception\Domain\DomainException;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;

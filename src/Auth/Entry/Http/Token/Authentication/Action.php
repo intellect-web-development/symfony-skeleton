@@ -9,7 +9,6 @@ use App\Auth\Entry\Http\Token\TokenOutputContract;
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
 use App\Auth\Infrastructure\Security\UserIdentity;
-use App\Common\Exception\Domain\DomainException;
 use App\Common\RateLimiter\Attribute\RateLimiting;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
