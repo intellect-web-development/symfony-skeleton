@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Action extends AbstractController
 {
@@ -63,7 +64,7 @@ class Action extends AbstractController
     ): Response {
         $userId = $jwtTokenizer->getUserIdByRefreshToken($contract->refreshToken);
         if (false === $refreshTokenCache->validate($userId, $contract->refreshToken)) {
-            throw new DomainException('Token is not valid', 400);
+            throw new AccessDeniedException(message: 'Token is not valid', code: 400);
         }
 
         $refreshTokenCache->invalidateAllExceptCurrent($userId, $contract->refreshToken);

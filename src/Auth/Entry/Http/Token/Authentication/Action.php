@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Action extends AbstractController
@@ -71,11 +72,11 @@ class Action extends AbstractController
     ): Response {
         $user = $userRepository->findByEmail($contract->email);
         if (null === $user) {
-            throw new DomainException($translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), 401);
+            throw new AccessDeniedException(message: $translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), code: 401);
         }
 
         if (!$passwordHasher->isPasswordValid($user, $contract->password)) {
-            throw new DomainException($translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), 401);
+            throw new AccessDeniedException(message: $translator->trans('app.admin.ui.modules.auth.user.flash.error_invalid_credentials'), code: 401);
         }
 
         $userIdentity = new UserIdentity(
