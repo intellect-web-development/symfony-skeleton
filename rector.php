@@ -23,7 +23,6 @@ use Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector;
 use Rector\CodeQuality\Rector\NullsafeMethodCall\CleanupUnneededNullsafeOperatorRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
-use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\ClassMethod\DataProviderArrayItemsNewlinedRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
@@ -126,7 +125,6 @@ return static function (RectorConfig $rectorConfig): void {
         SimplifyRegexPatternRector::class,
         ThrowWithPreviousExceptionRector::class,
         UnnecessaryTernaryExpressionRector::class,
-        CatchExceptionNameMatchingTypeRector::class,
         CountArrayToEmptyArrayComparisonRector::class,
         DataProviderArrayItemsNewlinedRector::class,
         StaticArrowFunctionRector::class,
