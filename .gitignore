@@ -65,3 +65,7 @@ finish_dev.sh
 /provisioning/.env
 /.deploy/.env
 /config/jwt/
+**/.DS_Store
+###> qossmic/deptrac-shim ###
+/.deptrac.cache
+###< qossmic/deptrac-shim ###

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Common\EventSubscriber\Exception;
 
 use App\Common\Exception\Domain\DomainException;
+use App\Common\Exception\Http\ToManyRequestException;
 use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
 use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
@@ -14,6 +15,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -23,16 +25,16 @@ use Throwable;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION, method: 'logException', priority: 2)]
 #[AsEventListener(event: KernelEvents::EXCEPTION, method: 'onFormatterException', priority: 1)]
-class HttpExceptionSubscriber
+readonly class HttpExceptionSubscriber
 {
     public function __construct(
-        private readonly SerializerInterface $serializer,
-        private readonly LoggerInterface $logger,
-        private readonly AdapterInterface $metrics,
+        private SerializerInterface $serializer,
+        private LoggerInterface $logger,
+        private AdapterInterface $metrics,
         #[Autowire('%env(APP_ENV)%')]
-        private readonly string $env,
+        private string $env,
         #[Autowire('%env(LOCAL_TEST)%')]
-        private readonly bool $debug,
+        private bool $debug,
     ) {
     }
 
@@ -97,6 +99,30 @@ class HttpExceptionSubscriber
             }
 
             throw $exception;
+        } catch (ToManyRequestException $exception) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS);
+            $response->headers->add($exception->getHeaders());
+            $response->setContent(
+                $this->serializer->serialize(
+                    $this->toApiFormat($exception, Response::HTTP_TOO_MANY_REQUESTS),
+                    $format
+                )
+            );
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
+        } catch (HttpException $exception) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            $response->headers->add($exception->getHeaders());
+            $response->setContent(
+                $this->serializer->serialize(
+                    $this->toApiFormat($exception, Response::HTTP_BAD_REQUEST),
+                    $format
+                )
+            );
+            $response->headers->add(['Content-Type' => 'application/' . $format]);
+            $event->setResponse($response);
         } catch (DomainException|PresentationBundleException $exception) {
             $response = new Response();
             $response->setContent(
@@ -166,7 +192,7 @@ class HttpExceptionSubscriber
         return 'prod' === $this->env;
     }
 
-    protected function toApiFormat(Exception $exception, ?int $code = null): array
+    protected function toApiFormat(Exception $exception, int $code = null): array
     {
         $errors = $this->isValidJson($exception->getMessage())
             ? json_decode($exception->getMessage(), true, 512, JSON_THROW_ON_ERROR)

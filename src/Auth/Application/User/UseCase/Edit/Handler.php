@@ -35,7 +35,7 @@ final readonly class Handler
             roles: [$role]
         );
 
-        $this->flusher->flush($user);
+        $this->flusher->flush();
 
         return Result::success($user);
     }

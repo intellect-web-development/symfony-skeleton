@@ -10,9 +10,12 @@ class DomainException extends \DomainException
 {
     public function __construct(
         string $message = '',
-        ?int $code = 0,
-        ?Throwable $previous = null
+        Throwable $previous = null,
+        public readonly ?array $context = null,
     ) {
-        parent::__construct($message, (int) $code, $previous);
+        parent::__construct(
+            message: $message,
+            previous: $previous,
+        );
     }
 }

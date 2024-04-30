@@ -28,7 +28,7 @@ final readonly class Handler
             $this->passwordHasher->hashPassword($user, $command->newPassword)
         );
 
-        $this->flusher->flush($user);
+        $this->flusher->flush();
 
         return Result::success($user);
     }

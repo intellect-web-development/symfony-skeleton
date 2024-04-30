@@ -7,16 +7,16 @@ services:
 
   app-postgres-db:
     ports:
-      - "54324:5432"
+      - "54321:5432"
 
   rabbitmq:
     ports:
-      - "5673:5672"
-      - "15673:15672"
+      - "5671:5672"
+      - "15671:15672"
 
   prometheus:
     ports:
-      - "9001:9090"
+      - "9091:9090"
 
   grafana:
     ports:

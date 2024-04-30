@@ -1,0 +1,12 @@
+parameters:
+  paths: ['./src']
+  exclude_files:
+    - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
+
+  layers:
+    - {name: Auth, collectors: [{type: directory, regex: '/src/Auth/.*'}]}
+    - {name: Common, collectors: [{type: directory, regex: '/src/Common/.*'}]}
+
+  ruleset:
+    Common: null
+    Auth: ['Common']

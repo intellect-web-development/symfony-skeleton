@@ -1,4 +1,4 @@
 doctrine:
     dbal:
         types:
-            auth_user_id: 'App\Auth\Domain\User\Type\UserIdType'
+            auth_user_id: App\Auth\Domain\User\Type\UserIdType

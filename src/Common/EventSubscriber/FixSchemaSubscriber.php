@@ -12,7 +12,6 @@ use Doctrine\ORM\Tools\ToolEvents;
 /** @codeCoverageIgnore */
 class FixSchemaSubscriber implements EventSubscriber
 {
-    /** {@inheritdoc} */
     public function getSubscribedEvents(): array
     {
         return [

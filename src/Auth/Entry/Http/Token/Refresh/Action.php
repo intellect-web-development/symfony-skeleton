@@ -10,7 +10,6 @@ use App\Auth\Entry\Http\Token\TokenOutputContract;
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
 use App\Auth\Infrastructure\Security\UserIdentity;
-use App\Common\Exception\Domain\DomainException;
 use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
 use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
 use IWD\Symfony\PresentationBundle\Service\Presenter;
@@ -71,12 +70,12 @@ class Action extends AbstractController
             $userId = $jwtTokenizer->getUserIdByRefreshToken($contract->refreshToken);
 
             if (false === $refreshTokenCache->validate($userId, $contract->refreshToken)) {
-                throw new DomainException('Token is not valid', 400);
+                throw new AccessDeniedException(message: 'Token is not valid', code: 400);
             }
 
             $user = $userRepository->findById(new UserId($userId));
             if (null === $user) {
-                throw new DomainException('User not found', 400);
+                throw new AccessDeniedException(message: 'User not found', code: 400);
             }
 
             $userIdentity = new UserIdentity(
@@ -102,7 +101,7 @@ class Action extends AbstractController
                 outputFormat: new OutputFormat('json')
             );
         } catch (AccessDeniedException $accessDeniedException) {
-            throw new DomainException('Access denied', 400, $accessDeniedException);
+            throw new AccessDeniedException(message: 'Access denied', previous: $accessDeniedException, code: 400);
         }
     }
 }

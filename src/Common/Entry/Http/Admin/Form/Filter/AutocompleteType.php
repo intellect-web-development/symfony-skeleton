@@ -32,8 +32,6 @@ class AutocompleteType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws RuntimeException
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void

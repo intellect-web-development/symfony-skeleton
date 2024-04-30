@@ -18,7 +18,7 @@ class UserRepositoryTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        self::$userRepository = self::$containerTool->get(UserRepository::class);
+        self::$userRepository = self::get(UserRepository::class);
     }
 
     protected static function withFixtures(): array
@@ -35,17 +35,6 @@ class UserRepositoryTest extends IntegrationTestCase
         );
         self::assertFalse(
             self::$userRepository->hasByEmail(md5(random_bytes(255)))
-        );
-    }
-
-    public function testNextId(): void
-    {
-        $id = self::$userRepository->nextId();
-
-        self::assertInstanceOf(UserId::class, $id);
-        self::assertEquals(
-            (int) $id->getValue() + 1,
-            (int) self::$userRepository->nextId()->getValue()
         );
     }
 

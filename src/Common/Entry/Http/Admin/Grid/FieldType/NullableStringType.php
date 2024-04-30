@@ -28,9 +28,6 @@ class NullableStringType implements FieldTypeInterface
     ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function render(Field $field, mixed $data, array $options): string
     {
         if ($this->propertyAccessor->isReadable($data, $field->getPath())) {
@@ -41,9 +38,6 @@ class NullableStringType implements FieldTypeInterface
         return '';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
     }

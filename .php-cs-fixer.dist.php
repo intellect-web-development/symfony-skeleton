@@ -18,6 +18,7 @@ return (new PhpCsFixer\Config())
         'global_namespace_import' => false,
         'phpdoc_summary' => false,
         'phpdoc_separation' => false,
+        'no_superfluous_phpdoc_tags' => false,
         'concat_space' => ['spacing' => 'one'],
     ])
     ->setFinder($finder)

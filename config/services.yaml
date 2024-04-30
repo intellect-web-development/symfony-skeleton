@@ -2,6 +2,7 @@ parameters:
     locale: 'ru'
     path.src: '%kernel.project_dir%/src'
     path.root: '%kernel.project_dir%'
+    .container.dumper.inline_factories: true
 
 services:
     _defaults:
@@ -57,3 +58,6 @@ services:
             # you can optionally pass an array of options. The only option is 'prefix',
             # which defines the prefix to use for the keys to avoid collision on the Redis server
             - { prefix: '%kernel.project_dir%' }
+
+    Symfony\Component\RateLimiter\RateLimiterFactory $anonymousApiCommon: '@limiter.anonymous_api_common'
+    Symfony\Component\RateLimiter\RateLimiterFactory $authenticatedApiCommon: '@limiter.authenticated_api_common'

@@ -9,7 +9,7 @@ security:
             entity:
                 class: App\Auth\Domain\User\User
                 property: email
-        main:
+        api:
             id: App\Auth\Infrastructure\Security\UserProvider
     firewalls:
         dev:
@@ -20,9 +20,15 @@ security:
             security: true
             pattern: ^/api/token/invalidate-all-refresh-tokens
             stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
+            provider: api
+            user_checker: App\Auth\Infrastructure\Security\ClientChecker
             custom_authenticators:
                 - App\Auth\Infrastructure\Security\TokenAuthenticator
+
+        api_info:
+            security: false
+            pattern: ^/api/info
+            stateless: true
 
         token:
             security: false
@@ -32,8 +38,9 @@ security:
         client:
             security: true
             pattern: ^/api/client
+            provider: api
             stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
+            user_checker: App\Auth\Infrastructure\Security\ClientChecker
             custom_authenticators:
                 - App\Auth\Infrastructure\Security\TokenAuthenticator
 
@@ -41,7 +48,8 @@ security:
             security: true
             pattern: ^/api/admin
             stateless: true
-            user_checker: App\Auth\Infrastructure\Security\UserChecker
+            provider: api
+            user_checker: App\Auth\Infrastructure\Security\AdminChecker
             custom_authenticators:
                 - App\Auth\Infrastructure\Security\TokenAuthenticator
 
