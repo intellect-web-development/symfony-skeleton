@@ -41,6 +41,7 @@ use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
+use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
 use Rector\Doctrine\CodeQuality\Rector\Class_\InitializeDefaultEntityCollectionRector;
 use Rector\Doctrine\CodeQuality\Rector\ClassMethod\MakeEntitySetterNullabilityInSyncWithPropertyRector;
 use Rector\Doctrine\CodeQuality\Rector\Property\ChangeBigIntEntityPropertyToIntTypeRector;
@@ -132,6 +133,7 @@ return static function (RectorConfig $rectorConfig): void {
         UseIncrementAssignRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         RemoveConcatAutocastRector::class,
+        RemoveDeadTryCatchRector::class,
         RemoveDoubleAssignRector::class,
         RemoveUnreachableStatementRector::class,
         RemoveUnusedForeachKeyRector::class,
