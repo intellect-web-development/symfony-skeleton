@@ -33,7 +33,7 @@ class CreateAdminCommand extends CliCommand
      */
     protected function handle(SymfonyStyle $io, InputContractInterface $inputContract): int
     {
-        $this->handler->handle(
+        $result = $this->handler->handle(
             new Command(
                 email: $inputContract->email,
                 plainPassword: $inputContract->password,
@@ -42,7 +42,11 @@ class CreateAdminCommand extends CliCommand
             )
         );
 
-        $io->success('Administration user was created!');
+        if ($result->isSuccess()) {
+            $io->success('Administration user was created!');
+        } else {
+            $io->error('Administration user was failed! Case: ' . $result->case->name);
+        }
 
         return self::SUCCESS;
     }
