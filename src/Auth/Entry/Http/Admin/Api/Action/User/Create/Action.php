@@ -19,7 +19,7 @@ class Action
     public const NAME = 'api_admin_app_auth_user_create';
 
     /**
-     * @OA\Tag(name="User.User")
+     * @OA\Tag(name="Auth.User")
      * @OA\Post(
      *     @OA\RequestBody(
      *         @OA\MediaType(
