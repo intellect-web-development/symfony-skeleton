@@ -7,6 +7,8 @@ parameters:
   layers:
     - {name: Common, collectors: [{type: directory, regex: '/src/Common/.*'}]}
     - {name: Auth, collectors: [{type: directory, regex: '/src/Auth/.*'}]}
+    - {name: Profile, collectors: [{type: directory, regex: '/src/Profile/.*'}]}
+    - {name: MetaProject, collectors: [{type: directory, regex: '/src/MetaProject/.*'}]}
 
   ruleset:
     Common: null
