@@ -5,7 +5,7 @@ import {RefreshTokenPayload} from "@/api/auth/token/methods/refresh/RefreshToken
 import RefreshTokenOutputContract from "@/api/auth/token/methods/refresh/RefreshTokenOutputContract";
 import type {Token} from "@/api/auth/token/dto/Token";
 
-const panelAuthMiddleware = (
+const protectedAuthMiddleware = (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
@@ -64,4 +64,4 @@ const panelAuthMiddleware = (
     }
 };
 
-export default panelAuthMiddleware;
+export default protectedAuthMiddleware;
