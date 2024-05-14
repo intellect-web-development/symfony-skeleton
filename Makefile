@@ -154,7 +154,7 @@ doctrine-schema-validate:
 	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:schema:validate
 
 composer-install:
-	docker compose run --rm app-php-fpm composer update intellect-web-development/symfony-doctrine-search-bundle
+	docker compose run --rm app-php-fpm composer install
 
 composer-audit:
 	docker compose run --rm app-php-fpm composer audit
