@@ -1,0 +1,43 @@
+@import './base.css';
+@import './m.css';
+
+.block {
+  height: 100%;
+}
+.app-background {
+  background: var(--vt-c-black);
+}
+.app-background-soft {
+  background: var(--vt-c-black-soft);
+}
+.app-background-mute {
+  background: var(--vt-c-black-mute);
+}
+
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.height-100 {
+  height:100%;
+}
+
+.p-message-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.p-message .p-message-text {
+  flex-grow: 1;
+}
+
+#app {
+  height: 100%;
+}
+
+.panel-page {
+  width: 100%;
+  height:100%;
+}
