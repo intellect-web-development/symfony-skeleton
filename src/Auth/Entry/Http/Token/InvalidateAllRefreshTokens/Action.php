@@ -6,9 +6,9 @@ namespace App\Auth\Entry\Http\Token\InvalidateAllRefreshTokens;
 
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
 use App\Auth\Infrastructure\Security\UserIdentity;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
+use IWD\SymfonyDoctrineSearch\Dto\Input\OutputFormat;
+use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyDoctrineSearch\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;

@@ -7,17 +7,16 @@ namespace App\Auth\Entry\Http\Client\Api\Action\Read;
 use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
 use App\Auth\Infrastructure\Security\UserIdentity;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
-use IWD\Symfony\PresentationBundle\Service\QueryBus\Aggregate\Bus;
-use IWD\Symfony\PresentationBundle\Service\QueryBus\Aggregate\Query;
+use IWD\SymfonyDoctrineSearch\Dto\Input\OutputFormat;
+use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyDoctrineSearch\Service\Presenter;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Bus;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Query;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Action
 {

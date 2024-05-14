@@ -6,9 +6,9 @@ namespace App\Auth\Entry\Http\Token\InvalidateAllRefreshTokensExceptCurrent;
 
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
+use IWD\SymfonyDoctrineSearch\Dto\Input\OutputFormat;
+use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyDoctrineSearch\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

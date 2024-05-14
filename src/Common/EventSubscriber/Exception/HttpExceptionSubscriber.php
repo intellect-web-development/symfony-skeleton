@@ -8,7 +8,7 @@ use App\Common\Exception\Domain\DomainException;
 use App\Common\Exception\Http\ToManyRequestException;
 use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
-use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
+use IWD\SymfonyDoctrineSearch\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -19,8 +19,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\SerializerInterface;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
+use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyDoctrineSearch\Exception\PresentationBundleException;
 use Throwable;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION, method: 'logException', priority: 2)]

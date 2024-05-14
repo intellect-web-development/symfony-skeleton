@@ -7,9 +7,9 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Remove;
 use App\Auth\Application\User\UseCase\Remove\Result;
 use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
 use DomainException;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
+use IWD\SymfonyDoctrineSearch\Dto\Input\OutputFormat;
+use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyDoctrineSearch\Service\Presenter;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResponsePresenter
