@@ -21,13 +21,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Action
 {
-    public const NAME = 'api_client_app_auth_user_read';
+    public const NAME = 'api_client_app_auth_identity-user';
 
     /**
      * @OA\Tag(name="Auth.User")
      * @OA\Response(
      *     response=200,
-     *     description="Read query for User",
+     *     description="Get identity User",
      *     @OA\JsonContent(
      *         allOf={
      *             @OA\Schema(ref=@Model(type=ApiFormatter::class)),
@@ -64,22 +64,18 @@ class Action
      * @Security(name="Bearer")
      */
     #[Route(
-        path: '/api/client/auth/users/{id}.{_format}',
+        path: '/api/client/auth/identity-user.{_format}',
         name: self::NAME,
         defaults: ['_format' => 'json'],
         methods: ['GET'],
     )]
     public function action(
-        string $id,
         Bus $bus,
         OutputFormat $outputFormat,
         Presenter $presenter,
         UserIdentity $userIdentity,
     ): Response {
-        if ($userIdentity->id !== $id) {
-            throw new AccessDeniedException('Access Denied.');
-        }
-        $query = new Query($id, User::class);
+        $query = new Query($userIdentity->id, User::class);
         /** @var User $user */
         $user = $bus->query($query);
 
