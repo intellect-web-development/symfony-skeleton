@@ -32,5 +32,5 @@ return [
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     IWD\SymfonyEntryContract\SymfonyEntryContractBundle::class => ['all' => true],
-    IWD\SymfonyDoctrineSearch\PresentationBundle::class => ['all' => true],
+    IWD\SymfonyDoctrineSearch\SymfonyDoctrineSearchBundle::class => ['all' => true],
 ];
