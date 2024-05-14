@@ -7,10 +7,10 @@ namespace App\Auth\Entry\Console\CreateAdmin;
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
 use App\Auth\Domain\User\User;
-use IWD\SymfonyDoctrineSearch\Attribute\CliContract;
-use IWD\SymfonyDoctrineSearch\Console\CliCommand;
-use IWD\SymfonyDoctrineSearch\Interfaces\InputContractInterface;
-use IWD\SymfonyDoctrineSearch\Service\CliContractResolver;
+use IWD\SymfonyEntryContract\Service\CliContractResolver;
+use IWD\SymfonyEntryContract\Attribute\CliContract;
+use IWD\SymfonyEntryContract\Console\CliCommand;
+use IWD\SymfonyEntryContract\Interfaces\InputContractInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
