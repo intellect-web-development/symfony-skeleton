@@ -2577,22 +2577,23 @@
         },
         {
             "name": "intellect-web-development/symfony-doctrine-search-bundle",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle.git",
-                "reference": "e63f15e3f3cbf8c166480817824e47b24ab13241"
+                "reference": "0acd14f0ee80819b28db70ccfd5614a27e25b517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-doctrine-search-bundle/zipball/e63f15e3f3cbf8c166480817824e47b24ab13241",
-                "reference": "e63f15e3f3cbf8c166480817824e47b24ab13241",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-doctrine-search-bundle/zipball/0acd14f0ee80819b28db70ccfd5614a27e25b517",
+                "reference": "0acd14f0ee80819b28db70ccfd5614a27e25b517",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "intellect-web-development/symfony-entry-contract-bundle": "^1.0",
                 "php": ">=8.2",
+                "symfony-bundles/bundle-dependency": "^1.0",
                 "symfony/config": "*",
                 "symfony/dependency-injection": "*",
                 "symfony/http-kernel": "*",
@@ -2631,9 +2632,9 @@
             "description": "Library for searching through your doctrine entities via the HTTP API",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle/tree/1.0.1"
+                "source": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle/tree/1.0.2"
             },
-            "time": "2024-05-14T06:28:22+00:00"
+            "time": "2024-05-14T07:42:18+00:00"
         },
         {
             "name": "intellect-web-development/symfony-entry-contract-bundle",
@@ -6358,6 +6359,67 @@
                 "source": "https://github.com/Sylius/SyliusUiBundle/tree/v1.12.13"
             },
             "time": "2023-12-04T10:10:34+00:00"
+        },
+        {
+            "name": "symfony-bundles/bundle-dependency",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony-bundles/bundle-dependency.git",
+                "reference": "9d86d2bbed4dd01ef04b76a5faab67a59ef5e760"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony-bundles/bundle-dependency/zipball/9d86d2bbed4dd01ef04b76a5faab67a59ef5e760",
+                "reference": "9d86d2bbed4dd01ef04b76a5faab67a59ef5e760",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.1",
+                "phpunit/php-code-coverage": "^3.3.0|^4.0",
+                "phpunit/phpunit": "^5.3",
+                "symfony/framework-bundle": "~2.7|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SymfonyBundles\\BundleDependency\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Khaperets",
+                    "email": "khaperets@gmail.com"
+                }
+            ],
+            "description": "Symfony BundleDependency Component",
+            "homepage": "https://github.com/symfony-bundles/bundle-dependency",
+            "keywords": [
+                "bundle",
+                "dependencies",
+                "dependency",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/symfony-bundles/bundle-dependency/issues",
+                "source": "https://github.com/symfony-bundles/bundle-dependency/tree/master"
+            },
+            "time": "2018-02-21T17:57:48+00:00"
         },
         {
             "name": "symfony/amqp-messenger",

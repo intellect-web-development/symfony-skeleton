@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
