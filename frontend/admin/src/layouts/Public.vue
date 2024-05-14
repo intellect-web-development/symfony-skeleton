@@ -21,7 +21,7 @@
             <template #center>
               <div class="nav">
                 <div class="other">
-                  <Button :label="$t('layouts.public.navbar.whois')" text plain style="flex-grow: 1" @click="$router.push('/')" />
+                  <Button :label="$t('layouts.public.navbar.whois')" text plain style="flex-grow: 1" @click="$router.push({name: 'Main'})" />
                 </div>
                 <div class="login">
                   <Button :label="$t('layouts.public.navbar.login')" text plain style="flex-grow: 1" @click="$router.push({name: 'Login'})" />

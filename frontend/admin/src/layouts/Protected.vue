@@ -58,7 +58,7 @@ export default {
           icon: 'pi pi-sign-out',
           command: () => {
             authStore.invalidateRefreshToken();
-            this.$router.push({ name: 'login' })
+            this.$router.push({ name: 'Login' })
             this.$nextTick(
                 () => {
                   this.$toast.add({ severity: 'success', summary: this.$t('main.success'), detail: this.$t('layouts.panel.actions.success-logout'), group: 'br',life: 3000 });

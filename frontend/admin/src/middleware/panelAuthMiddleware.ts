@@ -38,7 +38,7 @@ const panelAuthMiddleware = (
                     console.error('Refresh access token is failed', violations.violations);
 
                     forgetToken();
-                    next({ name: 'login' });
+                    next({ name: 'Login' });
 
                     return;
                 }
@@ -58,7 +58,7 @@ const panelAuthMiddleware = (
 
     if (!isAuthenticated(token)) {
         forgetToken();
-        next({ name: 'login' });
+        next({ name: 'Login' });
     } else {
         next();
     }
