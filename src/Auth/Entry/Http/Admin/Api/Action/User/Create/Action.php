@@ -6,8 +6,8 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Create;
 
 use App\Auth\Application\User\UseCase\Create\Handler;
 use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
-use IWD\SymfonyDoctrineSearch\Dto\Input\OutputFormat;
-use IWD\SymfonyDoctrineSearch\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Admin\Api\Action\User\Edit;
 
-use IWD\SymfonyDoctrineSearch\Interfaces\InputContractInterface;
+use IWD\SymfonyEntryContract\Interfaces\InputContractInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Positive;
 
