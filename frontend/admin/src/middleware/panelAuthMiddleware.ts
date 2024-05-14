@@ -13,7 +13,7 @@ const panelAuthMiddleware = (
     let token: Token|null = createTokenFromLocalstorage();
 
     if (null === token) {
-        next({ name: 'login' });
+        next({ name: 'Login' });
 
         return;
     }

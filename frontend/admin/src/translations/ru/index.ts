@@ -22,12 +22,11 @@ export default {
     },
     'layouts': {
         'public': {
-            'header': 'Проект "Futures Trader"',
-            'label': 'Добро пожаловать в систему автоматической торговли фьючерсами на крипто-рынке.',
+            'header': 'Проект "Skeleton"',
+            'label': 'Страница входа в SPA-админку',
             'navbar': {
                 'whois': 'О проекте',
                 'login': 'Войти',
-                'restore-access': 'Восстановить доступ',
             },
         },
         'panel': {

@@ -1,7 +1,7 @@
 <template>
   <div class="height-100 vertical-center">
     <SmartForm
-        :submit-label="$t('views.sign-up.form.submit')"
+        :submit-label="$t('views.login.form.submit')"
         :payload="form.payload"
         :schema="form.schema"
         :on-submit-callback="onSubmit"

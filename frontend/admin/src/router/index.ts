@@ -22,11 +22,6 @@ const router = createRouter({
           component: () => import('@/views/Public/Login.vue')
         },
         {
-          path: 'restore-access',
-          name: 'RestoreAccess',
-          component: () => import('@/views/Public/RestoreAccess.vue')
-        },
-        {
           path: ':catchAll(.*)*',
           component: () => import('@/views/Error/404.vue')
         },

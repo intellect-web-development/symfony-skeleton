@@ -22,11 +22,9 @@
               <div class="nav">
                 <div class="other">
                   <Button :label="$t('layouts.public.navbar.whois')" text plain style="flex-grow: 1" @click="$router.push('/')" />
-                  <Button :label="$t('layouts.public.navbar.sign-up')" text plain style="flex-grow: 1" @click="$router.push('/sign-up')" />
-                  <Button :label="$t('layouts.public.navbar.restore-access')" text plain style="flex-grow: 1" @click="$router.push('/restore-access')" />
                 </div>
                 <div class="login">
-                  <Button :label="$t('layouts.public.navbar.login')" text plain style="flex-grow: 1" @click="$router.push('/login')" />
+                  <Button :label="$t('layouts.public.navbar.login')" text plain style="flex-grow: 1" @click="$router.push({name: 'Login'})" />
                 </div>
               </div>
             </template>
