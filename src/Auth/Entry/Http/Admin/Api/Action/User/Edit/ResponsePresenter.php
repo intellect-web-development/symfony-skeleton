@@ -7,9 +7,9 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Edit;
 use App\Auth\Application\User\UseCase\Edit\Result;
 use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
 use DomainException;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Service\Presenter;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResponsePresenter

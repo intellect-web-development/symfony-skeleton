@@ -8,7 +8,8 @@ use App\Common\Exception\Domain\DomainException;
 use App\Common\Exception\Http\ToManyRequestException;
 use App\Common\Service\Metrics\AdapterInterface;
 use Exception;
-use IWD\Symfony\PresentationBundle\Exception\DeserializePayloadToInputContractException;
+use IWD\SymfonyDoctrineSearch\Exception\SymfonyDoctrineSearchException;
+use IWD\SymfonyEntryContract\Exception\DeserializePayloadToInputContractException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -19,8 +20,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\SerializerInterface;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Exception\PresentationBundleException;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Exception\SymfonyEntryContractBundleException;
 use Throwable;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION, method: 'logException', priority: 2)]
@@ -123,7 +124,7 @@ readonly class HttpExceptionSubscriber
             );
             $response->headers->add(['Content-Type' => 'application/' . $format]);
             $event->setResponse($response);
-        } catch (DomainException|PresentationBundleException $exception) {
+        } catch (DomainException|SymfonyEntryContractBundleException|SymfonyDoctrineSearchException $exception) {
             $response = new Response();
             $response->setContent(
                 $this->serializer->serialize(

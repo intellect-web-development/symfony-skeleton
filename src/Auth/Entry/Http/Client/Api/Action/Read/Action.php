@@ -7,27 +7,26 @@ namespace App\Auth\Entry\Http\Client\Api\Action\Read;
 use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
 use App\Auth\Infrastructure\Security\UserIdentity;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
-use IWD\Symfony\PresentationBundle\Service\QueryBus\Aggregate\Bus;
-use IWD\Symfony\PresentationBundle\Service\QueryBus\Aggregate\Query;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Service\Presenter;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Bus;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Query;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Action
 {
-    public const NAME = 'api_client_app_auth_user_read';
+    public const NAME = 'api_client_app_auth_identity-user';
 
     /**
      * @OA\Tag(name="Auth.User")
      * @OA\Response(
      *     response=200,
-     *     description="Read query for User",
+     *     description="Get identity User",
      *     @OA\JsonContent(
      *         allOf={
      *             @OA\Schema(ref=@Model(type=ApiFormatter::class)),
@@ -64,22 +63,18 @@ class Action
      * @Security(name="Bearer")
      */
     #[Route(
-        path: '/api/client/auth/users/{id}.{_format}',
+        path: '/api/client/auth/identity-user.{_format}',
         name: self::NAME,
         defaults: ['_format' => 'json'],
         methods: ['GET'],
     )]
     public function action(
-        string $id,
         Bus $bus,
         OutputFormat $outputFormat,
         Presenter $presenter,
         UserIdentity $userIdentity,
     ): Response {
-        if ($userIdentity->id !== $id) {
-            throw new AccessDeniedException('Access Denied.');
-        }
-        $query = new Query($id, User::class);
+        $query = new Query($userIdentity->id, User::class);
         /** @var User $user */
         $user = $bus->query($query);
 

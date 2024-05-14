@@ -6,8 +6,8 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Create;
 
 use App\Auth\Application\User\UseCase\Create\Handler;
 use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
@@ -19,7 +19,7 @@ class Action
     public const NAME = 'api_admin_app_auth_user_create';
 
     /**
-     * @OA\Tag(name="User.User")
+     * @OA\Tag(name="Auth.User")
      * @OA\Post(
      *     @OA\RequestBody(
      *         @OA\MediaType(

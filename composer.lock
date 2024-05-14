@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d68ef8b5abb2a320f3531354ab829f16",
+    "content-hash": "b3294eb6e23259c1401725f42ffc13fe",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2576,6 +2576,67 @@
             "time": "2023-05-11T20:22:51+00:00"
         },
         {
+            "name": "intellect-web-development/symfony-doctrine-search-bundle",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle.git",
+                "reference": "0acd14f0ee80819b28db70ccfd5614a27e25b517"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-doctrine-search-bundle/zipball/0acd14f0ee80819b28db70ccfd5614a27e25b517",
+                "reference": "0acd14f0ee80819b28db70ccfd5614a27e25b517",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "intellect-web-development/symfony-entry-contract-bundle": "^1.0",
+                "php": ">=8.2",
+                "symfony-bundles/bundle-dependency": "^1.0",
+                "symfony/config": "*",
+                "symfony/dependency-injection": "*",
+                "symfony/http-kernel": "*",
+                "symfony/serializer": "*",
+                "symfony/validator": "*"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.13",
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "overtrue/phplint": "^3.0",
+                "phpmetrics/phpmetrics": "^2.7",
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-symfony": "^4.0",
+                "roave/security-advisories": "dev-latest",
+                "symfony/security-bundle": "^6.1",
+                "vimeo/psalm": "^4.6",
+                "zircote/swagger-php": "^3.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "IWD\\SymfonyDoctrineSearch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alexander.erin",
+                    "email": "sanyaerin@mail.ru"
+                }
+            ],
+            "description": "Library for searching through your doctrine entities via the HTTP API",
+            "support": {
+                "issues": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle/issues",
+                "source": "https://github.com/intellect-web-development/symfony-doctrine-search-bundle/tree/1.0.2"
+            },
+            "time": "2024-05-14T07:42:18+00:00"
+        },
+        {
             "name": "intellect-web-development/symfony-entry-contract-bundle",
             "version": "1.0.3",
             "source": {
@@ -2631,65 +2692,6 @@
                 "source": "https://github.com/intellect-web-development/symfony-entry-contract-bundle/tree/1.0.3"
             },
             "time": "2024-04-29T15:50:40+00:00"
-        },
-        {
-            "name": "intellect-web-development/symfony-presentation-bundle",
-            "version": "0.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/intellect-web-development/symfony-presentation-bundle.git",
-                "reference": "2b83335fca8ab54c1a97f768969293d173e377cf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-presentation-bundle/zipball/2b83335fca8ab54c1a97f768969293d173e377cf",
-                "reference": "2b83335fca8ab54c1a97f768969293d173e377cf",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "doctrine/orm": "^2.13",
-                "friendsofphp/php-cs-fixer": "^3.14",
-                "overtrue/phplint": "^3.0",
-                "phpmetrics/phpmetrics": "^2.7",
-                "phpstan/phpstan": "^1.9",
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-symfony": "^4.0",
-                "roave/security-advisories": "dev-latest",
-                "symfony/config": "^6.1",
-                "symfony/dependency-injection": "^6.1",
-                "symfony/http-kernel": "^6.1",
-                "symfony/security-bundle": "^6.1",
-                "symfony/serializer": "^6.1",
-                "symfony/validator": "^6.1",
-                "vimeo/psalm": "^4.6",
-                "zircote/swagger-php": "^3.2"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "IWD\\Symfony\\PresentationBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "alexander.erin",
-                    "email": "sanyaerin@mail.ru"
-                }
-            ],
-            "description": "Package of tools for working with Command and Query(including a search engine with filtering, sorting and pagination)",
-            "support": {
-                "issues": "https://github.com/intellect-web-development/symfony-presentation-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-presentation-bundle/tree/0.4.1"
-            },
-            "time": "2023-08-04T17:10:24+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -6357,6 +6359,67 @@
                 "source": "https://github.com/Sylius/SyliusUiBundle/tree/v1.12.13"
             },
             "time": "2023-12-04T10:10:34+00:00"
+        },
+        {
+            "name": "symfony-bundles/bundle-dependency",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony-bundles/bundle-dependency.git",
+                "reference": "9d86d2bbed4dd01ef04b76a5faab67a59ef5e760"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony-bundles/bundle-dependency/zipball/9d86d2bbed4dd01ef04b76a5faab67a59ef5e760",
+                "reference": "9d86d2bbed4dd01ef04b76a5faab67a59ef5e760",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.1",
+                "phpunit/php-code-coverage": "^3.3.0|^4.0",
+                "phpunit/phpunit": "^5.3",
+                "symfony/framework-bundle": "~2.7|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SymfonyBundles\\BundleDependency\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Khaperets",
+                    "email": "khaperets@gmail.com"
+                }
+            ],
+            "description": "Symfony BundleDependency Component",
+            "homepage": "https://github.com/symfony-bundles/bundle-dependency",
+            "keywords": [
+                "bundle",
+                "dependencies",
+                "dependency",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/symfony-bundles/bundle-dependency/issues",
+                "source": "https://github.com/symfony-bundles/bundle-dependency/tree/master"
+            },
+            "time": "2018-02-21T17:57:48+00:00"
         },
         {
             "name": "symfony/amqp-messenger",

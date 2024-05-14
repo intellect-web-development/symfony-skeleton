@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Entry\Http\Admin\Api\Action\User\Search;
 
-use IWD\Symfony\PresentationBundle\Dto\Input\Filters;
-use IWD\Symfony\PresentationBundle\Dto\Input\SearchQuery;
+use IWD\SymfonyDoctrineSearch\Dto\Input\Filters;
+use IWD\SymfonyDoctrineSearch\Dto\Input\SearchQuery;
 use OpenApi\Annotations as OA;
 
 /** @codeCoverageIgnore */

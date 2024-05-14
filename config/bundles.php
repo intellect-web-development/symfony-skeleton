@@ -27,10 +27,10 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
-    IWD\Symfony\PresentationBundle\PresentationBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     IWD\SymfonyEntryContract\SymfonyEntryContractBundle::class => ['all' => true],
+    IWD\SymfonyDoctrineSearch\SymfonyDoctrineSearchBundle::class => ['all' => true],
 ];
