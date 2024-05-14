@@ -4,7 +4,7 @@
       <Card class="app-background vertical-center height-100">
         <template #header>
           <div style="display: flex; align-items: center; justify-content: center">
-            <img alt="Futures trader logo" class="logo" src="@/assets/img/favicon.ico" width="258" height="256" />
+            <img alt="Logo" class="logo" src="@/assets/img/favicon.ico" width="258" height="256" />
           </div>
         </template>
         <template #title>

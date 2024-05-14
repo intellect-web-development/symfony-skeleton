@@ -37,15 +37,12 @@ export default {
             'actions': {
                 'success-logout': 'Выход из системы произведен успешно',
             },
-            'sections': {
-                'my-tradings': 'Моя торговля'
-            }
         },
     },
     'views': {
         'panel': {
             'welcome': {
-                'title': 'Добро пожаловать в проект FuturesTrader!',
+                'title': 'Добро пожаловать!',
                 'content': 'Приступим?',
             }
         },
