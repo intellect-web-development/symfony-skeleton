@@ -62,7 +62,7 @@ class User implements UserInterface, ResourceInterface, PasswordAuthenticatedUse
 
         $this->recordEvent(
             new UserCreatedEvent(
-                id: $id,
+                id: $this->id,
             )
         );
     }
