@@ -5,4 +5,4 @@
 
 ## Темы:
 - [Настройка Xdebug](xdebug.md)
-- [Доступность DocHub в заблокированных странах](dochub.md)
+- [Разблокировка DockerHub](unlock-dochub)
