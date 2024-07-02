@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3294eb6e23259c1401725f42ffc13fe",
+    "content-hash": "1edc7939d566abee43085354a60ab8f3",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2638,16 +2638,16 @@
         },
         {
             "name": "intellect-web-development/symfony-entry-contract-bundle",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intellect-web-development/symfony-entry-contract-bundle.git",
-                "reference": "cb1bc8188b1bf6afca6e252cd0a7cd4cda8e13ed"
+                "reference": "7d501e0c7ab760884fccf430a223a6cf0e5bd18f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellect-web-development/symfony-entry-contract-bundle/zipball/cb1bc8188b1bf6afca6e252cd0a7cd4cda8e13ed",
-                "reference": "cb1bc8188b1bf6afca6e252cd0a7cd4cda8e13ed",
+                "url": "https://api.github.com/repos/intellect-web-development/symfony-entry-contract-bundle/zipball/7d501e0c7ab760884fccf430a223a6cf0e5bd18f",
+                "reference": "7d501e0c7ab760884fccf430a223a6cf0e5bd18f",
                 "shasum": ""
             },
             "require": {
@@ -2689,9 +2689,9 @@
             "description": "SymfonyEntryContract Symfony bundle for pretty contracts",
             "support": {
                 "issues": "https://github.com/intellect-web-development/symfony-entry-contract-bundle/issues",
-                "source": "https://github.com/intellect-web-development/symfony-entry-contract-bundle/tree/1.0.3"
+                "source": "https://github.com/intellect-web-development/symfony-entry-contract-bundle/tree/1.1.0"
             },
-            "time": "2024-04-29T15:50:40+00:00"
+            "time": "2024-07-02T08:16:28+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",

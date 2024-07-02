@@ -12,7 +12,6 @@ use IWD\SymfonyEntryContract\Attribute\CliContract;
 use IWD\SymfonyEntryContract\Console\CliCommand;
 use IWD\SymfonyEntryContract\Interfaces\InputContractInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:auth:user:create-admin',
@@ -31,7 +30,7 @@ class CreateAdminCommand extends CliCommand
     /**
      * @param InputContract $inputContract
      */
-    protected function handle(SymfonyStyle $io, InputContractInterface $inputContract): int
+    protected function handle(InputContractInterface $inputContract): int
     {
         $result = $this->handler->handle(
             new Command(
@@ -43,9 +42,9 @@ class CreateAdminCommand extends CliCommand
         );
 
         if ($result->isSuccess()) {
-            $io->success('Administration user was created!');
+            $this->io->success('Administration user was created!');
         } else {
-            $io->error('Administration user was failed! Case: ' . $result->case->name);
+            $this->io->error('Administration user was failed! Case: ' . $result->case->name);
         }
 
         return self::SUCCESS;
