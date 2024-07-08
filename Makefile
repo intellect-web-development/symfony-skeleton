@@ -3,6 +3,8 @@ before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm d
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
 
+reports: php-metrics-report
+
 first-init: jwt-keys chmod-password-key init
 
 asset-watch:
@@ -152,6 +154,9 @@ psalm:
 
 doctrine-schema-validate:
 	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:schema:validate
+
+php-metrics-report:
+	docker compose run --rm app-php-fpm ./vendor/bin/phpmetrics --report-html="var/report/phpmetrics" ./src
 
 composer-install:
 	docker compose run --rm app-php-fpm composer install
