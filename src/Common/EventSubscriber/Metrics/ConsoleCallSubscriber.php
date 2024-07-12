@@ -10,10 +10,10 @@ use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: ConsoleEvents::COMMAND, method: 'onSendMetrics', priority: 1)]
-class ConsoleCallSubscriber
+readonly class ConsoleCallSubscriber
 {
     public function __construct(
-        private readonly AdapterInterface $adapter
+        private AdapterInterface $adapter
     ) {
     }
 
