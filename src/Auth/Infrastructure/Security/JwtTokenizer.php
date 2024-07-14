@@ -17,7 +17,7 @@ use UnexpectedValueException;
 
 class JwtTokenizer
 {
-    private string $accessJwtTokenExpiredInterval = 'PT60M';
+    private string $accessJwtTokenExpiredInterval = 'PT12H';
     private string $refreshJwtTokenExpiredInterval = 'P30D';
 
     public function __construct(

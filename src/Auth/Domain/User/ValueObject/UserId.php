@@ -8,10 +8,11 @@ use Webmozart\Assert\Assert;
 
 readonly class UserId
 {
-    public function __construct(
-        private string $value
-    ) {
+    public function __construct(private string $value)
+    {
         Assert::notEmpty($value);
+        Assert::numeric($value);
+        Assert::greaterThan($value, 0);
     }
 
     public function getValue(): string

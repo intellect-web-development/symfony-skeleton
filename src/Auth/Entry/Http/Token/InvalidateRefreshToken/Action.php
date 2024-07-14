@@ -6,15 +6,15 @@ namespace App\Auth\Entry\Http\Token\InvalidateRefreshToken;
 
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\RefreshTokenCache;
-use App\Common\Exception\Domain\DomainException;
-use IWD\Symfony\PresentationBundle\Dto\Input\OutputFormat;
-use IWD\Symfony\PresentationBundle\Dto\Output\ApiFormatter;
-use IWD\Symfony\PresentationBundle\Service\Presenter;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Action extends AbstractController
 {
@@ -64,7 +64,7 @@ class Action extends AbstractController
     ): Response {
         $userId = $jwtTokenizer->getUserIdByRefreshToken($contract->refreshToken);
         if (false === $refreshTokenCache->validate($userId, $contract->refreshToken)) {
-            throw new DomainException('Token is not valid', 400);
+            throw new AccessDeniedException(message: 'Token is not valid', code: 400);
         }
 
         $refreshTokenCache->invalidate($userId, $contract->refreshToken);

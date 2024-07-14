@@ -7,6 +7,7 @@ namespace App\Auth\Domain\User;
 use App\Auth\Domain\User\ValueObject\UserId;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Generator;
 
 class UserRepository extends EntityRepository
 {
@@ -33,15 +34,17 @@ class UserRepository extends EntityRepository
         return $user;
     }
 
-    public function nextId(): UserId
+    public function findByEmail(string $email): ?User
     {
-        $id = $this->getEntityManager()
-            ->getConnection()
-            ->prepare("SELECT nextval('auth_user_id_seq')")
-            ->executeQuery()
-            ->fetchOne();
+        /** @var User|null $user */
+        $user = $this->findOneBy(['email' => $email]);
 
-        return new UserId((string) $id);
+        return $user;
+    }
+
+    public function hasById(UserId $id): bool
+    {
+        return null !== $this->findOneBy(['id' => $id]);
     }
 
     public function hasByEmail(string $email): bool
@@ -49,11 +52,29 @@ class UserRepository extends EntityRepository
         return null !== $this->findOneBy(['email' => $email]);
     }
 
-    public function findByEmail(string $email): ?User
-    {
-        /** @var User|null $user */
-        $user = $this->findOneBy(['email' => $email]);
+    public function all(
+        int $size = 100,
+        int $offset = 0,
+    ): Generator {
+        $count = $this->createQueryBuilder('user')->select('count(1)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
-        return $user;
+        while ($offset < $count) {
+            /** @var User[] $users */
+            $users = $this->createQueryBuilder('user')
+                ->addOrderBy('user.id', 'ASC')
+                ->setFirstResult($offset)
+                ->setMaxResults($size)
+                ->getQuery()
+                ->getResult()
+            ;
+            foreach ($users as $user) {
+                yield $user;
+            }
+
+            $offset += $size;
+            $this->getEntityManager()->clear();
+        }
     }
 }

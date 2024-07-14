@@ -19,6 +19,12 @@
     path: /etc/nginx/sites-enabled
     state: directory
 
+- name: Copy base nginx configs
+  become: yes
+  template:
+    src=templates/nginx.conf
+    dest=/etc/nginx/nginx.conf
+
 #3. Копирование файла конфигурации на сервер:
 # Вот так хранить и заливать ключи нельзя, придумать что нибудь. Но пока тестовая настройка - пускай висит. Ключи которые под гитом - считать скомпрометированными по умолчанию
 - name: Copy certificate

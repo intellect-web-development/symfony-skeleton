@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
 
         $this->recordEvent(
             new UserCreatedEvent(
-                id: $id->getValue(),
+                id: $this->id,
             )
         );
     }
