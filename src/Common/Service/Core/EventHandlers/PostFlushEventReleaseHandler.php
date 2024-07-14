@@ -23,7 +23,7 @@ readonly class PostFlushEventReleaseHandler
     ) {
     }
 
-    public function postFlush(PostFLushEventArgs $args): void
+    public function postFlush(PostFlushEventArgs $args): void
     {
         $objectManager = $args->getObjectManager();
         $unitOfWork = $objectManager->getUnitOfWork();

@@ -70,7 +70,7 @@ readonly class HttpExceptionSubscriber
 
         $exception = $event->getThrowable();
         if ($exception instanceof AccessDeniedException) {
-            /** @var \Symfony\Component\HttpFoundation\Request|null $request */
+            /** @var Request|null $request */
             $request = $exception->getSubject();
             if (null !== $request && Request::METHOD_GET === $request->getMethod()) {
                 return;
@@ -193,7 +193,7 @@ readonly class HttpExceptionSubscriber
         return 'prod' === $this->env;
     }
 
-    protected function toApiFormat(Exception $exception, int $code = null): array
+    protected function toApiFormat(Exception $exception, ?int $code = null): array
     {
         $errors = $this->isValidJson($exception->getMessage())
             ? json_decode($exception->getMessage(), true, 512, JSON_THROW_ON_ERROR)
