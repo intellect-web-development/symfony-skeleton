@@ -16,4 +16,6 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    IWD\SymfonyEntryContract\SymfonyEntryContractBundle::class => ['all' => true],
+    IWD\SymfonyDoctrineSearch\SymfonyDoctrineSearchBundle::class => ['all' => true],
 ];

@@ -161,6 +161,12 @@
     "http-interop/http-factory-guzzle": {
         "version": "1.2.0"
     },
+    "intellect-web-development/symfony-doctrine-search-bundle": {
+        "version": "1.0.2"
+    },
+    "intellect-web-development/symfony-entry-contract-bundle": {
+        "version": "1.1.0"
+    },
     "intellect-web-development/symfony-presentation-bundle": {
         "version": "0.0.4"
     },
