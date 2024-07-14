@@ -10,17 +10,37 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-/.idea/
 /docker-compose.override.yml
 
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> docker ###
+docker-compose.override.yml
+###< docker ###
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+/.composer/
+/database/
 /provisioning/hosts.yml
+/provisioning/.env
+/.deploy/.env
 /config/jwt/
+**/.DS_Store
+###> qossmic/deptrac-shim ###
+/.deptrac.cache
+###< qossmic/deptrac-shim ###
