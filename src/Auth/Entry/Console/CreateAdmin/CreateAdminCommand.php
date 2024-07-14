@@ -7,12 +7,11 @@ namespace App\Auth\Entry\Console\CreateAdmin;
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
 use App\Auth\Domain\User\User;
-use IWD\Symfony\PresentationBundle\Attribute\CliContract;
-use IWD\Symfony\PresentationBundle\Console\CliCommand;
-use IWD\Symfony\PresentationBundle\Interfaces\InputContractInterface;
-use IWD\Symfony\PresentationBundle\Service\CliContractResolver;
+use IWD\SymfonyEntryContract\Service\CliContractResolver;
+use IWD\SymfonyEntryContract\Attribute\CliContract;
+use IWD\SymfonyEntryContract\Console\CliCommand;
+use IWD\SymfonyEntryContract\Interfaces\InputContractInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:auth:user:create-admin',
@@ -31,9 +30,9 @@ class CreateAdminCommand extends CliCommand
     /**
      * @param InputContract $inputContract
      */
-    protected function handle(SymfonyStyle $io, InputContractInterface $inputContract): int
+    protected function handle(InputContractInterface $inputContract): int
     {
-        $this->handler->handle(
+        $result = $this->handler->handle(
             new Command(
                 email: $inputContract->email,
                 plainPassword: $inputContract->password,
@@ -42,7 +41,11 @@ class CreateAdminCommand extends CliCommand
             )
         );
 
-        $io->success('Administration user was created!');
+        if ($result->isSuccess()) {
+            $this->io->success('Administration user was created!');
+        } else {
+            $this->io->error('Administration user was failed! Case: ' . $result->case->name);
+        }
 
         return self::SUCCESS;
     }

@@ -38,17 +38,6 @@ class UserRepositoryTest extends IntegrationTestCase
         );
     }
 
-    public function testNextId(): void
-    {
-        $id = self::$userRepository->nextId();
-
-        self::assertInstanceOf(UserId::class, $id);
-        self::assertEquals(
-            (int) $id->getValue() + 1,
-            (int) self::$userRepository->nextId()->getValue()
-        );
-    }
-
     public function testAdd(): void
     {
         $user = (new UserBuilder())->build();

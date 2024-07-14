@@ -10,6 +10,8 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions xdebug intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis @composer-2
 
+RUN docker-php-ext-install sysvmsg sysvsem sysvshm
+
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Auth\Infrastructure\CompillerPass\RateLimitingPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -14,26 +16,43 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public const SKELETON_PATHS = [
-        'Common/Resource/config',
-        'Auth/Resource/config',
-    ];
-    public const PATHS = ConfigPaths::PATHS;
-    //    public const PATHS = [
-    //        // You can move the paths here
-    //    ];
+    public ?array $paths = null;
+
+    /**
+     * @return string[]
+     */
+    private function getConfigPaths(): array
+    {
+        if (null === $this->paths) {
+            $this->paths = [];
+            /** @var false|string[] $phpFiles */
+            $phpFiles = glob(__DIR__ . '/.modules/*.php');
+            if (false === $phpFiles) {
+                return [];
+            }
+
+            foreach ($phpFiles as $file) {
+                foreach (require_once $file as $path) {
+                    $this->paths[] = $path;
+                }
+            }
+        }
+
+        return $this->paths;
+    }
 
     public function __construct(string $environment, bool $debug)
     {
         # You can set need timezone here:
-        //        date_default_timezone_set('Europe/Moscow');
+        date_default_timezone_set('Europe/Moscow');
+
         parent::__construct($environment, $debug);
     }
 
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $this->configureContainerForPath($container, __DIR__ . '/../config');
-        foreach ([...self::SKELETON_PATHS, ...self::PATHS] as $path) {
+        foreach ($this->getConfigPaths() as $path) {
             $this->configureContainerForPath($container, __DIR__ . '/' . $path);
         }
     }
@@ -41,7 +60,7 @@ class Kernel extends BaseKernel
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $this->configureRoutesForPath($routes, __DIR__ . '/../config');
-        foreach ([...self::SKELETON_PATHS, ...self::PATHS] as $path) {
+        foreach ($this->getConfigPaths() as $path) {
             $this->configureRoutesForPath($routes, __DIR__ . '/' . $path);
         }
     }
@@ -72,5 +91,10 @@ class Kernel extends BaseKernel
         } elseif (is_file($path = $pathToConfig . '/routes.php')) {
             (require $path)($routes->withPath($path), $this);
         }
+    }
+
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new RateLimitingPass());
     }
 }

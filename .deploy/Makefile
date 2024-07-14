@@ -2,24 +2,26 @@ ifneq ("$(wildcard .env)","")
   include .env
 endif
 
+build-push-deploy: build push deploy
+build: production-build
+push: production-push
+deploy: deploy-app
+
 production-build:
-	docker --log-level=debug build --pull --file=docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG} .
-	docker --log-level=debug build --pull --file=docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG} ./docker/common/metrics/prometheus
+	docker --log-level=debug build --pull --file=../docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER} ../
+	docker create --name temp_build_php_fpm ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER}
+	docker cp temp_build_php_fpm:/app/public ./../
+	docker rm temp_build_php_fpm
+	docker --log-level=debug build --pull --file=../docker/production/nginx/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER} ../
+	docker --log-level=debug build --pull --file=../docker/common/metrics/prometheus/Dockerfile --tag=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PROMETHEUS}:${BUILD_NUMBER} ../docker/common/metrics/prometheus
 
 production-push:
 	docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}
-	docker push ${REGISTRY}/${NAMESPACE}/nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/app-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/${NAMESPACE}/app-metrics-prometheus:${IMAGE_TAG}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_NGINX}:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PHP_FPM}:${BUILD_NUMBER}
+	docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME_PROMETHEUS}:${BUILD_NUMBER}
 
-try-build:
-	IMAGE_TAG=${BUILD_NUMBER} make production-build
-
-try-push:
-	IMAGE_TAG=${BUILD_NUMBER} make production-push
-
-deploy:
+deploy-app:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker login --username=${NAMESPACE} ${REGISTRY} --password=${PASSWORD}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'rm -rf app_${BUILD_NUMBER}'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'mkdir app_${BUILD_NUMBER}'
@@ -39,15 +41,18 @@ deploy:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console --env=prod doctrine:cache:clear-metadata'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console --env=prod doctrine:cache:clear-query'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console --env=prod doctrine:cache:clear-result'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key'
 	ssh -o StrictHostKeyChecking=no root@${HOST} -p ${PORT} 'service nginx restart'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker image prune -a -f'
+	ssh -o StrictHostKeyChecking=no root@${HOST} -p ${PORT} 'docker ps'
 
 recreate-db:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:database:drop --force --no-interaction --if-exists'
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:database:create --no-interaction --if-not-exists'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction'
 
 create-user-ssh:
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="${ADMIN_EMAIL}" --password="${ADMIN_PASSWORD}" --name="Admin"'
 
 clear-unused-images:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker image prune -a -f'

@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\User\UseCase\Create;
 
+use App\Auth\Domain\User\Service\UserNextIdService;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\UserRepository;
 use App\Common\Service\Core\Flusher;
 use DateTimeImmutable;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final readonly class Handler
+readonly class Handler
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
-        private UserRepository $userRepository,
         private Flusher $flusher,
+        private UserRepository $userRepository,
+        private UserNextIdService $userNextIdService,
     ) {
     }
 
@@ -24,10 +26,9 @@ final readonly class Handler
         if ($this->userRepository->hasByEmail($command->email)) {
             return Result::emailIsBusy();
         }
-
         $now = new DateTimeImmutable();
         $user = User::create(
-            id: $this->userRepository->nextId(),
+            id: $this->userNextIdService->allocateId(),
             createdAt: $now,
             updatedAt: $now,
             email: $command->email,
@@ -39,8 +40,13 @@ final readonly class Handler
             $this->passwordHasher->hashPassword($user, $command->plainPassword)
         );
 
-        $this->flusher->flush($user);
+        $this->flusher->flush();
 
-        return Result::success($user);
+        return Result::success(
+            user: $user,
+            context: [
+                'id' => $user->getId()->getValue(),
+            ]
+        );
     }
 }
