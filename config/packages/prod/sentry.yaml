@@ -1,6 +1,19 @@
 sentry:
     dsn: '%env(SENTRY_DSN)%'
     register_error_listener: false # Disables the ErrorListener to avoid duplicated log in sentry
+    options:
+        traces_sample_rate: 1.0
+        profiles_sample_rate: 1.0
+    tracing:
+        enabled: true
+        dbal: # DB queries
+          enabled: true
+        cache: # cache pools
+          enabled: true
+        twig: # templating engine
+          enabled: true
+        http_client: # Symfony HTTP client
+          enabled: true
 
 monolog:
     handlers:
@@ -8,20 +21,3 @@ monolog:
             type: sentry
             level: !php/const Monolog\Logger::ERROR
             hub_id: Sentry\State\HubInterface
-
-#        If you are using Monolog, you also need these additional configuration and services to log the errors correctly:
-#        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
-#        register_error_listener: false
-
-#    monolog:
-#        handlers:
-#            sentry:
-#                type: service
-#                id: Sentry\Monolog\Handler
-
-#    services:
-#        Sentry\Monolog\Handler:
-#            arguments:
-#                $hub: '@Sentry\State\HubInterface'
-#                $level: !php/const Monolog\Logger::ERROR
-#                $bubble: false

@@ -6,5 +6,9 @@ namespace App\Common\Service\Core;
 
 interface AggregateRoot
 {
-    public function releaseEvents(): array;
+    public function releaseAllEvents(): array;
+
+    public function releasePreFlushEvents(): array;
+
+    public function releasePostFlushEvents(): array;
 }

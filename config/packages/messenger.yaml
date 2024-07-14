@@ -27,6 +27,12 @@ framework:
                     max_retries: 3
                     delay: 5000
                     multiplier: 3
+                options:
+                    exchange:
+                        name: common
+                    queues:
+                        common: ~
+
             failed: "%env(MESSENGER_TRANSPORT_DSN)%/failed"
 
             sync: 'sync://'

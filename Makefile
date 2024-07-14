@@ -1,7 +1,11 @@
 init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
-before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test
+before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test deptrac-lint
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
+
+reports: php-metrics-report
+
+first-init: jwt-keys chmod-password-key init
 
 asset-watch:
 	yarn watch
@@ -28,6 +32,14 @@ consume:
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
+
+jwt-keys:
+	mkdir -p config/jwt
+	ssh-keygen -t rsa -b 4096 -m PEM -f ./config/jwt/jwtRS256.key
+	openssl rsa -in ./config/jwt/jwtRS256.key -pubout -outform PEM -out ./config/jwt/jwtRS256.key.pub
+
+chmod-password-key:
+	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
 
 create-default-admin:
 	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
@@ -118,6 +130,10 @@ php-stan:
 twig-lint:
 	docker compose run --rm app-php-fpm php bin/console lint:twig templates src --show-deprecations
 
+deptrac-lint:
+	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse --config-file="deptrac-modules.yaml"
+	docker compose run --rm app-php-fpm ./vendor/bin/deptrac analyse --config-file="deptrac-layers.yaml"
+
 php-lint:
 	docker compose run --rm app-php-fpm ./vendor/bin/phplint
 
@@ -138,6 +154,9 @@ psalm:
 
 doctrine-schema-validate:
 	docker compose run --rm app-php-fpm php bin/console --env=test doctrine:schema:validate
+
+php-metrics-report:
+	docker compose run --rm app-php-fpm ./vendor/bin/phpmetrics --report-html="var/report/phpmetrics" ./src
 
 composer-install:
 	docker compose run --rm app-php-fpm composer install

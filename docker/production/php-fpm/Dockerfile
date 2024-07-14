@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FROM php:8.2-fpm-alpine as base
+FROM --platform=linux/amd64 php:8.2-fpm-alpine as base
 
 WORKDIR /app
 
@@ -15,7 +15,9 @@ RUN apk add --no-cache \
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis
+RUN install-php-extensions opcache intl bcmath gd pdo_pgsql pgsql sockets amqp-^1.11.0 zip redis excimer
+
+RUN docker-php-ext-install sysvmsg sysvsem sysvshm
 
 FROM base as modules
 

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use App\Auth\Domain\User\User;
 use Generator;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -15,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 readonly class UserIdentityResolver implements ValueResolverInterface
 {
     public function __construct(
-        private Security $security,
+        private UserIdentityFetcher $userIdentityFetcher,
     ) {
     }
 
@@ -24,15 +22,8 @@ readonly class UserIdentityResolver implements ValueResolverInterface
         if (!$this->supports($request, $argument)) {
             return [];
         }
-        if (($user = $this->security->getUser()) !== null) {
-            /** @var User $user */
-            $userIdentity = UserProvider::identityByUser($user);
-        }
-        if (!isset($userIdentity)) {
-            return [];
-        }
 
-        yield $userIdentity;
+        yield $this->userIdentityFetcher->fetch($request);
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool

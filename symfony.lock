@@ -101,8 +101,11 @@
             "config/packages/fos_rest.yaml"
         ]
     },
-    "intellect-web-development/symfony-presentation-bundle": {
-        "version": "0.0.10"
+    "intellect-web-development/symfony-doctrine-search-bundle": {
+        "version": "1.0.1"
+    },
+    "intellect-web-development/symfony-entry-contract-bundle": {
+        "version": "1.0.2"
     },
     "jms/serializer-bundle": {
         "version": "4.2",
@@ -147,8 +150,20 @@
             "config/routes/nelmio_api_doc.yaml"
         ]
     },
+    "nelmio/cors-bundle": {
+        "version": "2.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
+    },
     "php-http/discovery": {
-        "version": "1.19",
+        "version": "1.18",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -195,6 +210,18 @@
             ".env.test",
             "phpunit.xml.dist",
             "tests/bootstrap.php"
+        ]
+    },
+    "qossmic/deptrac-shim": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.19",
+            "ref": "3c3daab46226c37fc14e10faf81df737a3039d96"
+        },
+        "files": [
+            "deptrac.yaml"
         ]
     },
     "sentry/sentry-symfony": {
@@ -307,6 +334,18 @@
             "public/index.php",
             "src/Controller/.gitignore",
             "src/Kernel.php"
+        ]
+    },
+    "symfony/lock": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "8e937ff2b4735d110af1770f242c1107fdab4c8e"
+        },
+        "files": [
+            "config/packages/lock.yaml"
         ]
     },
     "symfony/maker-bundle": {

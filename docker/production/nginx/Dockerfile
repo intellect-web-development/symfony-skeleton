@@ -1,8 +1,6 @@
 #!/bin/bash
 
-FROM nginx:1.25-alpine
-
-RUN apk add --no-cache curl
+FROM --platform=linux/amd64 nginx:1.25-alpine
 
 COPY ./docker/common/nginx/conf.d /etc/nginx/conf.d
 

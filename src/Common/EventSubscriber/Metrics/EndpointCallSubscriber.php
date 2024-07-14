@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-#[AsEventListener(event: KernelEvents::RESPONSE, method: 'onSendMetrics', priority: 1)]
+#[AsEventListener(event: KernelEvents::RESPONSE, method: 'onSendMetrics', priority: 100)]
 class EndpointCallSubscriber
 {
     public function __construct(
