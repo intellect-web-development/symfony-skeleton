@@ -90,7 +90,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     /**
      * Called when authentication is needed, but it's not sent.
      */
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         $response = new Response();
         $response->setContent(
