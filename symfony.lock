@@ -161,6 +161,12 @@
     "http-interop/http-factory-guzzle": {
         "version": "1.2.0"
     },
+    "intellect-web-development/symfony-doctrine-search-bundle": {
+        "version": "1.0.2"
+    },
+    "intellect-web-development/symfony-entry-contract-bundle": {
+        "version": "1.1.0"
+    },
     "intellect-web-development/symfony-presentation-bundle": {
         "version": "0.0.4"
     },
@@ -310,6 +316,18 @@
     },
     "psr/log": {
         "version": "3.0.0"
+    },
+    "qossmic/deptrac-shim": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.19",
+            "ref": "3c3daab46226c37fc14e10faf81df737a3039d96"
+        },
+        "files": [
+            "deptrac.yaml"
+        ]
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
@@ -491,6 +509,18 @@
     },
     "symfony/http-kernel": {
         "version": "v6.0.8"
+    },
+    "symfony/lock": {
+        "version": "6.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "8e937ff2b4735d110af1770f242c1107fdab4c8e"
+        },
+        "files": [
+            "config/packages/lock.yaml"
+        ]
     },
     "symfony/maker-bundle": {
         "version": "1.42",

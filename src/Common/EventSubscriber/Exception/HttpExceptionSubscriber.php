@@ -70,7 +70,7 @@ readonly class HttpExceptionSubscriber
 
         $exception = $event->getThrowable();
         if ($exception instanceof AccessDeniedException) {
-            /** @var \Symfony\Component\HttpFoundation\Request|null $request */
+            /** @var Request|null $request */
             $request = $exception->getSubject();
             if (null !== $request && Request::METHOD_GET === $request->getMethod()) {
                 return;
