@@ -47,15 +47,6 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-.werf_secret_key
-
-###> deploy ###
-switch_dev.sh
-update_dev.sh
-update_front_dev.sh
-finish_dev.sh
-###< deploy ###
-
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
