@@ -29,6 +29,9 @@ consume-cron:
 consume:
 	docker compose exec app-php-fpm bin/console messenger:consume -vv
 
+messenger-stop-workers:
+	docker compose exec app-php-fpm bin/console messenger:stop-workers
+
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
