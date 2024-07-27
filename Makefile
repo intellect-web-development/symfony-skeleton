@@ -32,6 +32,9 @@ consume:
 messenger-stop-workers:
 	docker compose exec app-php-fpm bin/console messenger:stop-workers
 
+consume-failed:
+	@docker compose exec app-php-fpm bin/console messenger:consume failed
+
 consume-all:
 	@docker compose exec app-php-fpm bin/console messenger:consume \
 	common-command-transport
