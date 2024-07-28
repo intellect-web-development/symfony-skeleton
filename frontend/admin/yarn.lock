@@ -1837,6 +1837,11 @@ rrweb-cssom@^0.6.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
+sass-migrator@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/sass-migrator/-/sass-migrator-2.0.3.tgz#b80127f245ba3e4557b9d9cac85a7a8e42a6cc49"
+  integrity sha512-WaLQorgSz06q7/M+QNqkyn4d6m3NBQXFx93Ukrw88k108mIKOjBgSvyTerMpZ+5ogOJwrK82rxLBzA1J5azmJQ==
+
 sass@^1.71.1:
   version "1.71.1"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.71.1.tgz#dfb09c63ce63f89353777bbd4a88c0a38386ee54"
@@ -1891,6 +1896,11 @@ signal-exit@^4.0.1, signal-exit@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
+
+smart-grid@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/smart-grid/-/smart-grid-2.1.2.tgz#9f69cd0e3f8f95c2f4c616efa3630b1934377322"
+  integrity sha512-O5BYpBH5zMVMt12xAdbbCdQKwXpLWI4bqLJpaXRcNXHs4IfAVJd2K9XOilplRA7byBKva5Ysg1EtckwwqnoYeg==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"

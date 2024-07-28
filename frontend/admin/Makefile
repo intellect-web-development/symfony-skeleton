@@ -12,3 +12,7 @@ preview:
 
 test:
 	yarn test:unit
+
+smart-grid-regenerate:
+	node smart-grid-settings.js
+	yarn migrate-sass-smart-grid
