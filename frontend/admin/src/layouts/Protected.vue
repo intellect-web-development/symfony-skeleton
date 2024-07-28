@@ -4,7 +4,7 @@
       <template #start>
         <RouterLink :to="{name: 'Welcome'}" class="logo-link">
           <div class="logo">
-            <img alt="Futures trader logo" src="@/assets/img/favicon.ico" width="50" height="50" />
+            <img alt="Skeleton logo" src="@/assets/img/favicon.ico" width="50" height="50" />
             <span class="project-name"> {{ $t('main.project-name') }}</span>
           </div>
         </RouterLink>
@@ -30,12 +30,10 @@
 <script lang="ts">
 import {forgetToken} from "@/service/token/tokenService";
 import {useAuthStore} from "@/stores/auth";
-import NavLink from "@/components/NavLink.vue";
 
 const authStore = useAuthStore();
 
 export default {
-  components: { NavLink },
   computed: {
     userEmail(): string
     {

@@ -4,7 +4,7 @@
       <template #start>
         <RouterLink :to="{name: 'Welcome'}" class="logo-link">
           <div class="logo">
-            <img alt="Futures trader logo" src="@/assets/img/favicon.ico" width="50" height="50" />
+            <img alt="Skeleton logo" src="@/assets/img/favicon.ico" width="50" height="50" />
             <span class="project-name"> {{ $t('main.project-name') }}</span>
           </div>
         </RouterLink>

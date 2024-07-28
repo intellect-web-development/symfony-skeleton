@@ -1,14 +1,15 @@
 <template>
-  <div class="info">
-    <Card class="card">
-      <template #title>
-        {{ $t('views.panel.welcome.title') }}
-      </template>
-      <template #content>
-        <p>{{ $t('views.panel.welcome.content') }}</p>
-      </template>
-    </Card>
-
+  <div class="main-container">
+    <div class="info">
+      <Card class="card">
+        <template #title>
+          {{ $t('views.panel.welcome.title') }}
+        </template>
+        <template #content>
+          <p>{{ $t('views.panel.welcome.content') }}</p>
+        </template>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -20,15 +21,17 @@ export default {
 <style lang="scss" scoped>
 @import "smart-grid/smart-grid";
 
+.main-container {
+  @include wrapper();
+  width: 100%;
+}
 .info {
   @include row-flex();
-  @include md(justify-content, center);
+  @include lg(justify-content, center);
 
   .card {
     @include col();
-    @include size(3);
-    @include size-md(5);
-    @include size-xs(10);
+    @include size(12);
   }
 }
 
