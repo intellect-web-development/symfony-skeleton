@@ -2,7 +2,7 @@ export default [
     {
         path: 'welcome',
         name: 'Welcome',
-        component: () => import('@/views/Panel/Welcome.vue')
+        component: () => import('@/views/Protected/Welcome.vue')
     },
     {
         path: ':catchAll(.*)*',

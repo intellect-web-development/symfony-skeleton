@@ -1,5 +1,5 @@
 <template>
-  <div class="panel-page" style="position: relative;">
+  <div>
     <div class="info">
       <Card class="card">
         <template #title>

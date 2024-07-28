@@ -1,6 +1,6 @@
 export default {
     'main': {
-        'project-name': 'Vue admin',
+        'project-name': 'Vue skeleton',
         'api-contract-is-break': '',
         'error': 'Ошибка',
         'success': 'Успешно',
