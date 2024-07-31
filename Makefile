@@ -230,4 +230,4 @@ test-ci:
 	make before-deploy
 
 messenger-failed-messages-collect:
-	docker compose run --rm app-php-fpm php bin/console app:common:messenger-failed-messages-collect
+	docker compose run --rm app-php-fpm php bin/console app:common:messenger-doctrine-messages-collect --queueName="failed"
