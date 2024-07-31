@@ -6,13 +6,14 @@ namespace App\Common\Service\Metrics\Adapters\Redis;
 
 use App\Common\Service\Metrics\AdapterInterface;
 use Prometheus\Counter;
+use Prometheus\Gauge;
 
-class Adapter implements AdapterInterface
+readonly class Adapter implements AdapterInterface
 {
-    private readonly \Prometheus\Storage\Redis $adapter;
+    private \Prometheus\Storage\Redis $adapter;
 
     public function __construct(
-        private readonly Config $config
+        private Config $config
     ) {
         $this->adapter = new \Prometheus\Storage\Redis([
             'host' => $config->host,
@@ -27,14 +28,28 @@ class Adapter implements AdapterInterface
     public function createCounter(
         string $name,
         string $help = '',
-        array $labels = []
+        array $labels = [],
     ): Counter {
         return new Counter(
-            $this->adapter,
-            $this->config->namespace,
-            $name,
-            $help,
-            $labels
+            storageAdapter: $this->adapter,
+            namespace: $this->config->namespace,
+            name: $name,
+            help: $help,
+            labels: $labels,
+        );
+    }
+
+    public function createGauge(
+        string $name,
+        string $help = '',
+        array $labels = [],
+    ): Gauge {
+        return new Gauge(
+            storageAdapter: $this->adapter,
+            namespace: $this->config->namespace,
+            name: $name,
+            help: $help,
+            labels: $labels,
         );
     }
 }

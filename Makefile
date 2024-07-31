@@ -228,3 +228,6 @@ test-ci:
 	make make-migration-no-interaction
 	make migrations-up
 	make before-deploy
+
+messenger-failed-messages-collect:
+	docker compose run --rm app-php-fpm php bin/console app:common:messenger-failed-messages-collect
