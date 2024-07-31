@@ -11,9 +11,15 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 class InputContract implements InputContractInterface
 {
-    /** User name */
+    /** Название очереди */
     #[NotNull]
     #[NotBlank]
     #[Length(min: 1)]
     public string $queueName = 'failed';
+
+    /** Название таблицы, где хранится очередь сообщений */
+    #[NotNull]
+    #[NotBlank]
+    #[Length(min: 1)]
+    public string $messengerTable = 'messenger_messages';
 }

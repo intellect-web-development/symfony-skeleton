@@ -13,11 +13,11 @@ use IWD\SymfonyEntryContract\Interfaces\InputContractInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(
-    name: 'app:common:messenger-failed-messages-collect',
-    description: 'Collect failed messages in metric',
+    name: 'app:common:messenger-doctrine-messages-collect',
+    description: 'Collect doctrine messages in queue',
 )]
 #[CliContract(class: InputContract::class)]
-class MessengerFailedMessagesMetricCollectCommand extends CliCommand
+class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
 {
     public function __construct(
         CliContractResolver $cliContractResolver,
@@ -34,7 +34,7 @@ class MessengerFailedMessagesMetricCollectCommand extends CliCommand
     {
         $stmt = $this->connection->prepare(
             <<<SQL
-                select count(1) from messenger_messages
+                select count(1) from {$inputContract->messengerTable}
                 where queue_name = :queueName;
                 SQL
         );
@@ -43,8 +43,8 @@ class MessengerFailedMessagesMetricCollectCommand extends CliCommand
         $count = $stmt->executeQuery()->fetchOne();
 
         $gauge = $this->adapter->createGauge(
-            name: 'actual_failed_messages',
-            help: 'Actual failed messages in queue',
+            name: 'actual_messages_in_doctrine_queue',
+            help: 'Actual messages in doctrine queue',
             labels: [
                 'queue',
             ]
