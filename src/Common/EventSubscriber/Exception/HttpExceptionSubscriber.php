@@ -63,9 +63,6 @@ readonly class HttpExceptionSubscriber
         }
     }
 
-    // todo: провести рефакторинг:
-    //  Реализовать стратегию, где будет указан базовый приоритет проверки (порядка следования стратегий),
-    //  а затем вызов метода isSupport, если ничего не подошло - тогда fallback-вариант
     public function onFormatterException(ExceptionEvent $event): void
     {
         $format = (string) $event->getRequest()->attributes->get('_format', 'json');
