@@ -1,5 +1,5 @@
 <template>
-  <div class="container justify-content-center">
+  <div class="container container-center">
     <div class="info">
       <Card class="card">
         <template #title>
