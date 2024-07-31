@@ -1,12 +1,12 @@
 <template>
-  <div class="container justify-content-center">
+  <div class="container container-center">
     <div class="info">
       <Card class="card">
         <template #title>
-          {{ $t('views.panel.welcome.title') }}
+          {{ $t('views.public.welcome.title') }}
         </template>
         <template #content>
-          <p>{{ $t('views.panel.welcome.content') }}</p>
+          <p>{{ $t('views.public.welcome.content') }}</p>
         </template>
       </Card>
     </div>

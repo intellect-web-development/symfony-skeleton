@@ -47,6 +47,10 @@ export default {
             }
         },
         'public': {
+            'welcome': {
+                'title': 'Добро пожаловать!',
+                'content': 'Приступим?',
+            }
         },
         'error': {
             '404': {

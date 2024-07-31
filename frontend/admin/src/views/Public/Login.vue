@@ -1,15 +1,19 @@
 <template>
-  <div class="height-100 vertical-center">
-    <SmartForm
-        :submit-label="$t('views.login.form.submit')"
-        :payload="form.payload"
-        :schema="form.schema"
-        :on-submit-callback="onSubmit"
-    >
-      <template #header>
-        {{ $t('views.login.form.submit') }}
-      </template>
-    </SmartForm>
+  <div class="container container-center">
+    <div class="row">
+      <div class="col">
+        <SmartForm
+            :submit-label="$t('views.login.form.submit')"
+            :payload="form.payload"
+            :schema="form.schema"
+            :on-submit-callback="onSubmit"
+        >
+          <template #header>
+            {{ $t('views.login.form.submit') }}
+          </template>
+        </SmartForm>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,4 +75,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "smart-grid/smart-grid";
+
+.row {
+  @include row-flex();
+  justify-content: center;
+
+  .col {
+    @include col();
+    @include size(8);
+    @include size-sm(10);
+    @include size-xs(12);
+  }
+}
 </style>
