@@ -42,7 +42,7 @@ class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
             SQL
         );
 
-        $hasTable = $hasTableStmt->executeQuery()->fetchOne();
+        $hasTable = (bool) $hasTableStmt->executeQuery()->fetchOne();
         if ($hasTable) {
             $stmt = $this->connection->prepare(
                 <<<SQL
