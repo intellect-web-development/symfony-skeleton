@@ -3,13 +3,13 @@
     <div class="row">
       <div class="col">
         <SmartForm
-            :submit-label="$t('views.login.form.submit')"
+            :submit-label="$t(tPath + 'form.submit')"
             :payload="form.payload"
             :schema="form.schema"
             :on-submit-callback="onSubmit"
         >
           <template #header>
-            {{ $t('views.login.form.submit') }}
+            {{ $t(tPath + 'form.header') }}
           </template>
         </SmartForm>
       </div>
@@ -32,6 +32,7 @@ export default {
   components: {SmartForm},
   data() {
     return {
+      tPath: 'views.public.login.',
       form: {
         payload: new AuthenticationPayload(),
         schema: new FormSchema(),
@@ -42,14 +43,14 @@ export default {
     this.form.schema.add(
         new InputSchema(
             'email',
-            this.$t('views.login.form.input.email'),
+            this.$t(this.tPath + 'form.input.email'),
             InputType.Text,
         )
     )
     this.form.schema.add(
         new InputSchema(
             'password',
-            this.$t('views.login.form.input.password'),
+            this.$t(this.tPath + 'form.input.password'),
             InputType.Text,
         )
     )
@@ -83,7 +84,7 @@ export default {
 
   .col {
     @include col();
-    @include size(8);
+    @include size(6);
     @include size-sm(10);
     @include size-xs(12);
   }

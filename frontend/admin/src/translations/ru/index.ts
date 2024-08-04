@@ -47,7 +47,8 @@ export default {
             }
         },
         public: {
-            welcome: (await import('@/views/Public/Welcome/translations/ru')).default
+            welcome: (await import('@/views/Public/Welcome/translations/ru')).default,
+            login: (await import('@/views/Public/Login/translations/ru')).default,
         },
         error: {
             '404': {
@@ -58,16 +59,6 @@ export default {
                     'go-home': 'Вернуться на главную'
                 }
             },
-        },
-        login: {
-            'header': 'Вход в систему',
-            'form': {
-                'input': {
-                    'email': 'Email',
-                    'password': 'Пароль',
-                },
-                'submit': 'Войти'
-            }
         },
     }
 };
