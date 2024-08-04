@@ -20,7 +20,7 @@ const router = createRouter({
     },
     {
       path: '/:catchAll(.*)*',
-      component: () => import('@/views/Error/404/404.vue')
+      component: () => import('@/views/Common/Error/404/404.vue')
     },
   ]
 })

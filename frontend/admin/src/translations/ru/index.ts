@@ -40,25 +40,24 @@ export default {
         },
     },
     views: {
-        'panel': {
-            'welcome': {
-                'title': 'Добро пожаловать!',
-                'content': 'Приступим?',
-            }
+        common: {
+            error: {
+                '404': {
+                    'label': {
+                        'main': 'Упс. Здесь ничего нет',
+                    },
+                    'button': {
+                        'go-home': 'Вернуться на главную'
+                    }
+                },
+            },
+        },
+        protected: {
+            welcome: (await import('@/views/Protected/Welcome/translations/ru')).default,
         },
         public: {
             welcome: (await import('@/views/Public/Welcome/translations/ru')).default,
             login: (await import('@/views/Public/Login/translations/ru')).default,
-        },
-        error: {
-            '404': {
-                'label': {
-                    'main': 'Упс. Здесь ничего нет',
-                },
-                'button': {
-                    'go-home': 'Вернуться на главную'
-                }
-            },
         },
     }
 };

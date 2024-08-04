@@ -3,10 +3,10 @@
     <div class="info">
       <Card class="card">
         <template #title>
-          {{ $t('views.panel.welcome.title') }}
+          {{ $t(tPath + 'title') }}
         </template>
         <template #content>
-          <p>{{ $t('views.panel.welcome.content') }}</p>
+          <p>{{ $t(tPath + 'content') }}</p>
         </template>
       </Card>
     </div>
@@ -15,6 +15,11 @@
 
 <script lang="ts">
 export default {
+  data() {
+    return {
+      tPath: 'views.protected.welcome.',
+    }
+  }
 }
 </script>
 
