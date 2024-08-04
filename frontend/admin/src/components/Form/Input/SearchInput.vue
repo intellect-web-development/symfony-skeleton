@@ -68,6 +68,7 @@ export default {
 
   data() {
     return {
+      tPath: 'components.form.input.',
       options: [],
       loading: false,
       model: '',

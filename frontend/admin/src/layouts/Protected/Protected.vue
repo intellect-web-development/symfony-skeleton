@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import {forgetToken} from "@/service/token/tokenService";
-import {useAuthStore} from "@/stores/auth";
+import {useAuthStore} from "@/stores/auth/authToken";
 
 const authStore = useAuthStore();
 
@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      tPath: 'layouts.protected.',
       profileItems: [
         {
           label: this.$t('layouts.panel.nav.profile'),

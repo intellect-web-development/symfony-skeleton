@@ -11,7 +11,7 @@ import InvalidateRefreshTokenRequest, {
 } from "@/api/auth/token/methods/invalidateRefreshToken/InvalidateRefreshTokenRequest";
 import { createTokenFromLocalstorageOrFail } from "@/service/token/tokenService";
 
-export const useAuthStore = defineStore('auth.user', {
+export const useAuthStore = defineStore('auth.token', {
   getters: {
     userEmail(state): string
     {
@@ -47,7 +47,6 @@ export const useAuthStore = defineStore('auth.user', {
 
         return await api.auth.invalidateRefreshToken(new InvalidateRefreshTokenRequest(payload, token?.access));
       } catch(err) {
-        console.log(err)
         //@ts-ignore
         let messages = err.response.data.messages;
         return new Violations(messages)

@@ -22,7 +22,7 @@ import SmartForm from "@/components/Form/SmartForm/SmartForm.vue";
 import {AuthenticationPayload} from "@/api/auth/token/methods/authentication/AuthenticationRequest";
 import FormSchema from "@/components/Form/SmartForm/FormSchema";
 import InputSchema, {InputType} from "@/components/Form/SmartForm/InputSchema";
-import {useAuthStore} from "@/stores/auth";
+import {useAuthStore} from "@/stores/auth/authToken";
 import AuthenticationOutputContract from "@/api/auth/token/methods/authentication/AuthenticationOutputContract";
 import {saveToken} from "@/service/token/tokenService";
 

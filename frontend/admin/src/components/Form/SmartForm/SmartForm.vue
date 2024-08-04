@@ -106,6 +106,7 @@ export default defineComponent({
   },
   data() {
     return {
+      tPath: 'components.form.smart_form.',
       violations: new Violations(),
       formLocked: false,
       formIsUntouched: true,

@@ -18,6 +18,11 @@
 
 <script lang="ts">
 export default {
+  data() {
+    return {
+      tPath: 'components.security.security_loader.',
+    }
+  },
 }
 </script>
 

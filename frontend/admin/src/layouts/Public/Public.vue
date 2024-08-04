@@ -31,7 +31,12 @@ export default {
     RouterView,
   },
   computed: {
-  }
+  },
+  data() {
+    return {
+      tPath: 'layouts.public.',
+    }
+  },
 }
 </script>
 
