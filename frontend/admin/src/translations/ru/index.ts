@@ -42,7 +42,7 @@ export default {
     views: {
         common: {
             error: {
-                '404': (await import('@/views/Common/Error/404/translations/ru')).default,
+                404: (await import('@/views/Common/Error/404/translations/ru')).default,
             },
         },
         protected: {
