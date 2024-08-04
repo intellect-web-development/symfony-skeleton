@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "smart-grid/smart-grid";
+@import "../../../../smart-grid/smart-grid";
 
 .info {
   @include row-flex();

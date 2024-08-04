@@ -47,11 +47,7 @@ export default {
             }
         },
         'public': {
-            'welcome': {
-                'title': 'Добро пожаловать!',
-                'content': 'Это скелетон приложения, давайте попробуем залогиниться!',
-                'link_button': 'Авторизоваться',
-            }
+            welcome: (await import('@/views/Public/Welcome/translations/ru')).default
         },
         'error': {
             '404': {

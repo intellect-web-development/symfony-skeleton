@@ -2,7 +2,7 @@ export default [
     {
         path: '',
         name: 'public_welcome',
-        component: () => import('@/views/Public/Welcome.vue')
+        component: () => import('@/views/Public/Welcome/Welcome.vue')
     },
     {
         path: 'login',
