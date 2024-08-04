@@ -42,14 +42,7 @@ export default {
     views: {
         common: {
             error: {
-                '404': {
-                    'label': {
-                        'main': 'Упс. Здесь ничего нет',
-                    },
-                    'button': {
-                        'go-home': 'Вернуться на главную'
-                    }
-                },
+                '404': (await import('@/views/Common/Error/404/translations/ru')).default,
             },
         },
         protected: {
