@@ -15,8 +15,8 @@ export function isAuthenticated(token: Token|null): boolean {
 }
 
 export function createTokenFromLocalstorage(): Token|null {
-    let access = localStorage.getItem(localstorage.authTokenAccess);
-    let refresh = localStorage.getItem(localstorage.authTokenRefresh);
+    let access = localStorage.getItem(localstorage.auth.token.access);
+    let refresh = localStorage.getItem(localstorage.auth.token.refresh);
 
     if (access === null || refresh === null) {
         return null;
@@ -39,14 +39,14 @@ export function createTokenFromLocalstorageOrFail(): Token {
 }
 
 export function forgetToken(): void {
-    localStorage.removeItem(localstorage.authTokenAccess)
-    localStorage.removeItem(localstorage.authTokenRefresh)
+    localStorage.removeItem(localstorage.auth.token.access)
+    localStorage.removeItem(localstorage.auth.token.refresh)
 }
 
 export function saveToken(token: Token): void
 {
-    localStorage.setItem(localstorage.authTokenAccess, token.access.raw)
-    localStorage.setItem(localstorage.authTokenRefresh, token.refresh.raw)
-    localStorage.setItem(localstorage.authTokenUserId, token.access.decode.id)
-    localStorage.setItem(localstorage.authTokenUserUserName, token.access.decode.username)
+    localStorage.setItem(localstorage.auth.token.access, token.access.raw)
+    localStorage.setItem(localstorage.auth.token.refresh, token.refresh.raw)
+    localStorage.setItem(localstorage.auth.token.userId, token.access.decode.id)
+    localStorage.setItem(localstorage.auth.token.userName, token.access.decode.username)
 }
