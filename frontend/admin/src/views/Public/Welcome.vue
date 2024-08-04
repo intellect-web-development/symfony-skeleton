@@ -7,6 +7,9 @@
         </template>
         <template #content>
           <p>{{ $t('views.public.welcome.content') }}</p>
+          <router-link to="/login">
+            <Button :label="$t('views.public.welcome.link_button')" severity="secondary" />
+          </router-link>
         </template>
       </Card>
     </div>
@@ -32,8 +35,9 @@ export default {
 }
 
 .card {
-  background: #00000026;
-  color: #5c75a4;
+  background: var(--app-black-25);
+  color: var(--green-700);
+
   p {
     text-align: center;
   }

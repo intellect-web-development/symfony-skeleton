@@ -1,5 +1,5 @@
 <template>
-  <div class="fullscreen bg-dark text-white text-center q-pa-md flex flex-center">
+  <div class="container">
     <div>
       <div style="font-size: 30vh">404</div>
 
@@ -8,7 +8,7 @@
       </div>
 
       <router-link to="/">
-        <Button :label="$t('views.error.404.button.go-home')" to="/" severity="secondary" />
+        <Button :label="$t('views.error.404.button.go-home')" severity="secondary" />
       </router-link>
 
     </div>
