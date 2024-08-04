@@ -15,4 +15,4 @@ test:
 
 smart-grid-regenerate:
 	node smart-grid-settings.js
-	yarn migrate-sass-smart-grid
+	yarn migrate-sass
