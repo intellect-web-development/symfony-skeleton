@@ -7,7 +7,7 @@ export default [
     {
         path: 'login',
         name: 'Login',
-        component: () => import('@/views/Public/Login.vue')
+        component: () => import('@/views/Public/Login/Login.vue')
     },
     {
         path: ':catchAll(.*)*',
