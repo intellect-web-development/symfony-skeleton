@@ -1,5 +1,5 @@
 import './assets/main.scss'
-import './../smart-grid/smart-grid.scss'
+import './assets/smart-grid.scss'
 import './main.primevue-components'
 
 import { createApp } from 'vue'

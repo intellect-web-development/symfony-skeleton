@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../../smart-grid/smart-grid";
+@import "@/assets/smart-grid";
 
 .row {
   @include row-flex();
