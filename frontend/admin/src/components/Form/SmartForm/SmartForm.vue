@@ -75,14 +75,14 @@
       <Button :label="submitLabel" @click="onSubmit" :disabled="submitLocked" :loading="formLocked" />
     </div>
   </div>
-  <Toast />
+  <Toast position="bottom-right" />
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue'
 import Violations from "@/api/common/Violations";
-import InputSchema, {InputType} from "@/components/SmartForm/InputSchema";
-import FormSchema from "@/components/SmartForm/FormSchema";
+import InputSchema, {InputType} from "@/components/Form/SmartForm/InputSchema";
+import FormSchema from "@/components/Form/SmartForm/FormSchema";
 import debounce from 'debounce';
 
 export default defineComponent({

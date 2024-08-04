@@ -8,19 +8,19 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/layouts/Public.vue'),
+      component: () => import('@/layouts/Public/Public.vue'),
       beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => publicAuthMiddleware(to, from, next),
       children: (await import('@/router/public')).default
     },
     {
       path: '/admin/',
-      component: () => import('@/layouts/Protected.vue'),
+      component: () => import('@/layouts/Protected/Protected.vue'),
       beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => protectedAuthMiddleware(to, from, next),
       children: (await import('@/router/admin')).default
     },
     {
       path: '/:catchAll(.*)*',
-      component: () => import('@/views/Error/404.vue')
+      component: () => import('@/views/Error/404/404.vue')
     },
   ]
 })

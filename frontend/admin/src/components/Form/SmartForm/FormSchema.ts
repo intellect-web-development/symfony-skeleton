@@ -1,4 +1,4 @@
-import type InputSchema from "@/components/SmartForm/InputSchema";
+import type InputSchema from "@/components/Form/SmartForm/InputSchema";
 
 export default class FormSchema
 {

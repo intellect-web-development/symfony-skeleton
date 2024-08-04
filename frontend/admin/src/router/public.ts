@@ -11,6 +11,6 @@ export default [
     },
     {
         path: ':catchAll(.*)*',
-        component: () => import('@/views/Error/404.vue')
+        component: () => import('@/views/Error/404/404.vue')
     },
 ];
