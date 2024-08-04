@@ -32,8 +32,9 @@ export default {
 }
 
 .card {
-  background: #00000026;
-  color: #5c75a4;
+  background: var(--app-black-25);
+  color: var(--green-700);
+
   p {
     text-align: center;
   }

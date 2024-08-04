@@ -3,12 +3,12 @@
     <div class="info">
       <Card class="card">
         <template #title>
-          {{ $t('views.public.welcome.title') }}
+          {{ $t(tPath + 'title') }}
         </template>
         <template #content>
-          <p>{{ $t('views.public.welcome.content') }}</p>
+          <p>{{ $t(tPath + 'content') }}</p>
           <router-link to="/login">
-            <Button :label="$t('views.public.welcome.link_button')" severity="secondary" />
+            <Button :label="$t(tPath + 'link_button')" severity="secondary" />
           </router-link>
         </template>
       </Card>
@@ -18,6 +18,11 @@
 
 <script lang="ts">
 export default {
+  data() {
+    return {
+      tPath: 'views.public.welcome.',
+    }
+  }
 }
 </script>
 

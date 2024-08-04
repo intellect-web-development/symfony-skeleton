@@ -1,5 +1,5 @@
 export default {
-    'main': {
+    main: {
         'project-name': 'Vue skeleton',
         'api-contract-is-break': '',
         'error': 'Ошибка',
@@ -10,7 +10,7 @@ export default {
             'remove': 'Удалить',
         }
     },
-    'components': {
+    components: {
         'smart-form': {
             'violations-out-of-payload': 'Прочие ошибки',
         },
@@ -20,7 +20,7 @@ export default {
             'no-access': 'Доступ запрещен',
         }
     },
-    'layouts': {
+    layouts: {
         'public': {
             'header': 'Проект "Skeleton"',
             'label': 'Страница входа в SPA-админку',
@@ -39,17 +39,17 @@ export default {
             },
         },
     },
-    'views': {
+    views: {
         'panel': {
             'welcome': {
                 'title': 'Добро пожаловать!',
                 'content': 'Приступим?',
             }
         },
-        'public': {
+        public: {
             welcome: (await import('@/views/Public/Welcome/translations/ru')).default
         },
-        'error': {
+        error: {
             '404': {
                 'label': {
                     'main': 'Упс. Здесь ничего нет',
@@ -59,7 +59,7 @@ export default {
                 }
             },
         },
-        'login': {
+        login: {
             'header': 'Вход в систему',
             'form': {
                 'input': {

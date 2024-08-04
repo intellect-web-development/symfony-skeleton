@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-public">
     <Toolbar class="menubar">
       <template #start>
         <RouterLink :to="{name: 'Welcome'}" class="logo-link">
@@ -78,16 +78,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav-button {
-  color: #446cb7;
-}
 .logo-link {
   text-decoration: none;
-  color: #64cb25 !important;
   font-size: 1rem;
   font-weight: bold;
 }
-.container {
+.container-public {
   margin: 0 auto;
   font-weight: normal;
   height: 100%;
