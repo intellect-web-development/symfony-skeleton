@@ -1,5 +1,5 @@
-import sortModes from "@/api/filter/constants/sortModes";
-import Sort from "@/api/filter/sort/Sort";
+import sortModes from "@/api/common/filter/constants/sortModes";
+import Sort from "@/api/common/filter/sort/Sort";
 
 export default class SortCollection {
     constructor(

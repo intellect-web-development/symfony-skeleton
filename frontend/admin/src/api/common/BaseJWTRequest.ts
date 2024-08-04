@@ -1,4 +1,4 @@
-import BaseRequest from "@/api/BaseRequest";
+import BaseRequest from "./BaseRequest";
 
 export default class BaseJWTRequest extends BaseRequest {
   public headers = {

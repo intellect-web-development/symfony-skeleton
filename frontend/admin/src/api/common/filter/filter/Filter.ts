@@ -1,4 +1,4 @@
-import searchModes, { searchModesArray } from "@/api/filter/constants/searchModes";
+import searchModes, { searchModesArray } from "@/api/common/filter/constants/searchModes";
 
 export default class Filter {
     /**

@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia';
-import type BaseOutputContract from "@/api/BaseOutputContract";
+import type BaseOutputContract from "@/api/common/BaseOutputContract";
 import {api} from "@/api";
-import Violations from "@/api/Violations";
+import Violations from "@/api/common/Violations";
 import type {AuthenticationPayload} from "@/api/auth/token/methods/authentication/AuthenticationRequest";
 import AuthenticationRequest from "@/api/auth/token/methods/authentication/AuthenticationRequest";
 import type {RefreshTokenPayload} from "@/api/auth/token/methods/refresh/RefreshTokenRequest";

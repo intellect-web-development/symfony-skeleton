@@ -1,4 +1,4 @@
-import BaseOutputContract from "@/api/BaseOutputContract";
+import BaseOutputContract from "@/api/common/BaseOutputContract";
 import type {TokenInterface} from "@/api/auth/token/dto/Token";
 import {Token} from "@/api/auth/token/dto/Token";
 

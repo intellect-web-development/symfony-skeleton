@@ -1,5 +1,5 @@
-import BaseRequest from "@/api/BaseRequest";
-import {client} from "@/api/client";
+import BaseRequest from "@/api/common/BaseRequest";
+import {client} from "@/api/common/client";
 
 type classConstructor<T> = new(...args: any[]) => T
 

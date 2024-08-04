@@ -1,4 +1,4 @@
-import type { PaginationOutputContractInterface } from "@/api/filter/PaginationOutputContract";
+import type { PaginationOutputContractInterface } from "@/api/common/filter/PaginationOutputContract";
 
 export interface SearchDataOutputContractInterface<ModelInterface> {
   data: Array<ModelInterface>;

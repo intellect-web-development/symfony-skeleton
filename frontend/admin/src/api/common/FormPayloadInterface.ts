@@ -1,4 +1,4 @@
-import Violations from "@/api/Violations";
+import Violations from "@/api/common/Violations";
 
 export default interface FormPayloadInterface
 {

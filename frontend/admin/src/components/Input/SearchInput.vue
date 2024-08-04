@@ -14,13 +14,13 @@
 
 <script lang="ts">
 import debounce from "debounce";
-import SearchModes from "@/api/filter/constants/searchModes";
-import Filter from "@/api/filter/filter/Filter";
-import FilterCollection from "@/api/filter/filter/FilterCollection";
-import SortCollection from "@/api/filter/sort/SortCollection";
-import Sort from "@/api/filter/sort/Sort";
-import Pagination from "@/api/filter/pagination/Pagination";
-import {Strategy} from "@/api/filter/strategy/Strategy";
+import SearchModes from "@/api/common/filter/constants/searchModes";
+import Filter from "@/api/common/filter/filter/Filter";
+import FilterCollection from "@/api/common/filter/filter/FilterCollection";
+import SortCollection from "@/api/common/filter/sort/SortCollection";
+import Sort from "@/api/common/filter/sort/Sort";
+import Pagination from "@/api/common/filter/pagination/Pagination";
+import {Strategy} from "@/api/common/filter/strategy/Strategy";
 
 export default {
   props: {

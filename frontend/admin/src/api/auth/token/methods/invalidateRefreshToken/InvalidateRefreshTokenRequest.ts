@@ -1,9 +1,9 @@
-import Violations from "@/api/Violations";
-import type FormPayloadInterface from "@/api/FormPayloadInterface";
-import BaseJWTRequest from "@/api/BaseJWTRequest";
+import Violations from "@/api/common/Violations";
+import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
+import BaseJWTRequest from "@/api/common/BaseJWTRequest";
 import * as yup from "yup";
 import {RefreshTokenPayload} from "@/api/auth/token/methods/refresh/RefreshTokenRequest";
-import {validate} from "@/api/validator";
+import {validate} from "@/api/common/validator";
 import type AccessToken from "@/api/auth/token/dto/AccessToken";
 
 export class InvalidateRefreshTokenPayload implements FormPayloadInterface {

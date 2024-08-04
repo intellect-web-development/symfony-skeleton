@@ -1,8 +1,8 @@
-import BaseRequest from "@/api/BaseRequest";
-import Violations from "@/api/Violations";
+import BaseRequest from "@/api/common/BaseRequest";
+import Violations from "@/api/common/Violations";
 import * as yup from 'yup';
-import {validate} from "@/api/validator";
-import type FormPayloadInterface from "@/api/FormPayloadInterface";
+import {validate} from "@/api/common/validator";
+import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
 
 export class RefreshTokenPayload implements FormPayloadInterface {
   refreshToken: string|null = null;

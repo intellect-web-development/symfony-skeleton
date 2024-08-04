@@ -1,4 +1,4 @@
-import { sortModesArray } from "@/api/filter/constants/sortModes";
+import { sortModesArray } from "@/api/common/filter/constants/sortModes";
 
 export default class Sort {
     field;

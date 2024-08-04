@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import Violations from "@/api/Violations";
+import Violations from "@/api/common/Violations";
 import InputSchema, {InputType} from "@/components/SmartForm/InputSchema";
 import FormSchema from "@/components/SmartForm/FormSchema";
 import debounce from 'debounce';

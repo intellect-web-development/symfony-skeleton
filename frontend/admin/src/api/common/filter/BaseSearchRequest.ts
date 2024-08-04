@@ -1,9 +1,9 @@
-import FilterCollection from "@/api/filter/filter/FilterCollection";
-import SortCollection from "@/api/filter/sort/SortCollection";
-import Pagination from "@/api/filter/pagination/Pagination";
-import searchModes from "@/api/filter/constants/searchModes";
-import {Strategy} from "@/api/filter/strategy/Strategy";
-import BaseJWTRequest from "@/api/BaseJWTRequest";
+import FilterCollection from "@/api/common/filter/filter/FilterCollection";
+import SortCollection from "@/api/common/filter/sort/SortCollection";
+import Pagination from "@/api/common/filter/pagination/Pagination";
+import searchModes from "@/api/common/filter/constants/searchModes";
+import {Strategy} from "@/api/common/filter/strategy/Strategy";
+import BaseJWTRequest from "@/api/common/BaseJWTRequest";
 
 export default class BaseSearchRequest extends BaseJWTRequest {
   method = 'get'

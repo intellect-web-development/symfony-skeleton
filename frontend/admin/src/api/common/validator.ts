@@ -1,5 +1,5 @@
 import type {ObjectSchema} from "yup";
-import Violations from "@/api/Violations";
+import Violations from "@/api/common/Violations";
 
 export function validate(
     schema: ObjectSchema<any>,

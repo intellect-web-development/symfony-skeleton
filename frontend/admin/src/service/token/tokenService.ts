@@ -1,6 +1,6 @@
 import {Token} from "@/api/auth/token/dto/Token";
 import localstorage from "@/dictionary/localstorage";
-import Violations from "@/api/Violations";
+import Violations from "@/api/common/Violations";
 
 export function isAuthenticated(token: Token|null): boolean {
     if (null === token) {

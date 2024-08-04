@@ -1,4 +1,4 @@
-import BaseOutputContract from "@/api/BaseOutputContract";
+import BaseOutputContract from "@/api/common/BaseOutputContract";
 
 export default class InvalidateRefreshTokenOutputContract extends BaseOutputContract {
 

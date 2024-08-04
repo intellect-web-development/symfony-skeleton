@@ -1,5 +1,5 @@
-import Filter from "@/api/filter/filter/Filter";
-import searchModes from "@/api/filter/constants/searchModes";
+import Filter from "@/api/common/filter/filter/Filter";
+import searchModes from "@/api/common/filter/constants/searchModes";
 
 export default class FilterCollection {
   public filtersAssoc: any = {};
