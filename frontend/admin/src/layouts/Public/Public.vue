@@ -2,7 +2,7 @@
   <div class="layoutContainer">
     <Toolbar>
       <template #start>
-        <Logo :to="{name: 'Welcome'}" />
+        <Logo :to="{name: 'PublicWelcome'}" />
       </template>
 
       <template #center>
