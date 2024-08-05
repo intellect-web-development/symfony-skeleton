@@ -2,12 +2,7 @@
   <div class="container-public">
     <Toolbar class="menubar">
       <template #start>
-        <RouterLink :to="{name: 'PublicWelcome'}" class="logo-link">
-          <div class="logo">
-            <img alt="Skeleton logo" src="../../assets/img/favicon.ico" width="50" height="50" />
-            <span class="project-name"> {{ $t(tPathMain + 'project_name') }}</span>
-          </div>
-        </RouterLink>
+        <Logo :to="{name: 'PublicWelcome'}" />
       </template>
 
       <template #center>
@@ -20,14 +15,16 @@
       <RouterView />
     </div>
   </div>
-  <Toast position="bottom-right" group="br" />
+  <Toast position="bottom-right" />
 </template>
 
 <script lang="ts">
 import { RouterView } from 'vue-router'
+import Logo from "@/components/Common/Logo/Logo.vue";
 
 export default {
   components: {
+    Logo,
     RouterView,
   },
   computed: {
@@ -42,11 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo-link {
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
-}
 .container-public {
   margin: 0 auto;
   font-weight: normal;
@@ -59,14 +51,6 @@ export default {
     display: flex;
     flex-direction: column;
   }
-}
-.logo {
-  .project-name {
-    margin-left: 0.5rem;
-  }
-  margin: 0 0.5rem;
-  display: flex;
-  align-items: center;
 }
 .p-button.p-button-text {
   height: 100%;
