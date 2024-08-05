@@ -3,7 +3,7 @@
     <div class="info">
       <Card style="opacity: 85%; background: rgba(24,24,27,0)">
         <template #title>
-          {{ $t('components.security.no-access') }}
+          {{ $t(tPath + 'no-access') }}
         </template>
         <template #content>
           <div style="text-align: center">

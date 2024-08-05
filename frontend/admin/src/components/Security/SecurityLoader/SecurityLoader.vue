@@ -8,7 +8,7 @@
           </div>
         </template>
         <template #footer>
-          {{ $t('components.security.check') }}
+          {{ $t(tPath + 'check') }}
         </template>
       </Card>
     </div>

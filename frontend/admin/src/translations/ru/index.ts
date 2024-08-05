@@ -14,33 +14,20 @@ export default {
         'smart-form': {
             'violations-out-of-payload': 'Прочие ошибки',
         },
-        'security': {
-            'loading': 'Загрузка...',
-            'check': 'Проверка безопасности',
-            'no-access': 'Доступ запрещен',
-        }
+        security: {
+            security_loader: (await import('@/components/Security/SecurityLoader/translations/ru')).default,
+            page_loader: (await import('@/components/Security/PageLoader/translations/ru')).default,
+            security_guard: (await import('@/components/Security/SecurityGuard/translations/ru')).default,
+        },
+        // 'security': {
+        //     'loading': 'Загрузка...',
+        //     'check': 'Проверка безопасности',
+        //     'no-access': 'Доступ запрещен',
+        // }
     },
     layouts: {
         public: (await import('@/layouts/Public/translations/ru')).default,
         protected: (await import('@/layouts/Protected/translations/ru')).default,
-
-        // 'public': {
-        //     'header': 'Проект "Skeleton"',
-        //     'label': 'Страница входа в SPA-админку',
-        //     'navbar': {
-        //         'whois': 'О проекте',
-        //         'login': 'Войти',
-        //     },
-        // },
-        // 'panel': {
-        //     'nav': {
-        //         'profile': 'Профиль',
-        //         'logout': 'Выход из системы',
-        //     },
-        //     'actions': {
-        //         'success-logout': 'Выход из системы произведен успешно',
-        //     },
-        // },
     },
     views: {
         common: {

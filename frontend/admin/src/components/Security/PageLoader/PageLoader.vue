@@ -8,7 +8,7 @@
           </div>
         </template>
         <template #footer>
-          {{ $t('components.security.loading') }}
+          {{ $t(tPath + 'loading') }}
         </template>
       </Card>
     </div>
