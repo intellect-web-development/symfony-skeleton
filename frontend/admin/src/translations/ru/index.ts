@@ -1,9 +1,9 @@
 export default {
     main: {
         project_name: 'Vue skeleton',
+        error: 'Ошибка',
+        success: 'Успешно',
         'api-contract-is-break': '',
-        'error': 'Ошибка',
-        'success': 'Успешно',
         'cruds': {
             'list': 'Список',
             'create': 'Создать',
@@ -11,19 +11,12 @@ export default {
         }
     },
     components: {
-        'smart-form': {
-            'violations-out-of-payload': 'Прочие ошибки',
-        },
+        smart_form: (await import('@/components/Form/SmartForm/translations/ru')).default,
         security: {
             security_loader: (await import('@/components/Security/SecurityLoader/translations/ru')).default,
             page_loader: (await import('@/components/Security/PageLoader/translations/ru')).default,
             security_guard: (await import('@/components/Security/SecurityGuard/translations/ru')).default,
         },
-        // 'security': {
-        //     'loading': 'Загрузка...',
-        //     'check': 'Проверка безопасности',
-        //     'no-access': 'Доступ запрещен',
-        // }
     },
     layouts: {
         public: (await import('@/layouts/Public/translations/ru')).default,

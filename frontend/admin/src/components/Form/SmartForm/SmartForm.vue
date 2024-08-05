@@ -5,7 +5,7 @@
   <div>
     <Message v-if="hasViolationsOutOfPayload" severity="warn" style="margin-bottom: 0.5rem">
       <div style="display: flex; align-items: center; justify-content: space-between;">
-        <p>{{ $t('components.smart-form.violations-out-of-payload') }}</p>
+        <p>{{ $t(tPath + 'violations-out-of-payload') }}</p>
         <Button
           :badge="violationsOutOfPayloadCount"
           badgeSeverity="warning"
@@ -107,6 +107,7 @@ export default defineComponent({
   data() {
     return {
       tPath: 'components.form.smart_form.',
+      tPathMain: 'main.',
       violations: new Violations(),
       formLocked: false,
       formIsUntouched: true,
@@ -227,7 +228,7 @@ export default defineComponent({
             let message = result.violations[i];
             this.$toast.add({
               severity: 'warn',
-              summary: this.$t('main.error'),
+              summary: this.$t(this.tPathMain + 'error'),
               detail: message,
               life: 10000
             }
@@ -242,7 +243,7 @@ export default defineComponent({
         if (result.status >= 200 && result.status < 300) {
           this.$toast.add({
             severity: 'success',
-            summary: this.$t('main.success'),
+            summary: this.$t(this.tPathMain + 'success'),
             detail: Object.values(result.messages)[0],
             life: 10000
           }
