@@ -1,6 +1,6 @@
 export default {
     main: {
-        'project-name': 'Vue skeleton',
+        project_name: 'Vue skeleton',
         'api-contract-is-break': '',
         'error': 'Ошибка',
         'success': 'Успешно',
@@ -21,23 +21,26 @@ export default {
         }
     },
     layouts: {
-        'public': {
-            'header': 'Проект "Skeleton"',
-            'label': 'Страница входа в SPA-админку',
-            'navbar': {
-                'whois': 'О проекте',
-                'login': 'Войти',
-            },
-        },
-        'panel': {
-            'nav': {
-                'profile': 'Профиль',
-                'logout': 'Выход из системы',
-            },
-            'actions': {
-                'success-logout': 'Выход из системы произведен успешно',
-            },
-        },
+        public: (await import('@/layouts/Public/translations/ru')).default,
+        protected: (await import('@/layouts/Protected/translations/ru')).default,
+
+        // 'public': {
+        //     'header': 'Проект "Skeleton"',
+        //     'label': 'Страница входа в SPA-админку',
+        //     'navbar': {
+        //         'whois': 'О проекте',
+        //         'login': 'Войти',
+        //     },
+        // },
+        // 'panel': {
+        //     'nav': {
+        //         'profile': 'Профиль',
+        //         'logout': 'Выход из системы',
+        //     },
+        //     'actions': {
+        //         'success-logout': 'Выход из системы произведен успешно',
+        //     },
+        // },
     },
     views: {
         common: {

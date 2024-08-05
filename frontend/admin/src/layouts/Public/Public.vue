@@ -5,7 +5,7 @@
         <RouterLink :to="{name: 'PublicWelcome'}" class="logo-link">
           <div class="logo">
             <img alt="Skeleton logo" src="../../assets/img/favicon.ico" width="50" height="50" />
-            <span class="project-name"> {{ $t('main.project-name') }}</span>
+            <span class="project-name"> {{ $t(tPathMain + 'project_name') }}</span>
           </div>
         </RouterLink>
       </template>
@@ -34,6 +34,7 @@ export default {
   },
   data() {
     return {
+      tPathMain: 'main.',
       tPath: 'layouts.public.',
     }
   },

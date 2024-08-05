@@ -5,7 +5,7 @@
         <RouterLink :to="{name: 'Welcome'}" class="logo-link">
           <div class="logo">
             <img alt="Skeleton logo" src="../../assets/img/favicon.ico" width="50" height="50" />
-            <span class="project-name"> {{ $t('main.project-name') }}</span>
+            <span class="project-name"> {{ $t(tPathMain + 'project_name') }}</span>
           </div>
         </RouterLink>
       </template>
@@ -33,6 +33,8 @@ import {useAuthStore} from "@/stores/auth/authToken";
 
 const authStore = useAuthStore();
 
+let tPath = 'layouts.protected.';
+
 export default {
   computed: {
     userEmail(): string
@@ -42,10 +44,11 @@ export default {
   },
   data() {
     return {
-      tPath: 'layouts.protected.',
+      tPath: tPath,
+      tPathMain: 'main.',
       profileItems: [
         {
-          label: this.$t('layouts.panel.nav.profile'),
+          label: this.$t(tPath + 'nav.profile'),
           icon: 'pi pi-user',
           command: () => {
             // todo: реализовать переход в профиль
@@ -53,7 +56,7 @@ export default {
           }
         },
         {
-          label: this.$t('layouts.panel.nav.logout'),
+          label: this.$t(tPath + 'nav.logout'),
           icon: 'pi pi-sign-out',
           command: () => {
             authStore.invalidateRefreshToken();
