@@ -1,6 +1,7 @@
 export enum InputType {
     Text,
-    TextArea
+    TextArea,
+    Password
 }
 
 export default class InputSchema

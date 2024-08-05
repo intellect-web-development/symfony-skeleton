@@ -25,6 +25,7 @@ import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import PickList from 'primevue/picklist';
 import Dropdown from 'primevue/dropdown';
+import Password from "primevue/password";
 
 import BadgeDirective from 'primevue/badgedirective';
 
@@ -65,6 +66,7 @@ export function registerPrimeVueComponents(app: App) {
     app.component('StepperPanel', StepperPanel);
     app.component('PickList', PickList);
     app.component('Dropdown', Dropdown);
+    app.component('Password', Password);
 
     app.directive('badge', BadgeDirective);
     app.directive('ripple', Ripple);

@@ -5,7 +5,7 @@
   <div>
     <Message v-if="hasViolationsOutOfPayload" severity="warn" style="margin-bottom: 0.5rem">
       <div style="display: flex; align-items: center; justify-content: space-between;">
-        <p>{{ $t(tPath + 'violations-out-of-payload') }}</p>
+        <p>{{ $t(tPath + 'violations_out_of_payload') }}</p>
         <Button
           :badge="violationsOutOfPayloadCount"
           badgeSeverity="warning"
@@ -58,6 +58,26 @@
               invalidFieldsMap[input.name]
             "
           />
+
+          <Password
+              v-if="input.type === InputType.Password"
+              class="form-input"
+              :promptLabel="$t(tPath + ('password_input.prompt_label'))"
+              :weakLabel="$t(tPath + ('password_input.weak_label'))"
+              :mediumLabel="$t(tPath + ('password_input.medium_label'))"
+              :strongLabel="$t(tPath + ('password_input.strong_label'))"
+              toggleMask
+              feedback
+              v-model="
+              //@ts-ignore
+              payload[input.name]
+            "
+              :invalid="
+              //@ts-ignore
+              invalidFieldsMap[input.name]
+            "
+          />
+
         </div>
         <p class="violation" v-if="
           //@ts-ignore

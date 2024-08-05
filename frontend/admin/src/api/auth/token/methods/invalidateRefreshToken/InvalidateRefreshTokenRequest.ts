@@ -2,6 +2,7 @@ import Violations from "@/api/common/Violations";
 import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
 import BaseJWTRequest from "@/api/common/BaseJWTRequest";
 import * as yup from "yup";
+import * as yupTrans from "@/translations/ru/yup-translation";
 import {RefreshTokenPayload} from "@/api/auth/token/methods/refresh/RefreshTokenRequest";
 import {validate} from "@/api/common/validator";
 import type AccessToken from "@/api/auth/token/dto/AccessToken";
@@ -11,7 +12,7 @@ export class InvalidateRefreshTokenPayload implements FormPayloadInterface {
 
   static schema = yup.object({
     refreshToken: yup.string()
-        .required(),
+        .required(yupTrans.required),
   });
 
   public validate(): Violations

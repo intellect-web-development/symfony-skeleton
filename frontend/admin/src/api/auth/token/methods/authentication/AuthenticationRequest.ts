@@ -1,7 +1,7 @@
 import BaseRequest from "@/api/common/BaseRequest";
 import Violations from "@/api/common/Violations";
 import * as yup from 'yup';
-import { email } from "@/translations/ru/yup-translation";
+import * as yupTrans from "@/translations/ru/yup-translation";
 import {validate} from "@/api/common/validator";
 import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
 
@@ -12,10 +12,10 @@ export class AuthenticationPayload implements FormPayloadInterface {
 
   static schema = yup.object({
     email: yup.string()
-        .required()
-        .email(email),
+        .required(yupTrans.required)
+        .email(yupTrans.email),
     password: yup.string()
-        .required(),
+        .required(yupTrans.required),
         // .min(6),
     // passwordRepeat: yup.string()
     //     .required()

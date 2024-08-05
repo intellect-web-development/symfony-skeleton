@@ -1,6 +1,7 @@
 import BaseRequest from "@/api/common/BaseRequest";
 import Violations from "@/api/common/Violations";
 import * as yup from 'yup';
+import * as yupTrans from "@/translations/ru/yup-translation";
 import {validate} from "@/api/common/validator";
 import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
 
@@ -9,7 +10,7 @@ export class RefreshTokenPayload implements FormPayloadInterface {
 
   static schema = yup.object({
     refreshToken: yup.string()
-        .required(),
+        .required(yupTrans.required),
   });
 
   public validate(): Violations
