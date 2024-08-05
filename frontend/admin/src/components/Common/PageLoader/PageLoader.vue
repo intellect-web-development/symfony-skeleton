@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      tPath: 'components.security.page_loader.',
+      tPath: 'components.common.page_loader.',
     }
   },
 }

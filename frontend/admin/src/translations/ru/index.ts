@@ -10,12 +10,14 @@ export default {
         // }
     },
     components: {
+        common: {
+            page_loader: (await import('@/components/Common/PageLoader/translations/ru')).default,
+        },
         form: {
             smart_form: (await import('@/components/Form/SmartForm/translations/ru')).default,
         },
         security: {
             security_loader: (await import('@/components/Security/SecurityLoader/translations/ru')).default,
-            page_loader: (await import('@/components/Security/PageLoader/translations/ru')).default,
             security_guard: (await import('@/components/Security/SecurityGuard/translations/ru')).default,
         },
     },
