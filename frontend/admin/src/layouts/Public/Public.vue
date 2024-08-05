@@ -1,8 +1,8 @@
 <template>
-  <div class="container-public">
-    <Toolbar class="menubar">
+  <div class="layoutContainer">
+    <Toolbar>
       <template #start>
-        <Logo :to="{name: 'PublicWelcome'}" />
+        <Logo :to="{name: 'Welcome'}" />
       </template>
 
       <template #center>
@@ -11,7 +11,7 @@
       <template #end>
       </template>
     </Toolbar>
-    <div class="main">
+    <div class="workSpace">
       <RouterView />
     </div>
   </div>
@@ -39,20 +39,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-public {
+.layoutContainer {
   margin: 0 auto;
   font-weight: normal;
   height: 100%;
   display: flex;
   flex-direction: column;
 
-  .main {
+  .workSpace {
     height: 100%;
     display: flex;
     flex-direction: column;
   }
-}
-.p-button.p-button-text {
-  height: 100%;
 }
 </style>
