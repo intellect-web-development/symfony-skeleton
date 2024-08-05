@@ -60,7 +60,7 @@
           />
 
           <Password
-              v-if="input.type === InputType.Password"
+              v-if="input.type === InputType.NewPassword"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
               :weakLabel="$t(tPath + ('password_input.weak_label'))"
@@ -68,6 +68,25 @@
               :strongLabel="$t(tPath + ('password_input.strong_label'))"
               toggleMask
               feedback
+              v-model="
+              //@ts-ignore
+              payload[input.name]
+            "
+              :invalid="
+              //@ts-ignore
+              invalidFieldsMap[input.name]
+            "
+          />
+
+          <Password
+              v-if="input.type === InputType.CheckPassword"
+              class="form-input"
+              :promptLabel="$t(tPath + ('password_input.prompt_label'))"
+              :weakLabel="$t(tPath + ('password_input.weak_label'))"
+              :mediumLabel="$t(tPath + ('password_input.medium_label'))"
+              :strongLabel="$t(tPath + ('password_input.strong_label'))"
+              toggleMask
+              :feedback="false"
               v-model="
               //@ts-ignore
               payload[input.name]

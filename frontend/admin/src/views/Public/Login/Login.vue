@@ -51,7 +51,7 @@ export default {
         new InputSchema(
             'password',
             this.$t(this.tPath + 'form.input.password'),
-            InputType.Password,
+            InputType.CheckPassword,
         )
     )
   },

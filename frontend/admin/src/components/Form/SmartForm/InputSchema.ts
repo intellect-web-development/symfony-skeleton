@@ -1,7 +1,8 @@
 export enum InputType {
     Text,
     TextArea,
-    Password
+    NewPassword,   // Придумываем новый пароль
+    CheckPassword, // Проверяем пароль
 }
 
 export default class InputSchema

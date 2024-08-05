@@ -1,12 +1,12 @@
 <template>
   <div class="container container-center">
-    <div class="info">
+    <div class="row">
       <Card class="card">
         <template #title>
-          {{ $t(tPath + 'title') }}
+          <p class="card__title">{{ $t(tPath + 'title') }}</p>
         </template>
         <template #content>
-          <p>{{ $t(tPath + 'content') }}</p>
+          <span class="card__content">{{ $t(tPath + 'content') }}</span>
         </template>
       </Card>
     </div>
@@ -26,22 +26,26 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/smart-grid";
 
-.info {
+.row {
   @include row-flex();
   @include lg(justify-content, center);
 
   .card {
     @include col();
     @include size(12);
-  }
-}
 
-.card {
-  background: var(--app-black-25);
-  color: var(--green-700);
+    background: var(--app-black-25);
+    p {
+      text-align: center;
+    }
 
-  p {
-    text-align: center;
+    &__title {
+      color: var(--green-700);
+    }
+
+    &__content {
+      color: var(--green-700);
+    }
   }
 }
 </style>
