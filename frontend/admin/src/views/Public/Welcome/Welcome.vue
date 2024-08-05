@@ -1,15 +1,19 @@
 <template>
   <div class="container container-center">
-    <div class="info">
+    <div class="row">
       <Card class="card">
         <template #title>
-          {{ $t(tPath + 'title') }}
+          <p class="card__title">{{ $t(tPath + 'title') }}</p>
         </template>
         <template #content>
-          <p>{{ $t(tPath + 'content') }}</p>
-          <router-link to="/login">
-            <Button :label="$t(tPath + 'link_button')" severity="secondary" />
-          </router-link>
+          <p class="card__content">
+            {{ $t(tPath + 'content') }}
+          </p>
+          <div class="card__authLink">
+            <router-link to="/login">
+              <Button :label="$t(tPath + 'link_button')" severity="secondary" />
+            </router-link>
+          </div>
         </template>
       </Card>
     </div>
@@ -29,22 +33,33 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/smart-grid";
 
-.info {
+.row {
   @include row-flex();
   @include lg(justify-content, center);
 
   .card {
     @include col();
     @include size(12);
-  }
-}
 
-.card {
-  background: var(--app-black-25);
-  color: var(--green-700);
+    background: var(--app-black-25);
 
-  p {
-    text-align: center;
+    &__title {
+      color: var(--green-700);
+      text-align: center;
+    }
+
+    &__content {
+      color: var(--blue-600);
+      text-align: center;
+    }
+
+    &__authLink {
+      text-align: center;
+
+      button {
+        margin-top: 1rem;
+      }
+    }
   }
 }
 </style>
