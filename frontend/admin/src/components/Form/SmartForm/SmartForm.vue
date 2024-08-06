@@ -61,6 +61,7 @@
 
           <Password
               v-if="input.type === InputType.NewPassword"
+              @keydown="submitFormOnPressEnter"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
               :weakLabel="$t(tPath + ('password_input.weak_label'))"
@@ -80,6 +81,7 @@
 
           <Password
               v-if="input.type === InputType.CheckPassword"
+              @keydown="submitFormOnPressEnter"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
               :weakLabel="$t(tPath + ('password_input.weak_label'))"

@@ -3,11 +3,6 @@ export default {
         project_name: 'Vue skeleton',
         error: 'Ошибка',
         success: 'Успешно',
-        // 'cruds': {
-        //     'list': 'Список',
-        //     'create': 'Создать',
-        //     'remove': 'Удалить',
-        // }
     },
     components: {
         common: {
