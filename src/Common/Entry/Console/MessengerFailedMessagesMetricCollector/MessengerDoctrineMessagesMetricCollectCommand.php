@@ -34,21 +34,21 @@ class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
     {
         $hasTableStmt = $this->connection->prepare(
             <<<SQL
-                SELECT EXISTS (
-                SELECT 1
-                FROM information_schema.tables
-                WHERE table_name = '{$inputContract->messengerTable}'
-            );
-            SQL
+                    SELECT EXISTS (
+                    SELECT 1
+                    FROM information_schema.tables
+                    WHERE table_name = '{$inputContract->messengerTable}'
+                );
+                SQL
         );
 
         $hasTable = (bool) $hasTableStmt->executeQuery()->fetchOne();
         if ($hasTable) {
             $stmt = $this->connection->prepare(
                 <<<SQL
-                select count(1) from {$inputContract->messengerTable}
-                where queue_name = :queueName;
-                SQL
+                    select count(1) from {$inputContract->messengerTable}
+                    where queue_name = :queueName;
+                    SQL
             );
 
             $stmt->bindValue('queueName', $inputContract->queueName);
@@ -67,7 +67,6 @@ class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
         $gauge->set($count, [
             $inputContract->queueName,
         ]);
-
 
         $this->io->success((string) $count);
 
