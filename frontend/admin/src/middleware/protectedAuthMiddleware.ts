@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 import {createTokenFromLocalstorage, isAuthenticated, saveToken, forgetToken} from "@/service/token/tokenService";
-import {useAuthStore} from "@/stores/auth/authToken";
+import {useAuthStore} from "@/stores/auth/authTokenStore";
 import {RefreshTokenPayload} from "@/api/auth/token/methods/refresh/RefreshTokenRequest";
 import RefreshTokenOutputContract from "@/api/auth/token/methods/refresh/RefreshTokenOutputContract";
 import type {Token} from "@/api/auth/token/dto/Token";

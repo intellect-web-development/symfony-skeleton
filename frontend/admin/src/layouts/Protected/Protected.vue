@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import {forgetToken} from "@/service/token/tokenService";
-import {useAuthStore} from "@/stores/auth/authToken";
+import {useAuthStore} from "@/stores/auth/authTokenStore";
 import Logo from "@/components/Common/Logo/Logo.vue";
 
 const authStore = useAuthStore();
