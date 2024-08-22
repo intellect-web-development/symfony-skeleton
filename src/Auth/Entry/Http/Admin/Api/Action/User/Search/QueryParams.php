@@ -21,8 +21,7 @@ class QueryParams extends SearchQuery
      *         "updatedAt": {"range": "1993-01-13 22:13:45,1993-01-31 22:13:45"},
      *         "email": {"eq": "foo"},
      *         "userRoles": {"like": "thud"},
-     *         "password": {"eq": "bar"},
-     *         "name": {"like": "fred"}
+     *         "password": {"eq": "bar"}
      *     }
      * )
      */

@@ -2,7 +2,7 @@ framework:
     messenger:
         transports:
             auth-transport:
-                dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 retry_strategy:
                     max_retries: 3
                     delay: 5000
@@ -10,6 +10,7 @@ framework:
                 options:
                     exchange:
                         name: auth
+                        type: direct
                     queues:
-                        common: ~
+                        auth: '~'
         routing: {  }
