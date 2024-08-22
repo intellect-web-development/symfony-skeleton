@@ -8,7 +8,6 @@ import type FormPayloadInterface from "@/api/common/FormPayloadInterface";
 export class AuthenticationPayload implements FormPayloadInterface {
   email: string|null = null;
   password: string|null = null;
-  // passwordRepeat: string|null = null;
 
   static schema = yup.object({
     email: yup.string()
@@ -16,12 +15,6 @@ export class AuthenticationPayload implements FormPayloadInterface {
         .email(yupTrans.email),
     password: yup.string()
         .required(yupTrans.required),
-        // .min(6),
-    // passwordRepeat: yup.string()
-    //     .required()
-    //     .oneOf([yup.ref('password'), 'null'], 'passwordRepeat Пароли должны совпадать') // todo: to translator
-    //     .min(6)
-    // todo: это пока останется тут как example, нужно будет там, где пароль надо будет повторять.
   });
 
   public validate(): Violations

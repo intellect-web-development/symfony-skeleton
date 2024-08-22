@@ -1,9 +1,7 @@
-import { default as authentication } from "@/api/auth/token/methods/authentication";
-import { default as refresh } from "@/api/auth/token/methods/refresh";
-import { default as invalidateRefreshToken } from "@/api/auth/token/methods/invalidateRefreshToken";
+import * as token from "./token/methods";
+import * as user from "./user/methods";
 
 export {
-  authentication,
-  refresh,
-  invalidateRefreshToken,
+  token,
+  user,
 };

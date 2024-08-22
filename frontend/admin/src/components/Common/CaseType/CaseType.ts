@@ -1,0 +1,1 @@
+export type CaseType = { value: string, label: string };

@@ -1,6 +1,6 @@
 <template>
-  <div class="layoutContainer">
-    <Toolbar>
+  <div class="container-full">
+    <Toolbar class="toolbar">
       <template #start>
         <Logo :to="{name: 'PublicWelcome'}" />
       </template>
@@ -39,17 +39,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layoutContainer {
-  margin: 0 auto;
-  font-weight: normal;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+@import "@/assets/smart-grid";
 
-  .workSpace {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.toolbar {
+  @include row-flex();
+}
+
+.workSpace {
+  height: 100%;
+  @include row-flex();
+
+  &__workZone {
+    @include col();
+    @include size(12);
   }
 }
 </style>

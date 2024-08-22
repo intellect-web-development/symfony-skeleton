@@ -8,7 +8,7 @@
           </div>
         </template>
         <template #footer>
-          {{ $t(tPath + 'loading') }}
+          {{ labelText }}
         </template>
       </Card>
     </div>
@@ -18,11 +18,26 @@
 
 <script lang="ts">
 export default {
+  props: {
+    label: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       tPath: 'components.common.page_loader.',
     }
   },
+  computed: {
+    labelText() {
+      if (null !== this.label) {
+        return this.$t(this.label);
+      }
+
+      return this.$t(this.tPath + 'loading');
+    }
+  }
 }
 </script>
 

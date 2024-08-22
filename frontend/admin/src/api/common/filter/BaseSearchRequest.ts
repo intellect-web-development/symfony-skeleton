@@ -1,7 +1,6 @@
 import FilterCollection from "@/api/common/filter/filter/FilterCollection";
 import SortCollection from "@/api/common/filter/sort/SortCollection";
 import Pagination from "@/api/common/filter/pagination/Pagination";
-import searchModes from "@/api/common/filter/constants/searchModes";
 import {Strategy} from "@/api/common/filter/strategy/Strategy";
 import BaseJWTRequest from "@/api/common/BaseJWTRequest";
 
@@ -30,13 +29,8 @@ export default class BaseSearchRequest extends BaseJWTRequest {
     let params = filters.toParams();
     for (let property in params) {
       for (let mode in params[property]) {
-        if ([searchModes.IN, searchModes.NOT_IN].includes(mode)) {
-          // @ts-ignore
-          this.params[`filter[${property}][${mode}]`] = params[property][mode];
-        } else {
-          // @ts-ignore
-          this.params[`filter[${property}][${mode}]`] = params[property][mode];
-        }
+        // @ts-ignore
+        this.params[`filter[${property}][${mode}]`] = params[property][mode];
       }
     }
   }

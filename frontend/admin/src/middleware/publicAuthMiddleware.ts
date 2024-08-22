@@ -9,7 +9,7 @@ const publicAuthMiddleware = (
     let token = createTokenFromLocalstorage();
 
     if (isAuthenticated(token)) {
-        next({ name: 'Welcome' });
+        next({ name: 'ProtectedWelcome' });
     } else {
         next();
     }

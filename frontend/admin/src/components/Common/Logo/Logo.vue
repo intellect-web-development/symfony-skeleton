@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="to" class="logo-link">
     <div class="logo">
-      <img alt="Skeleton logo" src="@/assets/img/favicon.ico" width="50" height="50" />
+      <img alt="Logo" src="@/assets/img/favicon.ico" width="50" height="50" />
       <span class="project-name"> {{ $t(tPathMain + 'project_name') }}</span>
     </div>
   </RouterLink>
@@ -12,7 +12,7 @@ export default {
   props: {
     to: {
       type: Object,
-      default: {name: 'Welcome'},
+      default: {name: 'ProtectedWelcome'},
     },
   },
   data() {
@@ -32,6 +32,7 @@ export default {
   margin: 0 0.5rem;
   display: flex;
   align-items: center;
+  color: var(--app-main-color);
 }
 .logo-link {
   text-decoration: none;

@@ -1,0 +1,41 @@
+$primaryColor: #64B5F6 !default;
+$primaryLightColor: scale-color($primaryColor, $lightness: 30%) !default;
+$primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
+$primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$primaryTextColor: #212529 !default;
+
+$accentColor:#9FA8DA !default;
+$accentTextColor:#121212 !default;
+
+$highlightBg: rgba(100, 181, 246, .16) !default;
+$highlightTextColor: rgba(255,255,255,.87) !default;
+$highlightFocusBg: rgba($primaryColor, .24) !default;
+
+//$primaryColor:#9FA8DA !default;
+//$primaryTextColor:#121212 !default;
+
+//$primaryColor:#2196f3 !default;
+//$primaryTextColor:#121212 !default;
+//$accentColor:#9FA8DA !default;
+//$accentTextColor:#121212 !default;
+//
+//$primaryColor:#9FA8DA !default;
+//$primaryTextColor:#121212 !default;
+//$accentColor:#F48FB1 !default;
+//$accentTextColor:#121212 !default;
+
+@import 'primevue-sass-theme/themes/material/material-dark/_variables.scss';
+@import 'primevue-sass-theme/themes/material/material-dark/compact/indigo/_fonts';
+@import 'primevue-sass-theme/theme-base/_components';
+@import 'primevue-sass-theme/themes/material/extensions/vendor_extensions';
+@import 'primevue-sass-theme/themes/material/material-dark/compact/indigo/_extensions';
+
+.p-sidebar .p-sidebar-content {
+  padding: 0 !important;
+}
+.p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link {
+  padding: 0.7rem 1rem;
+}
+.p-speeddial-action {
+  text-decoration: none;
+}

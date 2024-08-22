@@ -1,6 +1,5 @@
 export default {
     'nav': {
-        'profile': 'Профиль',
         'logout': 'Выход из системы',
     },
     'actions': {

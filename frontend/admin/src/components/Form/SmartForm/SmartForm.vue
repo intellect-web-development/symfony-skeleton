@@ -27,7 +27,7 @@
         <div class="p-inputgroup mt-1">
           <span class="p-inputgroup-addon form-label">{{ input.label }}</span>
           <InputText
-              v-if="input.type === InputType.Text"
+              v-if="input instanceof InputSchema"
               @keydown="submitFormOnPressEnter"
               class="form-input"
               type="text"
@@ -43,7 +43,7 @@
           />
 
           <Textarea
-              v-if="input.type === InputType.TextArea"
+              v-if="input instanceof TextAreaInputSchema"
               @keydown="submitFormOnPressEnter"
               class="form-input"
               type="text"
@@ -60,7 +60,7 @@
           />
 
           <Password
-              v-if="input.type === InputType.NewPassword"
+              v-if="input instanceof NewPasswordInputSchema"
               @keydown="submitFormOnPressEnter"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
@@ -80,7 +80,7 @@
           />
 
           <Password
-              v-if="input.type === InputType.CheckPassword"
+              v-if="input instanceof CheckPasswordInputSchema"
               @keydown="submitFormOnPressEnter"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
@@ -99,6 +99,30 @@
             "
           />
 
+          <Dropdown
+              v-if="input instanceof ChoiceInputSchema"
+              v-model="
+              //@ts-ignore
+              tempPayload[input.name]"
+              optionLabel="label"
+              @update:model-value="
+              //@ts-ignore
+              payload[input.name] = tempPayload[input.name].value;"
+              :options="input.cases"
+              :editable="input.editable"
+          />
+
+          <SearchInput
+              v-if="input instanceof SearchInputSchema"
+              :searchProperties="input.searchProperties"
+              :targetValue="input.targetValue"
+              :searchMethod="input.searchMethod"
+              :searchRequest="input.searchRequest"
+              :propertyLabelFn="input.propertyLabelFn"
+              @value-updated="payload[input.name] = $event"
+              :payload="payload[input.name]"
+          />
+
         </div>
         <p class="violation" v-if="
           //@ts-ignore
@@ -112,21 +136,30 @@
       </BlockUI>
     </template>
 
-    <div style="display: flex; align-items: center; justify-content: end;">
+    <div style="display: flex; align-items: center; justify-content: end; margin-top: 1rem">
       <Button :label="submitLabel" @click="onSubmit" :disabled="submitLocked" :loading="formLocked" />
     </div>
   </div>
-  <Toast position="bottom-right" />
+<!-- todo <IWD-3321>: отверстать этот компонент по БЭМ -->
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue'
 import Violations from "@/api/common/Violations";
-import InputSchema, {InputType} from "@/components/Form/SmartForm/InputSchema";
+import AbstractInputSchema from "@/components/Form/SmartForm/InputSchema/AbstractInputSchema";
 import FormSchema from "@/components/Form/SmartForm/FormSchema";
 import debounce from 'debounce';
+import TextInputSchema from "@/components/Form/SmartForm/InputSchema/TextInputSchema";
+import TextAreaInputSchema from "@/components/Form/SmartForm/InputSchema/TextAreaInputSchema";
+import NewPasswordInputSchema from "@/components/Form/SmartForm/InputSchema/NewPasswordInputSchema";
+import CheckPasswordInputSchema from "@/components/Form/SmartForm/InputSchema/CheckPasswordInputSchema";
+import SearchInput from "@/components/Form/Input/SearchInput/SearchInput.vue";
+import SearchInputSchema from "@/components/Form/SmartForm/InputSchema/SearchInputSchema";
+import ChoiceInputSchema from "@/components/Form/SmartForm/InputSchema/ChoiceInputSchema";
 
 export default defineComponent({
+  components: {SearchInput},
+  emits: [ "successSubmit" ],
   props: {
     submitLabel: {
       type: String,
@@ -153,11 +186,27 @@ export default defineComponent({
       formLocked: false,
       formIsUntouched: true,
       payloadSnapshot: Object,
+      tempPayload: {},
     }
   },
   computed: {
-    InputType() {
-      return InputType
+    ChoiceInputSchema() {
+      return ChoiceInputSchema
+    },
+    SearchInputSchema() {
+      return SearchInputSchema
+    },
+    CheckPasswordInputSchema() {
+      return CheckPasswordInputSchema
+    },
+    NewPasswordInputSchema() {
+      return NewPasswordInputSchema
+    },
+    TextAreaInputSchema() {
+      return TextAreaInputSchema
+    },
+    InputSchema() {
+      return TextInputSchema
     },
     submitLocked(): boolean {
       return this.hasViolations || this.formIsUntouched;
@@ -171,7 +220,7 @@ export default defineComponent({
     hasViolations(): boolean {
       return JSON.stringify(this.violationsMap) !== '{}';
     },
-    sortedInputs(): InputSchema[] {
+    sortedInputs(): AbstractInputSchema[] {
       return Object.values(this.schema.inputs).sort((a, b) => a.order - b.order);
     },
     invalidFieldsMap() {
@@ -221,8 +270,23 @@ export default defineComponent({
         break;
       }
     }
+
+    // Предзаполняем temp-значения ChoiceInputSchema
+    for (let propertyName in this.payload) {
+      let propertyValue = this.payload[propertyName];
+      //@ts-ignore
+      if (this.schema.inputs.hasOwnProperty(propertyName) && this.schema.inputs[propertyName] instanceof ChoiceInputSchema) {
+        //@ts-ignore
+        this.tempPayload[propertyName] = this.schema.inputs[propertyName].cases.find((element: { value: string }) => element.value === propertyValue);
+      }
+    }
   },
   methods: {
+    isInputSchema(input: AbstractInputSchema) {
+      console.log(input);
+
+      return true;
+    },
     onValidate() {
       if (this.formIsUntouched) {
         this.formIsUntouched = false;
@@ -282,13 +346,7 @@ export default defineComponent({
         this.violations = new Violations(violations);
       } else {
         if (result.status >= 200 && result.status < 300) {
-          this.$toast.add({
-            severity: 'success',
-            summary: this.$t(this.tPathMain + 'success'),
-            detail: Object.values(result.messages)[0],
-            life: 10000
-          }
-          );
+          this.$emit('successSubmit', result)
         }
       }
 
@@ -311,7 +369,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .violation {
   color: var(--red-400);
-  margin: 0;
+  margin: 0.5rem;
 }
 .form-label {
   width: 25%;

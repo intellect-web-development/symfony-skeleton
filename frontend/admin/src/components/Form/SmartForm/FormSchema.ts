@@ -1,4 +1,4 @@
-import type InputSchema from "@/components/Form/SmartForm/InputSchema";
+import type AbstractInputSchema from "@/components/Form/SmartForm/InputSchema/AbstractInputSchema";
 
 export default class FormSchema
 {
@@ -14,7 +14,7 @@ export default class FormSchema
         }
     }
 
-    add(inputSchema: InputSchema): void
+    add(inputSchema: AbstractInputSchema): void
     {
         // @ts-ignore
         this.inputs[inputSchema.name] = inputSchema;

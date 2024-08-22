@@ -2,7 +2,7 @@ import type {NavigationGuardNext, RouteLocationNormalized} from "vue-router";
 import {createRouter, createWebHistory} from 'vue-router'
 import publicAuthMiddleware from "@/middleware/publicAuthMiddleware";
 import protectedAuthMiddleware from "@/middleware/protectedAuthMiddleware";
-import {projectName} from "@/router/meta/routerDictionary";
+import {projectName} from "@/router/routerDictionary";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,17 +11,34 @@ const router = createRouter({
       path: '/',
       component: () => import('@/layouts/Public/Public.vue'),
       beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => publicAuthMiddleware(to, from, next),
+      children: [
+        {
+          path: '',
+          name: 'PublicWelcome',
+          component: () => import('@/pages/Public/Welcome/Welcome.vue'),
+        },
+        {
+          path: 'login',
+          name: 'Login',
+          component: () => import('@/pages/Public/Login/Login.vue'),
+        },
+      ],
+    },
+    {
+      path: '/public/',
+      component: () => import('@/layouts/Public/Public.vue'),
+      beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => publicAuthMiddleware(to, from, next),
       children: (await import('@/router/public')).default,
     },
     {
-      path: '/admin/',
+      path: '/',
       component: () => import('@/layouts/Protected/Protected.vue'),
       beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => protectedAuthMiddleware(to, from, next),
-      children: (await import('@/router/admin')).default,
+      children: (await import('@/router/protected')).default,
     },
     {
       path: '/:catchAll(.*)*',
-      component: () => import('@/views/Common/Error/404/404.vue'),
+      component: () => import('@/pages/Error/404/404.vue'),
     },
   ]
 })

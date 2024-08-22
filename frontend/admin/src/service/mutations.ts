@@ -12,3 +12,16 @@ export function assignWithTypes(data: any, target: any): void {
         }
     })
 }
+
+/**
+ * @param target - Целевой объект, на который будет производиться маппинг
+ * @param data - Объект данных, с которого данные будут взяты
+ */
+export function dataMap(target: object, data: object): void {
+    for (const key in data) {
+        if (data.hasOwnProperty(key) && target.hasOwnProperty(key)) {
+            //@ts-ignore
+            target[key] = data[key];
+        }
+    }
+}
