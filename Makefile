@@ -1,4 +1,4 @@
-init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app
+init: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up init-app frontend-init
 before-deploy: php-lint twig-lint rector-dry-run php-cs-dry-run php-stan psalm doctrine-schema-validate test deptrac-lint
 fix-linters: rector-fix php-cs-fix
 init-and-check: init before-deploy
@@ -18,7 +18,10 @@ update-deps: composer-update before-deploy composer-outdated
 
 up-test-down: docker-compose-override-init docker-down-clear docker-pull docker-build docker-up env-init \
 	composer-install database-create make-migration-no-interaction migrations-up create-default-admin init-assets \
-	before-deploy docker-down-clear
+	before-deploy docker-down-clear frontend-init
+
+frontend-init:
+	cd ./frontend/admin && make -f Makefile install
 
 make-migration-no-interaction:
 	docker compose run --rm app-php-fpm php bin/console make:migration --no-interaction
