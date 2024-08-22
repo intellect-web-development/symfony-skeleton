@@ -133,7 +133,12 @@ export default {
           let total = outputContract.data['data'].length;
           // Если найдена только одна запись - подставить ее сразу в поле
           if (1 === total) {
-            this.model = this.propertyLabelFn(outputContract.data['data'][0])
+            //@ts-ignore
+            this.model = {
+              label: this.propertyLabelFn(outputContract.data['data'][0]),
+              //@ts-ignore
+              value: outputContract.data['data'][0][this.targetValue],
+            }
           }
           //@ts-ignore
           outputContract.data['data'].map((entity: object) => {
