@@ -4,7 +4,7 @@ import router from "@/router";
 
 const tPathNav = 'nav.';
 
-const items = [
+const items: any = [
 ];
 
 export default items;

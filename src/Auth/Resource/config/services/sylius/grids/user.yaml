@@ -30,10 +30,6 @@ sylius_grid:
                     type: string
                     label: app.admin.ui.modules.auth.user.properties.email
                     sortable: ~
-                name:
-                    type: string
-                    label: app.admin.ui.modules.auth.user.properties.name
-                    sortable: ~
             sorting:
                 id: desc
             filters:
@@ -42,11 +38,6 @@ sylius_grid:
                     form_options:
                         field_name: email
                         label: app.admin.ui.modules.auth.user.properties.email
-                name:
-                    type: like
-                    form_options:
-                        field_name: name
-                        label: app.admin.ui.modules.auth.user.properties.name
             actions:
                 main:
                     create:

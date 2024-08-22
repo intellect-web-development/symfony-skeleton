@@ -46,7 +46,6 @@ class UserController extends ResourceController
                     email: $payload['email'],
                     plainPassword: $payload['plainPassword'],
                     role: $payload['role'],
-                    name: $payload['name'],
                 )
             );
             if ($result->isEmailIsBusy()) {
@@ -97,7 +96,6 @@ class UserController extends ResourceController
             $result = $handler->handle(
                 new EditCommand(
                     id: $user->getId(),
-                    name: $payload['name'],
                     email: $payload['email'],
                     role: $payload['role'],
                 )
@@ -180,7 +178,6 @@ class UserController extends ResourceController
             $result = $editHandler->handle(
                 new EditCommand(
                     id: $user->getId(),
-                    name: $payload['name'],
                     email: $payload['email'],
                     role: $payload['role']
                 )

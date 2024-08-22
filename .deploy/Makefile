@@ -53,7 +53,7 @@ recreate-db:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console doctrine:migrations:migrate --no-interaction'
 
 create-user-ssh:
-	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="${ADMIN_EMAIL}" --password="${ADMIN_PASSWORD}" --name="Admin"'
+	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="${ADMIN_EMAIL}" --password="${ADMIN_PASSWORD}"
 
 clear-unused-images:
 	ssh -o StrictHostKeyChecking=no deploy@${HOST} -p ${PORT} 'docker image prune -a -f'

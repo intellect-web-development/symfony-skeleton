@@ -21,10 +21,4 @@ class InputContract implements InputContractInterface
     #[NotBlank]
     #[Length(min: 4)]
     public string $password = 'root';
-
-    /** User name */
-    #[NotNull]
-    #[NotBlank]
-    #[Length(min: 1)]
-    public string $name = 'Administration';
 }

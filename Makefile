@@ -51,7 +51,7 @@ chmod-password-key:
 	docker compose run --rm app-php-fpm chmod a+r config/jwt/jwtRS256.key
 
 create-default-admin:
-	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root" --name="Admin"
+	docker compose run --rm app-php-fpm php bin/console app:auth:user:create-admin --email="admin@dev.com" --password="root"
 
 debug-router:
 	docker compose run --rm app-php-fpm bin/console debug:router

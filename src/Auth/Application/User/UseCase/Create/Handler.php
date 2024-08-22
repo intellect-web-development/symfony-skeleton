@@ -33,7 +33,6 @@ readonly class Handler
             updatedAt: $now,
             email: $command->email,
             roles: [$command->role],
-            name: $command->name
         );
         $this->userRepository->add($user);
         $user->changePassword(

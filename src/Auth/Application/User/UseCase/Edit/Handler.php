@@ -25,12 +25,10 @@ final readonly class Handler
             return Result::emailIsBusy();
         }
 
-        $name = $command->name ?? $user->getName();
         $email = $command->email ?? $user->getEmail();
         $role = $command->role ?? $user->getRole();
 
         $user->edit(
-            name: $name,
             email: $email,
             roles: [$role]
         );

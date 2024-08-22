@@ -10,7 +10,6 @@ final readonly class Command
 {
     public function __construct(
         public UserId $id,
-        public ?string $name,
         public ?string $email,
         public ?string $role,
     ) {

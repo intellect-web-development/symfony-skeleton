@@ -63,7 +63,6 @@ class FunctionalTestCase extends WebTestCase
             updatedAt: new DateTimeImmutable(),
             email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
             roles: [User::ROLE_ADMIN],
-            name: 'admin@dev.com'
         );
         self::$user->changePassword($passwordHasher->hash('12345'));
         self::$userIdentity = new UserIdentity(
