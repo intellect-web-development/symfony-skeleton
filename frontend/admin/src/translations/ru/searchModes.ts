@@ -1,0 +1,15 @@
+export default {
+    "equals": 'Полное совпадение (equals)',
+    "not-equals": 'Не равно (not equals)',
+    "like": 'Частичное совпадение (like)',
+    "not-like": 'Не содержит частичного совпадения (not like)',
+    "is-null": 'Значение отсутствует (null)',
+    "not-null": 'Значение присутствует (not null)',
+    "in": 'Один из (in)',
+    "not-in": 'Не один из (not in)',
+    "range": 'В диапазоне (range)',
+    "less-than": 'Меньше чем (less than)',
+    "less-or-equals": 'Меньше или равно (less or equals)',
+    "greater-than": 'Больше чем (greater than)',
+    "greater-or-equals": 'Больше или равно (greater or equals)',
+};

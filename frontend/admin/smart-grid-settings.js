@@ -8,7 +8,7 @@ const settings = {
     mobileFirst: false, /* mobileFirst ? 'min-width' : 'max-width' */
     container: {
         maxWidth: '1200px', /* max-width оn very large screen */
-        fields: '30px' /* side fields */
+        fields: '15px' /* side fields */
     },
     breakPoints: {
         lg: {
@@ -19,7 +19,7 @@ const settings = {
         },
         sm: {
             width: '780px',
-            fields: '15px' /* set fields only if you want to change container.fields */
+            // fields: '15px' /* set fields only if you want to change container.fields */
         },
         xs: {
             width: '560px'

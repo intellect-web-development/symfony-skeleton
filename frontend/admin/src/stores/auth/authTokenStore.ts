@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth.token', {
   actions: {
     async authentication(payload: AuthenticationPayload): Promise<BaseOutputContract | Violations> {
       try {
-        return await api.auth.authentication(new AuthenticationRequest(payload));
+        return await api.auth.token.authentication(new AuthenticationRequest(payload));
       } catch(err) {
         //@ts-ignore
         let messages = err.response.data.messages;
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth.token', {
     },
     async refreshToken(payload: RefreshTokenPayload): Promise<BaseOutputContract | Violations> {
       try {
-        return await api.auth.refresh(new RefreshTokenRequest(payload));
+        return await api.auth.token.refresh(new RefreshTokenRequest(payload));
       } catch(err) {
         //@ts-ignore
         let messages = err.response.data.messages;
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth.token', {
         let token = createTokenFromLocalstorageOrFail();
         payload.refreshToken = token.refresh.raw;
 
-        return await api.auth.invalidateRefreshToken(new InvalidateRefreshTokenRequest(payload, token?.access));
+        return await api.auth.token.invalidateRefreshToken(new InvalidateRefreshTokenRequest(payload, token?.access));
       } catch(err) {
         //@ts-ignore
         let messages = err.response.data.messages;
