@@ -6,11 +6,11 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Read;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Bus;
+use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Query;
 use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use IWD\SymfonyEntryContract\Service\Presenter;
-use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Bus;
-use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Query;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;

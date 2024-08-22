@@ -6,13 +6,13 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Search;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
-use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyDoctrineSearch\Dto\Input\SearchQuery;
-use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use IWD\SymfonyDoctrineSearch\Dto\Output\OutputPagination;
-use IWD\SymfonyEntryContract\Service\Presenter;
 use IWD\SymfonyDoctrineSearch\Service\QueryBus\Search\Bus;
 use IWD\SymfonyDoctrineSearch\Service\QueryBus\Search\Query;
+use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
+use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
+use IWD\SymfonyEntryContract\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
