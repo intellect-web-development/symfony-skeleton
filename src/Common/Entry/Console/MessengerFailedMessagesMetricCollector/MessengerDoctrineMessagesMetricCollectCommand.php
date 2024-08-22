@@ -32,30 +32,15 @@ class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
      */
     protected function handle(InputContractInterface $inputContract): int
     {
-        $hasTableStmt = $this->connection->prepare(
+        $stmt = $this->connection->prepare(
             <<<SQL
-                    SELECT EXISTS (
-                    SELECT 1
-                    FROM information_schema.tables
-                    WHERE table_name = '{$inputContract->messengerTable}'
-                );
+                select count(1) from {$inputContract->messengerTable}
+                where queue_name = :queueName;
                 SQL
         );
 
-        $hasTable = (bool) $hasTableStmt->executeQuery()->fetchOne();
-        if ($hasTable) {
-            $stmt = $this->connection->prepare(
-                <<<SQL
-                    select count(1) from {$inputContract->messengerTable}
-                    where queue_name = :queueName;
-                    SQL
-            );
-
-            $stmt->bindValue('queueName', $inputContract->queueName);
-            $count = $stmt->executeQuery()->fetchOne();
-        } else {
-            $count = 0;
-        }
+        $stmt->bindValue('queueName', $inputContract->queueName);
+        $count = $stmt->executeQuery()->fetchOne();
 
         $gauge = $this->adapter->createGauge(
             name: 'actual_messages_in_doctrine_queue',

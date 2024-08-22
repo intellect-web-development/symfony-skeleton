@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Common\EventSubscriber\Metrics;
 
 use App\Common\Service\Metrics\AdapterInterface;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpReceivedStamp;
 use Symfony\Component\Messenger\Event\SendMessageToTransportsEvent;
@@ -14,11 +13,11 @@ use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
 use Symfony\Component\Messenger\Event\WorkerMessageReceivedEvent;
 use Symfony\Component\Messenger\Event\WorkerMessageRetriedEvent;
 use Symfony\Component\Messenger\Event\WorkerRateLimitedEvent;
+use Symfony\Component\Messenger\Event\WorkerRunningEvent;
 use Symfony\Component\Messenger\Event\WorkerStartedEvent;
 use Symfony\Component\Messenger\Event\WorkerStoppedEvent;
 use Symfony\Component\Messenger\Stamp\BusNameStamp;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
-use Symfony\Component\Messenger\Stamp\RedeliveryStamp;
 use Symfony\Component\Messenger\Stamp\StampInterface;
 
 #[AsEventListener(event: SendMessageToTransportsEvent::class, method: 'onSendMessageToTransportsEvent')]
@@ -29,6 +28,7 @@ use Symfony\Component\Messenger\Stamp\StampInterface;
 #[AsEventListener(event: WorkerRateLimitedEvent::class, method: 'onWorkerRateLimitedEvent')]
 #[AsEventListener(event: WorkerStartedEvent::class, method: 'onWorkerStartedEvent')]
 #[AsEventListener(event: WorkerStoppedEvent::class, method: 'onWorkerStoppedEvent')]
+//#[AsEventListener(event: WorkerRunningEvent::class, method: 'onWorkerRunningEvent')]
 readonly class MessengerSubscriber
 {
     public function __construct(
@@ -243,4 +243,11 @@ readonly class MessengerSubscriber
     //
     //        return $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
     //    }
+
+    /**
+     * Отправляется после того, как работник обработал сообщение или вообще не получил сообщение.
+     */
+    public function onWorkerRunningEvent(WorkerRunningEvent $event): void
+    {
+    }
 }

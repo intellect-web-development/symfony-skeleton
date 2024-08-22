@@ -78,11 +78,14 @@ readonly class HttpExceptionSubscriber
             $response = new Response();
             $response->setContent(
                 $this->serializer->serialize(
-                    $this->toApiFormat($exception, Response::HTTP_UNAUTHORIZED),
+                    ApiFormatter::prepare(
+                        null,
+                        Response::HTTP_UNAUTHORIZED,
+                        $exception->getMessage(),
+                    ),
                     $format
                 )
             );
-
             $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
             $response->headers->add(['Content-Type' => 'application/' . $format]);
             $event->setResponse($response);
