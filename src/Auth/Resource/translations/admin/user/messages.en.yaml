@@ -15,7 +15,6 @@ app:
                             email: Email
                             user_roles: UserRoles
                             password: Password
-                            name: Name
                         flash:
                             success: success
                             email_is_busy: 'email is busy'

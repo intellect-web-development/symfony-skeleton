@@ -13,7 +13,6 @@ app:
                             created_at: Дата создания
                             updated_at: Дата обновления
                             password: Пароль
-                            name: Имя
                             role: Роль
                             email: Email
                         flash:
