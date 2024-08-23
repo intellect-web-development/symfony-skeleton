@@ -45,7 +45,7 @@ export const useAuthUserStore = defineStore('auth.user', {
           return violations;
         }
         let result = await api.auth.user.create(
-            new AuthUserCreateRequest(payload, token?.access)
+          new AuthUserCreateRequest(payload, token?.access)
         );
 
         return result;
@@ -64,7 +64,7 @@ export const useAuthUserStore = defineStore('auth.user', {
           return violations;
         }
         let result = await api.auth.user.edit(
-            new AuthUserEditRequest(payload, token?.access)
+          new AuthUserEditRequest(payload, token?.access)
         );
 
         return result;
@@ -83,7 +83,7 @@ export const useAuthUserStore = defineStore('auth.user', {
           return violations;
         }
         let result = await api.auth.user.remove(
-            new AuthUserRemoveRequest(payload, token?.access)
+          new AuthUserRemoveRequest(payload, token?.access)
         );
 
         return result;
