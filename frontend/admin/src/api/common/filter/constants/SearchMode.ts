@@ -15,6 +15,3 @@ export enum SearchMode {
 }
 
 export default SearchMode
-
-// Для получения массива значений
-export const searchModesArray = Object.values(SearchMode);
