@@ -1,6 +1,6 @@
 import {assignWithTypes} from "@/service/mutations";
 
-export class UserEntity {
+export class AuthUserEntity {
   id: string|null = '';
   createdAt: string|null = '';
   updatedAt: string|null = '';

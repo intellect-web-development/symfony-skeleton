@@ -1,17 +1,17 @@
 import BaseOutputContract from '@/api/common/BaseOutputContract';
-import { UserEntity } from "./UserEntity";
+import { AuthUserEntity } from "./AuthUserEntity";
 
 export default class UserCommonOutputContract extends BaseOutputContract {
   public constructor(
     status: number,
     ok: boolean,
-    data: UserEntity,
+    data: AuthUserEntity,
     messages: object,
   ) {
     super(
       status,
       ok,
-      new UserEntity(data),
+      new AuthUserEntity(data),
       messages
     );
   }
