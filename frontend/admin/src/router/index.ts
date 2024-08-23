@@ -15,12 +15,12 @@ const router = createRouter({
         {
           path: '',
           name: 'PublicWelcome',
-          component: () => import('@/pages/Public/Welcome/Welcome.vue'),
+          component: () => import('@/pages/Public/welcome/Welcome.vue'),
         },
         {
           path: 'login',
           name: 'Login',
-          component: () => import('@/pages/Public/Login/Login.vue'),
+          component: () => import('@/pages/Public/login/Login.vue'),
         },
       ],
     },
@@ -38,7 +38,7 @@ const router = createRouter({
     },
     {
       path: '/:catchAll(.*)*',
-      component: () => import('@/pages/Error/404/404.vue'),
+      component: () => import('@/pages/Common/error/404/404.vue'),
     },
   ]
 })

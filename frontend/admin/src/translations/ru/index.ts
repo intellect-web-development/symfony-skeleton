@@ -49,14 +49,14 @@ export default {
     },
     pages: {
         public: {
-            welcome: (await import('@/pages/Public/Welcome/translations/ru')).default,
-            login: (await import('@/pages/Public/Login/translations/ru')).default,
+            welcome: (await import('@/pages/Public/welcome/translations/ru')).default,
+            login: (await import('@/pages/Public/login/translations/ru')).default,
         },
         protected: {
-            welcome: (await import('@/pages/Protected/Welcome/translations/ru')).default,
+            welcome: (await import('@/pages/Protected/welcome/translations/ru')).default,
         },
         error: {
-            404: (await import('@/pages/Error/404/translations/ru')).default,
+            404: (await import('@/pages/Common/error/404/translations/ru')).default,
         },
     },
     views: {},
