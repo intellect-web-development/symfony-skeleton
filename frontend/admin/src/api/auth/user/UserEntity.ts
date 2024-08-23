@@ -1,26 +1,25 @@
 import {assignWithTypes} from "@/service/mutations";
 
 export class UserEntity {
-    id: string|null = '';
-    createdAt: string|null = '';
-    updatedAt: string|null = '';
-    name: string|null = '';
-    email: string|null = '';
+  id: string|null = '';
+  createdAt: string|null = '';
+  updatedAt: string|null = '';
+  email: string|null = '';
 
-    constructor(data?: any) {
-        if (data) {
-            this.mutate(data);
-        }
+  constructor(data?: any) {
+    if (data) {
+      this.mutate(data);
     }
+  }
 
-    public mutate(data: object) {
-        assignWithTypes(data, this);
-    }
+  public mutate(data: object) {
+    assignWithTypes(data, this);
+  }
 
-    public isInit(): boolean
-    {
-        return this.id !== '';
-    }
+  public isInit(): boolean
+  {
+    return this.id !== '';
+  }
 }
 
 // todo: реализовать механизм типо доктрины, но на фронте, readonly. Похожая имплементация есть в ФабрикеКодогенератора.
