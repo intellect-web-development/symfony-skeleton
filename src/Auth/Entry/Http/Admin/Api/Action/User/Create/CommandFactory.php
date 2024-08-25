@@ -15,7 +15,6 @@ class CommandFactory
             email: (string) $inputContract->email,
             plainPassword: (string) $inputContract->plainPassword,
             role: User::ROLE_ADMIN, // todo: переделать на enum
-            name: (string) $inputContract->name,
         );
     }
 }
