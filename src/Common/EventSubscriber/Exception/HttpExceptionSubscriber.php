@@ -81,7 +81,7 @@ readonly class HttpExceptionSubscriber
                     ApiFormatter::prepare(
                         null,
                         Response::HTTP_UNAUTHORIZED,
-                        $exception->getMessage(),
+                        [$exception->getMessage()],
                     ),
                     $format
                 )

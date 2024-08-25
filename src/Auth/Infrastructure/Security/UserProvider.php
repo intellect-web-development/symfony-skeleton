@@ -6,6 +6,7 @@ namespace App\Auth\Infrastructure\Security;
 
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\UserRepository;
+use App\Auth\Domain\User\ValueObject\UserId;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -25,13 +26,13 @@ readonly class UserProvider implements UserProviderInterface
         }
 
         return self::identityByUser(
-            $this->loadUser($user->getUserIdentifier())
+            $this->loadUser(new UserId($user->getUserIdentifier()))
         );
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->loadUser($identifier);
+        $user = $this->loadUser(new UserId($identifier));
 
         return self::identityByUser($user);
     }
@@ -46,9 +47,9 @@ readonly class UserProvider implements UserProviderInterface
         return UserIdentity::class === $class;
     }
 
-    private function loadUser(string $username): User
+    private function loadUser(UserId $userId): User
     {
-        if (($user = $this->userRepository->findByEmail($username)) !== null) {
+        if (($user = $this->userRepository->findById($userId)) !== null) {
             return $user;
         }
 

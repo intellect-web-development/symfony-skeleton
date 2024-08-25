@@ -47,7 +47,7 @@ class JwtTokenizer
                 'iat' => (new DateTime())->getTimestamp(),
                 'exp' => (new DateTime())->add(new DateInterval($this->accessJwtTokenExpiredInterval))->getTimestamp(),
                 'id' => $user->id,
-                'username' => $user->getUserIdentifier(),
+                'username' => $user->username,
                 'roles' => $user->getRoles(),
             ],
             $payload
