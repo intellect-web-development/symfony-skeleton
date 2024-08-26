@@ -66,7 +66,6 @@ export default {
     return {
       visibleModel: false,
       items: [],
-      tPath: 'nav.',
     };
   },
 };

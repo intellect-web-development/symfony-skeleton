@@ -1,13 +1,13 @@
 <template>
   <Card class="card" unstyled>
     <template #title>
-      <span class="card__title">{{$t(tPathEntity + 'name')}} #{{ id }}</span>
+      <span class="card__title">{{$t(tPathEntity + 'one')}} #{{ id }}</span>
     </template>
     <template #content>
       <div class="row-main">
         <div class="items">
-          <SimpleItem :label="$t(tPathEntity + 'properties.createdAt')">{{ createdAt }}</SimpleItem>
-          <SimpleItem :label="$t(tPathEntity + 'properties.updatedAt')">{{ updatedAt }}</SimpleItem>
+          <SimpleItem :label="$t(tPathEntity + 'properties.created_at')">{{ createdAt }}</SimpleItem>
+          <SimpleItem :label="$t(tPathEntity + 'properties.updated_at')">{{ updatedAt }}</SimpleItem>
           <SimpleItem :label="$t(tPathEntity + 'properties.email')">{{ email }}</SimpleItem>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default defineComponent({
   },
   data() {
     return {
-      tPathEntity: 'entities.auth.user.',
+      tPathEntity: 'entities.auth.entities.user.',
     };
   },
   computed: {
@@ -41,6 +41,7 @@ export default defineComponent({
     createdAt() {
       //@ts-ignore
       let date = new Date(this.readonlyState.createdAt);
+
       return date.toLocaleString(undefined, {
         year: 'numeric',
         month: 'long',
@@ -52,6 +53,7 @@ export default defineComponent({
     updatedAt() {
       //@ts-ignore
       let date = new Date(this.readonlyState.updatedAt);
+
       return date.toLocaleString(undefined, {
         year: 'numeric',
         month: 'long',

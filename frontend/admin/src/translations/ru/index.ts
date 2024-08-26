@@ -17,9 +17,9 @@ export default {
         },
         events: {
             remove_confirmed: 'Удаление подтверждено',
-        }
+        },
+        details: 'Детали',
     },
-    nav: (await import('./nav')).default,
     components: {
         common: {
             page_loader: (await import('@/components/Common/PageLoader/translations/ru')).default,
@@ -59,11 +59,5 @@ export default {
             404: (await import('@/pages/Common/error/404/translations/ru')).default,
         },
     },
-    views: {},
-    modal: {
-        protected: {
-        },
-    },
-    entities: {
-    },
+    entities: (await import('./entities')).default,
 };
