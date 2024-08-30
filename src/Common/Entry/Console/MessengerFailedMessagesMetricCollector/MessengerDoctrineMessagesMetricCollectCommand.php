@@ -32,28 +32,35 @@ class MessengerDoctrineMessagesMetricCollectCommand extends CliCommand
      */
     protected function handle(InputContractInterface $inputContract): int
     {
-        $stmt = $this->connection->prepare(
+        $queuesAndCounts = $this->connection->prepare(
             <<<SQL
-                select count(1) from {$inputContract->messengerTable}
-                where queue_name = :queueName;
+                WITH queue_names AS (
+                    SELECT DISTINCT queue_name
+                    FROM {$inputContract->messengerTable}
+                ),
+                     queue_counts AS (SELECT queue_name, COUNT(*) AS count FROM {$inputContract->messengerTable} GROUP BY queue_name)
+                SELECT
+                    queue_names.queue_name,
+                    COALESCE(queue_counts.count, 0) AS message_count
+                FROM
+                    queue_names LEFT JOIN queue_counts ON queue_names.queue_name = queue_counts.queue_name
                 SQL
-        );
+        )->executeQuery()->fetchAllAssociative();
 
-        $stmt->bindValue('queueName', $inputContract->queueName);
-        $count = $stmt->executeQuery()->fetchOne();
+        foreach ($queuesAndCounts as $queuesAndCount) {
+            $gauge = $this->adapter->createGauge(
+                name: 'actual_messages_in_doctrine_queue',
+                help: 'Actual messages in doctrine queue',
+                labels: [
+                    'queue',
+                ]
+            );
+            $gauge->set($queuesAndCount['message_count'], [
+                $queuesAndCount['queue_name'],
+            ]);
 
-        $gauge = $this->adapter->createGauge(
-            name: 'actual_messages_in_doctrine_queue',
-            help: 'Actual messages in doctrine queue',
-            labels: [
-                'queue',
-            ]
-        );
-        $gauge->set($count, [
-            $inputContract->queueName,
-        ]);
-
-        $this->io->success((string) $count);
+            $this->io->success($queuesAndCount['queue_name'] . ': ' . $queuesAndCount['message_count']);
+        }
 
         return self::SUCCESS;
     }
