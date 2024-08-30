@@ -10,8 +10,10 @@ use App\Auth\Application\User\UseCase\Create\Command as CreateCommand;
 use App\Auth\Application\User\UseCase\Create\Handler as CreateHandler;
 use App\Auth\Application\User\UseCase\Edit\Command as EditCommand;
 use App\Auth\Application\User\UseCase\Edit\Handler as EditHandler;
-use App\Auth\Application\User\UseCase\Remove\Command as RemoveCommand;
-use App\Auth\Application\User\UseCase\Remove\Handler as RemoveHandler;
+use App\Auth\Application\User\UseCase\Remove\Command as DeleteCommand;
+use App\Auth\Application\User\UseCase\Remove\Handler as DeleteHandler;
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
+use App\Auth\Domain\User\Exception\UserNotFoundException;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\UserId;
 use App\Auth\Entry\Http\Admin\Sylius\Controller\User\Form\ChangePasswordType;
@@ -26,40 +28,50 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route(path: '/users', name: 'app_auth.user_')]
+#[Route(
+    path: 'auth/users',
+    name: 'app_auth.user_',
+)]
 class UserController extends ResourceController
 {
-    #[Route(path: '/create/new', name: 'create', methods: ['GET', 'POST'])]
+    #[Route(
+        path: '/create/new',
+        name: 'create',
+        methods: ['GET', 'POST'],
+    )]
     public function create(
         Request $request,
         CreateHandler $handler,
         TranslatorInterface $translator,
     ): Response {
+        $formData = null;
+
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $form = $this->createForm(CreateType::class);
+        $form = $this->createForm(CreateType::class, $formData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $payload = $form->getData();
-            $result = $handler->handle(
-                new CreateCommand(
-                    email: $payload['email'],
-                    plainPassword: $payload['plainPassword'],
-                    role: $payload['role'],
-                )
-            );
-            if ($result->isEmailIsBusy()) {
-                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.error_email_is_busy'));
+            try {
+                $result = $handler->handle(
+                    new CreateCommand(
+                        email: $payload['email'],
+                        plainPassword: $payload['plainPassword'],
+                        role: $payload['role'],
+                    )
+                );
+            } catch (UserEmailAlreadyTakenException $exception) {
+                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.email_already_taken'));
             }
-            if ($result->isSuccess()) {
-                $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success_created'));
+            if (isset($result)) {
+                $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success'));
 
-                return $this->redirectToRoute('app_auth.user_show', ['id' => $result->user?->getId()->getValue()]);
+                return $this->redirectToRoute('app_auth.user_show', ['id' => $result->user->getId()->getValue()]);
             }
         }
 
         return $this->render(
-            '@app/admin/layout/crud/create.html.twig',
+            '@auth/admin/user/create.html.twig',
             [
                 'metadata' => $this->metadata,
                 'form' => $form->createView(),
@@ -90,26 +102,26 @@ class UserController extends ResourceController
         }
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $payload = $form->getData();
-            $result = $handler->handle(
-                new EditCommand(
-                    id: $user->getId(),
-                    email: $payload['email'],
-                    role: $payload['role'],
-                )
-            );
-            if ($result->isEmailIsBusy()) {
-                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.error_email_is_busy'));
-            }
-            if ($result->isUserNotExists()) {
-                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.error_user_not_exists'));
-            }
-            if ($result->isSuccess()) {
-                $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success_edited'));
 
-                return $this->redirectToRoute('app_auth.user_show', ['id' => $result->user?->getId()->getValue()]);
+            try {
+                $result = $handler->handle(
+                    new EditCommand(
+                        id: $user->getId(),
+                        email: $payload['email'],
+                        role: $payload['role'],
+                    )
+                );
+            } catch (UserNotFoundException $exception) {
+                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.user_not_found'));
+            } catch (UserEmailAlreadyTakenException $exception) {
+                $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.email_already_taken'));
+            }
+            if (isset($result)) {
+                $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success'));
+
+                return $this->redirectToRoute('app_auth.user_show', ['id' => $result->user->getId()->getValue()]);
             }
         }
 
@@ -131,19 +143,20 @@ class UserController extends ResourceController
     )]
     public function delete(
         string $id,
+        DeleteHandler $handler,
         TranslatorInterface $translator,
-        RemoveHandler $handler
     ): Response {
-        $result = $handler->handle(
-            new RemoveCommand(
-                id: new UserId($id)
-            )
-        );
-        if ($result->isUserNotExists()) {
-            $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.error_user_not_exists'));
+        try {
+            $result = $handler->handle(
+                new DeleteCommand(
+                    id: new UserId($id)
+                )
+            );
+        } catch (UserNotFoundException $exception) {
+            $this->addFlash('error', $translator->trans('app.admin.ui.modules.auth.user.flash.user_not_found'));
         }
-        if ($result->isSuccess()) {
-            $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success_deleted'));
+        if (isset($result)) {
+            $this->addFlash('success', $translator->trans('app.admin.ui.modules.auth.user.flash.success'));
         }
 
         return $this->redirectToRoute('app_auth.user_index');

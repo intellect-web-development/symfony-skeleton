@@ -5,29 +5,33 @@ declare(strict_types=1);
 namespace App\Auth\Entry\Http\Admin\Api\Action\User\Remove;
 
 use App\Auth\Application\User\UseCase\Remove\Result;
+use App\Auth\Domain\User\Exception\UserNotFoundException;
+use App\Common\Exception\Domain\DomainException;
 use App\Common\Service\Metrics\AdapterInterface;
 
 /** @codeCoverageIgnore */
-class MetricSender
+readonly class MetricSender
 {
-    public function __construct(private readonly AdapterInterface $metrics)
+    public function __construct(private AdapterInterface $metrics)
     {
     }
 
-    public function send(Result $result): void
-    {
+    public function send(
+        ?Result $result,
+        ?DomainException $exception,
+    ): void {
         $metricPrefix = str_replace('.', '_', Action::NAME);
 
-        if ($result->isSuccess()) {
+        if (null !== $result) {
             $this->metrics->createCounter(
                 name: $metricPrefix . ':success',
-                help: 'success'
+                help: 'Success'
             )->inc();
         }
-        if ($result->isUserNotExists()) {
+        if ($exception instanceof UserNotFoundException) {
             $this->metrics->createCounter(
-                name: $metricPrefix . ':user_not_exists',
-                help: 'user not exists'
+                name: $metricPrefix . ':user_not_found',
+                help: 'User not found'
             )->inc();
         }
     }

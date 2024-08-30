@@ -7,6 +7,7 @@ namespace App\Auth\Entry\Http\Admin\Api\Action\User\Remove;
 use App\Auth\Application\User\UseCase\Remove\Handler;
 use App\Auth\Domain\User\User;
 use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
+use App\Common\Exception\Domain\DomainException;
 use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -84,9 +85,16 @@ class Action
         MetricSender $metricSender,
     ): Response {
         $command = $commandFactory->create($contract);
-        $result = $handler->handle($command);
-        $metricSender->send($result);
+        try {
+            $result = $handler->handle($command);
+        } catch (DomainException $domainException) {
+        } finally {
+            $result ??= null;
+            $domainException ??= null;
+        }
 
-        return $responsePresenter->present($result, $outputFormat);
+        $metricSender->send($result, $domainException);
+
+        return $responsePresenter->present($result, $domainException, $outputFormat);
     }
 }

@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\User\UseCase\Edit;
 
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
+use App\Auth\Domain\User\Exception\UserNotFoundException;
 use App\Auth\Domain\User\UserRepository;
 use App\Common\Service\Core\Flusher;
 
 final readonly class Handler
 {
     public function __construct(
-        private UserRepository $userRepository,
         private Flusher $flusher,
+        private UserRepository $userRepository,
     ) {
     }
 
@@ -19,10 +21,17 @@ final readonly class Handler
     {
         $user = $this->userRepository->findById($command->id);
         if (null === $user) {
-            return Result::userNotExists();
+            throw new UserNotFoundException(
+                message: "User #{$command->id} not found",
+                context: ['id' => $command->id],
+            );
         }
+
         if (null !== $command->email && $command->email !== $user->getEmail() && $this->userRepository->hasByEmail($command->email)) {
-            return Result::emailIsBusy();
+            throw new UserEmailAlreadyTakenException(
+                message: "User #{$command->email} not found",
+                context: ['email' => $command->email],
+            );
         }
 
         $email = $command->email ?? $user->getEmail();
@@ -35,6 +44,8 @@ final readonly class Handler
 
         $this->flusher->flush();
 
-        return Result::success($user);
+        return new Result(
+            user: $user,
+        );
     }
 }
