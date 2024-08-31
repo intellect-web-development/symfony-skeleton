@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AuthUserCreateView from "@/views/Protected/auth/user/AuthUserCreateView.vue";
+import AuthUserCreateView from "@/views/Protected/auth/user/Auth_User_CreateView.vue";
 
 export default defineComponent({
   components: {AuthUserCreateView},

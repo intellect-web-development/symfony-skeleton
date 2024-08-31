@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AuthUserShowView from "@/views/Protected/auth/user/AuthUserShowView.vue";
+import AuthUserShowView from "@/views/Protected/auth/user/Auth_User_ShowView.vue";
 import {AuthUserEntity} from "@/api/auth/user/AuthUserEntity";
 
 export default defineComponent({

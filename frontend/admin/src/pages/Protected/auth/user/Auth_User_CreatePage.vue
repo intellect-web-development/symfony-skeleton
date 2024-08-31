@@ -3,7 +3,7 @@
     <Breadcrumb :home="breadcrumbs.home" :model="breadcrumbs.items" />
     <Card>
       <template #content>
-        <AuthUserCreateView :fallback-form-payload="fallbackFormPayload" />
+        <Auth_User_CreateView :fallback-form-payload="fallbackFormPayload" />
       </template>
     </Card>
   </div>
@@ -11,12 +11,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AuthUserCreateView from "@/views/Protected/auth/user/AuthUserCreateView.vue";
+import Auth_User_CreateView from "@/views/Protected/auth/user/Auth_User_CreateView.vue";
 import {useHead} from "unhead";
 import {generateTitleFromBreadcrumbs} from "@/service/metaService";
 
 export default defineComponent({
-  components: {AuthUserCreateView},
+  components: {Auth_User_CreateView},
 
   created() {
     useHead({

@@ -20,7 +20,7 @@
         hideIcon="pi pi-times"
     >
     </SpeedDial>
-    <AuthUserCreateModal
+    <Auth_User_CreateModal
         :visible="createDialogVisible"
         @visibleChanged="createDialogVisible = $event"
     />
@@ -32,7 +32,7 @@ import {defineComponent} from 'vue';
 import SearchPage from "@/components/Search/SearchPage/SearchPage.vue";
 import {useAuthUserStore} from "@/stores/auth/authUserStore";
 import AuthUserSearchRequest from "@/api/auth/user/methods/search/AuthUserSearchRequest";
-import AuthUserCreateModal from "@/modal/Protected/auth/user/AuthUserCreateModal.vue";
+import Auth_User_CreateModal from "@/modal/Protected/auth/user/Auth_User_CreateModal.vue";
 import Properties from "@/api/common/filter/dto/Properties";
 import Property from "@/api/common/filter/dto/Property";
 import PropertyFilter from "@/api/common/filter/dto/PropertyFilter";
@@ -44,7 +44,7 @@ import {useHead} from "unhead";
 import {generateTitleFromBreadcrumbs} from "@/service/metaService";
 
 export default defineComponent({
-  components: {AuthUserCreateModal, SearchPage},
+  components: {Auth_User_CreateModal: Auth_User_CreateModal, SearchPage},
 
   created() {
     useHead({

@@ -9,7 +9,7 @@
           </template>
           <template #content>
             <div class="row-main">
-              <AuthUserShowView class="show" :readonlyState="readonlyState" />
+              <Auth_User_ShowView class="show" :readonlyState="readonlyState" />
               <div class="sidebar"></div>
             </div>
           </template>
@@ -33,14 +33,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AuthUserShowView from "@/views/Protected/auth/user/AuthUserShowView.vue";
+import Auth_User_ShowView from "@/views/Protected/auth/user/Auth_User_ShowView.vue";
 import SearchPage from "@/components/Search/SearchPage/SearchPage.vue";
 import {AuthUserEntity} from "@/api/auth/user/AuthUserEntity";
 import {useAuthUserStore} from "@/stores/auth/authUserStore";
 import AuthUserReadRequest from "@/api/auth/user/methods/read/AuthUserReadRequest";
 import Violations from "@/api/common/Violations";
 import PageLoader from "@/components/Common/PageLoader/PageLoader.vue";
-import AuthUserEditModal from "@/modal/Protected/auth/user/AuthUserEditModal.vue";
+import AuthUserEditModal from "@/modal/Protected/auth/user/Auth_User_EditModal.vue";
 import {AuthUserRemovePayload} from "@/api/auth/user/methods/remove/AuthUserRemoveRequest";
 import type UserCommonOutputContract from "@/api/auth/user/UserCommonOutputContract";
 import {generateTitleForDetailsPage} from "@/service/metaService";
@@ -49,7 +49,7 @@ import { useHead } from 'unhead'
 const authUserStore = useAuthUserStore()
 
 export default defineComponent({
-  components: {AuthUserEditModal, PageLoader, SearchPage, AuthUserShowView},
+  components: {AuthUserEditModal, PageLoader, SearchPage, Auth_User_ShowView},
 
   created() {
     this.onLoadReadonlyState()
