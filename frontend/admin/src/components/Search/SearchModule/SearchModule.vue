@@ -205,6 +205,9 @@ export default defineComponent({
     this.onFilterApply();
 
     this.properties.properties.map((property: Property) => {
+      if (!this.searchPayload.filterCollection.filtersAssoc[property.name]) {
+        return;
+      }
       let searchMode = this.searchPayload.filterCollection.filtersAssoc[property.name].searchMode;
       // @ts-ignore
       this.filters[property.name] = {
