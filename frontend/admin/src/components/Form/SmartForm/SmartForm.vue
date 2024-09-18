@@ -346,11 +346,11 @@ export default defineComponent({
             // @ts-ignore
             let message = result.violations[i];
             this.$toast.add({
-                  severity: 'warn',
-                  summary: this.$t(this.tPathMain + 'error'),
-                  detail: message,
-                  life: 10000
-                }
+                severity: 'warn',
+                summary: this.$t(this.tPathMain + 'error'),
+                detail: message,
+                life: 10000
+              }
             );
           } else {
             // @ts-ignore
