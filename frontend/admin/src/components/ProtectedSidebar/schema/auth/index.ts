@@ -3,7 +3,6 @@ import router from "@/router";
 const items: any = [
   {
     label: 'entities.auth.label',
-    icon: 'pi pi-list',
     items: [
       {
         label: 'entities.auth.entities.user.many',
