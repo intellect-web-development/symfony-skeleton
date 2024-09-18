@@ -31,7 +31,7 @@
               @keydown="submitFormOnPressEnter"
               class="form-input"
               type="text"
-              @change="onValidate"
+              @change="onChangePayload(input)"
               v-model="
               //@ts-ignore
               payload[input.name]
@@ -48,7 +48,7 @@
               class="form-input"
               type="text"
               rows="5"
-              @change="onValidate"
+              @change="onChangePayload(input)"
               v-model="
               //@ts-ignore
               payload[input.name]
@@ -61,6 +61,7 @@
 
           <Password
               v-if="input instanceof NewPasswordInputSchema"
+              @input="onChangePayload(input)"
               @keydown="submitFormOnPressEnter"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
@@ -79,9 +80,11 @@
             "
           />
 
+
           <Password
               v-if="input instanceof CheckPasswordInputSchema"
               @keydown="submitFormOnPressEnter"
+              @input="onChangePayload(input)"
               class="form-input"
               :promptLabel="$t(tPath + ('password_input.prompt_label'))"
               :weakLabel="$t(tPath + ('password_input.weak_label'))"
@@ -101,6 +104,7 @@
 
           <Dropdown
               v-if="input instanceof ChoiceInputSchema"
+              @change="onChangePayload(input)"
               v-model="
               //@ts-ignore
               tempPayload[input.name]"
@@ -140,7 +144,7 @@
       <Button :label="submitLabel" @click="onSubmit" :disabled="submitLocked" :loading="formLocked" />
     </div>
   </div>
-<!-- todo <IWD-3321>: отверстать этот компонент по БЭМ -->
+  <!-- todo <IWD-3321>: отверстать этот компонент по БЭМ -->
 </template>
 
 <script lang="ts">
@@ -176,7 +180,11 @@ export default defineComponent({
     onSubmitCallback: {
       type: Function,
       required: true,
-    }
+    },
+    validateTimeout: {
+      type: Number,
+      default: 300
+    },
   },
   data() {
     return {
@@ -187,6 +195,7 @@ export default defineComponent({
       formIsUntouched: true,
       payloadSnapshot: Object,
       tempPayload: {},
+      touchedInputs: {},
     }
   },
   computed: {
@@ -260,8 +269,7 @@ export default defineComponent({
     }
   },
   created() {
-    this.onValidate = debounce(this.onValidate, 300);
-    this.onValidateWithTimeout = debounce(this.onValidate, 800);
+    this.onValidate = debounce(this.onValidate, this.validateTimeout);
 
     // Если есть хотя бы одно предзаполненное поле, то вызываем валидацию
     for (let value of Object.values(this.payload)) {
@@ -282,23 +290,29 @@ export default defineComponent({
     }
   },
   methods: {
-    isInputSchema(input: AbstractInputSchema) {
-      console.log(input);
-
-      return true;
-    },
-    onValidate() {
+    onChangePayload(input: AbstractInputSchema|null = null) {
+      if (input) {
+        //@ts-ignore
+        this.touchedInputs[input.name] = input;
+      }
       if (this.formIsUntouched) {
         this.formIsUntouched = false;
       }
-
-      this.violations = this.payload.validate();
-
-      // @ts-ignore
-      this.payloadSnapshot = { ...this.payload };
     },
-    onValidateWithTimeout() {
-      // callback for call onValidate with late
+    onValidate() {
+      const prototype = Object.getPrototypeOf(this.payload);
+
+      if (typeof prototype.constructor === 'function') {
+        this.payloadSnapshot = new prototype.constructor();
+
+        for (let name in this.touchedInputs) {
+          //@ts-ignore
+          this.payloadSnapshot[name] = this.payload[name];
+        }
+      }
+
+      //@ts-ignore
+      this.violations = this.payloadSnapshot.validate();
     },
     fieldIsInvalid(field: string) {
       return this.violationsMap.hasOwnProperty(field);
@@ -332,11 +346,11 @@ export default defineComponent({
             // @ts-ignore
             let message = result.violations[i];
             this.$toast.add({
-              severity: 'warn',
-              summary: this.$t(this.tPathMain + 'error'),
-              detail: message,
-              life: 10000
-            }
+                  severity: 'warn',
+                  summary: this.$t(this.tPathMain + 'error'),
+                  detail: message,
+                  life: 10000
+                }
             );
           } else {
             // @ts-ignore
