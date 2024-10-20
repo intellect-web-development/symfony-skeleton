@@ -29,7 +29,7 @@ final readonly class Handler
 
         if (null !== $command->email && $command->email !== $user->getEmail() && $this->userRepository->hasByEmail($command->email)) {
             throw new UserEmailAlreadyTakenException(
-                message: "User #{$command->email} not found",
+                message: "Email {$command->email} already taken",
                 context: ['email' => $command->email],
             );
         }

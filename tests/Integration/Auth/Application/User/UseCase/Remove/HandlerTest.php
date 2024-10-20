@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\Remove;
 
 use App\Auth\Application\User\UseCase\Remove\Command;
 use App\Auth\Application\User\UseCase\Remove\Handler;
-use App\Auth\Application\User\UseCase\Remove\ResultCase;
+use App\Auth\Domain\User\Exception\UserNotFoundException;
 use App\Auth\Domain\User\UserRepository;
 use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
@@ -48,14 +48,12 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWhenUserNotExists(): void
     {
-        $result = self::$handler->handle(
+        self::expectException(UserNotFoundException::class);
+
+        self::$handler->handle(
             new Command(
                 id: new UserId('100000'),
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::UserNotExists)
-        );
-        self::assertNull($result->user);
     }
 }

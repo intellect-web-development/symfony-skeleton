@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\Create;
 
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
-use App\Auth\Application\User\UseCase\Create\ResultCase;
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\ValueObject\UserId;
 use App\Tests\Integration\IntegrationTestCase;
@@ -41,9 +41,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::Success)
-        );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
@@ -60,16 +57,14 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWhenEmailIsBusy(): void
     {
-        $result = self::$handler->handle(
+        self::expectException(UserEmailAlreadyTakenException::class);
+
+        self::$handler->handle(
             new Command(
                 email: Fixture::EMAIL,
                 plainPassword: self::$faker->password(),
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::EmailIsBusy)
-        );
-        self::assertNull($result->user);
     }
 }

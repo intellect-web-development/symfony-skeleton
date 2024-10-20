@@ -6,7 +6,8 @@ namespace App\Tests\Integration\Auth\Application\User\UseCase\Edit;
 
 use App\Auth\Application\User\UseCase\Edit\Command;
 use App\Auth\Application\User\UseCase\Edit\Handler;
-use App\Auth\Application\User\UseCase\Edit\ResultCase;
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
+use App\Auth\Domain\User\Exception\UserNotFoundException;
 use App\Auth\Domain\User\User;
 use App\Auth\Domain\User\UserRepository;
 use App\Auth\Domain\User\ValueObject\UserId;
@@ -46,9 +47,6 @@ class HandlerTest extends IntegrationTestCase
                 role: null,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::Success)
-        );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($expectedEmail, $result->user->getEmail());
@@ -64,9 +62,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::Success)
-        );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
@@ -75,17 +70,14 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWhenUserNotExists(): void
     {
-        $result = self::$handler->handle(
+        self::expectException(UserNotFoundException::class);
+        self::$handler->handle(
             new Command(
                 id: new UserId('100000'),
                 email: self::$faker->email() . self::$faker->sha1(),
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::UserNotExists)
-        );
-        self::assertNull($result->user);
     }
 
     public function testHandleWhenSuccessWithSelfEmail(): void
@@ -97,9 +89,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::Success)
-        );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
@@ -107,16 +96,13 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWhenEmailIsBusy(): void
     {
-        $result = self::$handler->handle(
+        self::expectException(UserEmailAlreadyTakenException::class);
+        self::$handler->handle(
             new Command(
                 id: new UserId(Fixture::ID),
                 email: Fixture::BUSY_EMAIL,
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::EmailIsBusy)
-        );
-        self::assertNull($result->user);
     }
 }
