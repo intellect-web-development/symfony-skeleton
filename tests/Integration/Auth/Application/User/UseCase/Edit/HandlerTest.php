@@ -47,7 +47,6 @@ class HandlerTest extends IntegrationTestCase
                 role: null,
             )
         );
-        self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($expectedEmail, $result->user->getEmail());
         self::assertSame($expectedRole, $result->user->getRole());
@@ -62,7 +61,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
         self::assertSame($command->role, $result->user->getRole());
@@ -89,7 +87,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
     }

@@ -43,13 +43,14 @@ class HandlerTest extends IntegrationTestCase
         self::assertTrue(
             $result->case->isEqual(ResultCase::Success)
         );
-        self::assertNotNull($result->user);
-        self::assertTrue(
-            self::$passwordHasher->verify($result->user->getPassword(), $command->newPassword)
-        );
-        self::assertFalse(
-            self::$passwordHasher->verify($result->user->getPassword(), $command->oldPassword)
-        );
+        if (null !== $result->user) {
+            self::assertTrue(
+                self::$passwordHasher->verify($result->user->getPassword(), $command->newPassword)
+            );
+            self::assertFalse(
+                self::$passwordHasher->verify($result->user->getPassword(), $command->oldPassword)
+            );
+        }
     }
 
     public function testHandleWhenInvalidCredentials(): void

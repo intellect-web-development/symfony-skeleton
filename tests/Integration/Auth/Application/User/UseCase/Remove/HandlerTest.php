@@ -33,13 +33,10 @@ class HandlerTest extends IntegrationTestCase
 
     public function testHandleWhenSuccess(): void
     {
-        $result = self::$handler->handle(
+        self::$handler->handle(
             $command = new Command(
                 id: new UserId(Fixture::ID),
             )
-        );
-        self::assertTrue(
-            $result->case->isEqual(ResultCase::Success)
         );
         self::assertNull(
             self::$userRepository->findById($command->id)

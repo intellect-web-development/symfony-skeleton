@@ -41,7 +41,6 @@ class HandlerTest extends IntegrationTestCase
                 role: User::ROLE_ADMIN,
             )
         );
-        self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
         self::assertSame($command->email, $result->user->getEmail());
         self::assertSame([User::ROLE_ADMIN], $result->user->getRoles());
