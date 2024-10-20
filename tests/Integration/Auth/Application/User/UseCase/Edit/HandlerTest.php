@@ -36,14 +36,12 @@ class HandlerTest extends IntegrationTestCase
     {
         $user = self::$userRepository->findById($wallId = new UserId(Fixture::ID));
         self::assertNotNull($user);
-        $expectedName = $user->getName();
         $expectedEmail = $user->getEmail();
         $expectedRole = $user->getRole();
 
         $result = self::$handler->handle(
             new Command(
                 id: $wallId,
-                name: null,
                 email: null,
                 role: null,
             )
@@ -53,7 +51,6 @@ class HandlerTest extends IntegrationTestCase
         );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
-        self::assertSame($expectedName, $result->user->getName());
         self::assertSame($expectedEmail, $result->user->getEmail());
         self::assertSame($expectedRole, $result->user->getRole());
     }
@@ -63,7 +60,6 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             $command = new Command(
                 id: new UserId(Fixture::ID),
-                name: self::$faker->name() . self::$faker->sha1(),
                 email: self::$faker->email() . self::$faker->sha1(),
                 role: User::ROLE_ADMIN,
             )
@@ -73,7 +69,6 @@ class HandlerTest extends IntegrationTestCase
         );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
-        self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
         self::assertSame($command->role, $result->user->getRole());
     }
@@ -83,7 +78,6 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             new Command(
                 id: new UserId('100000'),
-                name: self::$faker->name() . self::$faker->sha1(),
                 email: self::$faker->email() . self::$faker->sha1(),
                 role: User::ROLE_ADMIN,
             )
@@ -99,7 +93,6 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             $command = new Command(
                 id: new UserId(Fixture::ID),
-                name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::SELF_EMAIL,
                 role: User::ROLE_ADMIN,
             )
@@ -109,7 +102,6 @@ class HandlerTest extends IntegrationTestCase
         );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
-        self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
     }
 
@@ -118,7 +110,6 @@ class HandlerTest extends IntegrationTestCase
         $result = self::$handler->handle(
             new Command(
                 id: new UserId(Fixture::ID),
-                name: self::$faker->name() . self::$faker->sha1(),
                 email: Fixture::BUSY_EMAIL,
                 role: User::ROLE_ADMIN,
             )

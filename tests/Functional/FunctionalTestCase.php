@@ -63,7 +63,6 @@ class FunctionalTestCase extends WebTestCase
             updatedAt: new DateTimeImmutable(),
             email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
             roles: [User::ROLE_ADMIN],
-            name: 'admin@dev.com'
         );
         self::$user->changePassword($passwordHasher->hash('12345'));
         self::$userIdentity = new UserIdentity(
@@ -148,7 +147,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntityData(string $content = null): array
+    protected function parseEntityData(?string $content = null): array
     {
         if (null === $content) {
             return [];
@@ -160,7 +159,7 @@ class FunctionalTestCase extends WebTestCase
     /**
      * @throws JsonException
      */
-    protected function parseEntitiesData(string $content = null): array
+    protected function parseEntitiesData(?string $content = null): array
     {
         if (null === $content) {
             return [];

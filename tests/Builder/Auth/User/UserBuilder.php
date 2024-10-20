@@ -15,7 +15,6 @@ class UserBuilder extends AbstractBuilder
     protected DateTimeImmutable $createdAt;
     protected DateTimeImmutable $updatedAt;
     protected string $email;
-    protected string $name;
     protected array $userRoles;
     protected string $password;
 
@@ -41,7 +40,6 @@ class UserBuilder extends AbstractBuilder
         $payload['createdAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
         $payload['updatedAt'] = new DateTimeImmutable(self::$faker->dateTime()->format('Y-m-d H:i:s'));
         $payload['email'] = self::$faker->email();
-        $payload['name'] = self::$faker->name();
         $payload['userRoles'] = [User::ROLE_ADMIN];
         $payload['password'] = sha1(self::$faker->password());
 
@@ -76,14 +74,6 @@ class UserBuilder extends AbstractBuilder
     {
         $clone = clone $this;
         $clone->email = $email;
-
-        return $clone;
-    }
-
-    public function withName(string $name): self
-    {
-        $clone = clone $this;
-        $clone->name = $name;
 
         return $clone;
     }

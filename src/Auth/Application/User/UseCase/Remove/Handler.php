@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Auth\Application\User\UseCase\Remove;
 
+use App\Auth\Domain\User\Exception\UserNotFoundException;
 use App\Auth\Domain\User\UserRepository;
 use App\Common\Service\Core\Flusher;
 
-readonly class Handler
+final readonly class Handler
 {
     public function __construct(
         private Flusher $flusher,
@@ -19,17 +20,17 @@ readonly class Handler
     {
         $user = $this->userRepository->findById($command->id);
         if (null === $user) {
-            return Result::userNotExists();
+            throw new UserNotFoundException(
+                message: "User #{$command->id} not found",
+                context: ['id' => $command->id],
+            );
         }
 
         $this->userRepository->remove($user);
         $this->flusher->flush();
 
-        return Result::success(
+        return new Result(
             user: $user,
-            context: [
-                'id' => $command->id->getValue(),
-            ]
         );
     }
 }

@@ -35,14 +35,12 @@ class UserTest extends UnitTestCase
             updatedAt: $updatedAt = new DateTimeImmutable(self::$faker->dateTime()->format(DATE_ATOM)),
             email: $email = self::$faker->email(),
             roles: $roles = [User::ROLE_ADMIN],
-            name: $name = self::$faker->name()
         );
         self::assertSame($id, $user->getId());
         self::assertSame($createdAt, $user->getCreatedAt());
         self::assertSame($updatedAt, $user->getUpdatedAt());
         self::assertSame($email, $user->getEmail());
         self::assertSame($roles, $user->getRoles());
-        self::assertSame($name, $user->getName());
     }
 
     public function testChangePassword(): void
@@ -60,12 +58,10 @@ class UserTest extends UnitTestCase
             ->build();
 
         $user->edit(
-            name: $name = self::$faker->name(),
             email: $email = self::$faker->email(),
             roles: $roles = [User::ROLE_ADMIN],
         );
 
-        self::assertSame($name, $user->getName());
         self::assertSame($email, $user->getEmail());
         self::assertSame($roles, $user->getRoles());
         self::assertSame(User::ROLE_ADMIN, $user->getRole());
@@ -123,13 +119,6 @@ class UserTest extends UnitTestCase
         $expected = self::$faker->email();
         $user = (new UserBuilder())->withEmail($expected)->build();
         self::assertSame($expected, $user->getUsername());
-    }
-
-    public function testGetName(): void
-    {
-        $expected = self::$faker->name();
-        $user = (new UserBuilder())->withName($expected)->build();
-        self::assertSame($expected, $user->getName());
     }
 
     public function testOnUpdated(): void

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Auth\Entry\Http\Admin\Api\Action\User\Create;
 
 use App\Auth\Application\User\UseCase\Create\Handler;
-use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
+use App\Auth\Domain\User\User;
+use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
+use App\Common\Exception\Domain\DomainException;
 use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -31,7 +33,7 @@ class Action
      *     )
      * )
      * @OA\Response(
-     *     response=200,
+     *     response=201,
      *     description="Create command for User",
      *     @OA\JsonContent(
      *         allOf={
@@ -44,7 +46,7 @@ class Action
      *                 ),
      *                 @OA\Property(
      *                     property="status",
-     *                     example="200"
+     *                     example="201"
      *                 )
      *             )
      *         }
@@ -83,9 +85,16 @@ class Action
         MetricSender $metricSender,
     ): Response {
         $command = $commandFactory->create($contract);
-        $result = $handler->handle($command);
-        $metricSender->send($result);
+        try {
+            $result = $handler->handle($command);
+        } catch (DomainException $domainException) {
+        } finally {
+            $result ??= null;
+            $domainException ??= null;
+        }
 
-        return $responsePresenter->present($result, $outputFormat);
+        $metricSender->send($result, $domainException);
+
+        return $responsePresenter->present($result, $domainException, $outputFormat);
     }
 }

@@ -47,9 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
 
     private ?string $plainPassword = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $name;
-
     public function __construct(
         UserId $id,
         DateTimeImmutable $createdAt,
@@ -72,7 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
         DateTimeImmutable $updatedAt,
         string $email,
         array $roles,
-        string $name,
     ): self {
         $user = new self(
             id: $id,
@@ -81,15 +77,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
         );
         $user->email = $email;
         $user->userRoles = $roles;
-        $user->name = $name;
 
         return $user;
     }
 
-    public function edit(string $name, string $email, array $roles): void
+    public function edit(string $email, array $roles): void
     {
         $this->email = $email;
-        $this->name = $name;
         $this->userRoles = $roles;
     }
 
@@ -131,11 +125,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Aggrega
     public function getSalt(): ?string
     {
         return null;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     public function getCreatedAt(): DateTimeImmutable

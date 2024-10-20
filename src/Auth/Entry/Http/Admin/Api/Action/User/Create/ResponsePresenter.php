@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Auth\Entry\Http\Admin\Api\Action\User\Create;
 
 use App\Auth\Application\User\UseCase\Create\Result;
-use App\Auth\Entry\Http\Client\Api\Contract\User\CommonOutputContract;
-use DomainException;
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
+use App\Auth\Entry\Http\Admin\Api\Contract\User\CommonOutputContract;
+use App\Common\Exception\Domain\DomainException;
 use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use IWD\SymfonyEntryContract\Service\Presenter;
@@ -19,24 +20,25 @@ readonly class ResponsePresenter
     }
 
     public function present(
-        Result $result,
+        ?Result $result,
+        ?DomainException $exception,
         OutputFormat $outputFormat,
     ): Response {
-        if ($result->isSuccess()) {
+        if (null !== $result) {
             return $this->presenter->present(
                 data: ApiFormatter::prepare(
-                    data: null !== $result->user ? CommonOutputContract::create($result->user) : null,
-                    messages: ['success']
+                    data: CommonOutputContract::create($result->user),
+                    messages: ['Success']
                 ),
                 outputFormat: $outputFormat,
-                status: Response::HTTP_OK,
+                status: Response::HTTP_CREATED,
             );
         }
-        if ($result->isEmailIsBusy()) {
+        if ($exception instanceof UserEmailAlreadyTakenException) {
             return $this->presenter->present(
                 data: ApiFormatter::prepare(
-                    data: null !== $result->user ? CommonOutputContract::create($result->user) : null,
-                    messages: ['email is busy']
+                    data: null,
+                    messages: ['Email already taken']
                 ),
                 outputFormat: $outputFormat,
                 status: Response::HTTP_BAD_REQUEST,

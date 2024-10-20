@@ -39,7 +39,6 @@ class HandlerTest extends IntegrationTestCase
                 email: self::$faker->email() . md5(random_bytes(255)),
                 plainPassword: self::$faker->password(),
                 role: User::ROLE_ADMIN,
-                name: self::$faker->name() . md5(random_bytes(255)),
             )
         );
         self::assertTrue(
@@ -47,7 +46,6 @@ class HandlerTest extends IntegrationTestCase
         );
         self::assertNotNull($result->user);
         self::assertInstanceOf(UserId::class, $result->user->getId());
-        self::assertSame($command->name, $result->user->getName());
         self::assertSame($command->email, $result->user->getEmail());
         self::assertSame([User::ROLE_ADMIN], $result->user->getRoles());
         self::assertDatetimeNow($result->user->getCreatedAt());
@@ -67,7 +65,6 @@ class HandlerTest extends IntegrationTestCase
                 email: Fixture::EMAIL,
                 plainPassword: self::$faker->password(),
                 role: User::ROLE_ADMIN,
-                name: self::$faker->name() . md5(random_bytes(255)),
             )
         );
         self::assertTrue(

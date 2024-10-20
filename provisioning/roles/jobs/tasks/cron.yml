@@ -1,9 +1,8 @@
 ---
-#- name: Example ansible task
-#  cron:
-#    name: example_custom_command_name
-#    job: 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:example'
-#    minute: '1'
-#    hour: '10,22'
-#  become: yes
-#  become_user: deploy
+- name: Failed messages in messenger metrics collect
+  cron:
+    name: app_common_messenger-doctrine-messages-collect
+    job: 'cd app && docker compose -f docker-compose-production.yml run --rm app-php-fpm php bin/console app:common:messenger-doctrine-messages-collect'
+    minute: '*/10'
+  become: yes
+  become_user: deploy

@@ -18,7 +18,4 @@ class InputContract implements InputContractInterface
     #[NotNull]
     #[Length(min: 6, max: 4096)]
     public ?string $plainPassword;
-
-    #[NotNull]
-    public ?string $name;
 }

@@ -37,7 +37,6 @@ class CreateAdminCommand extends CliCommand
                 email: $inputContract->email,
                 plainPassword: $inputContract->password,
                 role: User::ROLE_ADMIN,
-                name: $inputContract->name,
             )
         );
 

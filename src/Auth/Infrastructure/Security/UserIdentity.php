@@ -20,7 +20,7 @@ class UserIdentity implements UserInterface, EquatableInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->username;
+        return $this->id;
     }
 
     public function getRoles(): array

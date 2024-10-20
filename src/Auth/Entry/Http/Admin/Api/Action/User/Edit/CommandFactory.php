@@ -14,7 +14,6 @@ class CommandFactory
     {
         return new Command(
             id: new UserId((string) $inputContract->id),
-            name: (string) $inputContract->name,
             email: (string) $inputContract->email,
             role: User::ROLE_ADMIN, // todo: переделать на enum
         );

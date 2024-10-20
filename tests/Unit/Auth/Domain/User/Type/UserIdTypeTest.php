@@ -10,14 +10,14 @@ use App\Tests\Unit\UnitTestCase;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /** @covers \App\Auth\Domain\User\Type\UserIdType */
-class IdTypeTest extends UnitTestCase
+class UserIdTypeTest extends UnitTestCase
 {
     public function testConvertToPHPValueSuccess(): void
     {
         /** @psalm-suppress InternalMethod */
         $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
-        $value = '708';
+        $value = (string) random_int(1, 999);
 
         /** @var UserId|null $phpValue */
         $phpValue = $idType->convertToPHPValue($value, $abstractPlatformMock);
@@ -42,7 +42,7 @@ class IdTypeTest extends UnitTestCase
         /** @psalm-suppress InternalMethod */
         $idType = new UserIdType();
         $abstractPlatformMock = $this->createMock(AbstractPlatform::class);
-        $value = new UserId('697');
+        $value = new UserId((string) random_int(1, 999));
 
         $convertedDatabaseValue = $idType->convertToDatabaseValue($value, $abstractPlatformMock);
         self::assertSame($value->getValue(), $convertedDatabaseValue);

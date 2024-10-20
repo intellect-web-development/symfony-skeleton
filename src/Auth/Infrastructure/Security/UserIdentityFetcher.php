@@ -62,7 +62,7 @@ readonly class UserIdentityFetcher
         [$type, $token] = explode(' ', $authorization);
 
         /** @var UserIdentity $userIdentity */
-        $userIdentity = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
+        $userIdentity = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['id']);
 
         return $userIdentity;
     }

@@ -17,6 +17,4 @@ class InputContract implements InputContractInterface
     public ?string $email = null;
 
     public ?string $role = null;
-
-    public ?string $name = null;
 }

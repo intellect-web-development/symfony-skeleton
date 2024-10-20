@@ -40,7 +40,7 @@ class TokenAuthenticator extends AbstractAuthenticator
             if (str_starts_with($authorization, 'Bearer ') && strlen($authorization) > 7) {
                 [$type, $token] = explode(' ', $authorization);
                 /** @var UserIdentity $user */
-                $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['username']);
+                $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['id']);
 
                 return new SelfValidatingPassport(
                     new UserBadge(
@@ -90,7 +90,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     /**
      * Called when authentication is needed, but it's not sent.
      */
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         $response = new Response();
         $response->setContent(

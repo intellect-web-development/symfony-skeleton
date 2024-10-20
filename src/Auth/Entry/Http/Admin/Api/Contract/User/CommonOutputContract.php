@@ -19,8 +19,6 @@ class CommonOutputContract
 
     public string $role;
 
-    public string $name;
-
     public static function create(User $user): self
     {
         $contract = new self();
@@ -29,7 +27,6 @@ class CommonOutputContract
         $contract->updatedAt = $user->getUpdatedAt()->format(DateTimeInterface::ATOM);
         $contract->email = $user->getEmail();
         $contract->role = $user->getRole();
-        $contract->name = $user->getName();
 
         return $contract;
     }
