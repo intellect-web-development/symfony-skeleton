@@ -14,6 +14,7 @@ framework:
                     # if your workers run for a long time and the database
                     # connection is sometimes lost
                     - doctrine_ping_connection
+
         # reset services after consuming messages
         reset_on_message: true
 
@@ -32,13 +33,17 @@ framework:
                         name: common
                     queues:
                         common: ~
+                failure_transport: failed_base_transport
 
-            failed: "%env(MESSENGER_TRANSPORT_DSN)%/failed"
+            # Сохранять фейловые сообщения в дефолтный транспорт MESSENGER_TRANSPORT_DSN:
+            # failed: "%env(MESSENGER_TRANSPORT_DSN)%/failed"
+            # Сохранять фейловые сообщения в транспорт доктрины:
+            failed: 'doctrine://default?queue_name=failed'
+            failed_base_transport: "%env(MESSENGER_TRANSPORT_DSN)%/failed"
 
             sync: 'sync://'
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
         routing:

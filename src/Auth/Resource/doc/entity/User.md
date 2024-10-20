@@ -11,7 +11,6 @@ User
 | Email     | string |                   |
 | UserRoles | array  |                   |
 | Password  | string |                   |
-| Name      | string |                   |
 
 **Commands:**
 

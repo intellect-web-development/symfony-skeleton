@@ -6,7 +6,9 @@ namespace App\Auth\Entry\Console\CreateAdmin;
 
 use App\Auth\Application\User\UseCase\Create\Command;
 use App\Auth\Application\User\UseCase\Create\Handler;
+use App\Auth\Domain\User\Exception\UserEmailAlreadyTakenException;
 use App\Auth\Domain\User\User;
+use App\Common\Exception\Domain\DomainException;
 use IWD\SymfonyEntryContract\Service\CliContractResolver;
 use IWD\SymfonyEntryContract\Attribute\CliContract;
 use IWD\SymfonyEntryContract\Console\CliCommand;
@@ -32,20 +34,33 @@ class CreateAdminCommand extends CliCommand
      */
     protected function handle(InputContractInterface $inputContract): int
     {
-        $result = $this->handler->handle(
-            new Command(
-                email: $inputContract->email,
-                plainPassword: $inputContract->password,
-                role: User::ROLE_ADMIN,
-            )
-        );
-
-        if ($result->isSuccess()) {
-            $this->io->success('Administration user was created!');
-        } else {
-            $this->io->error('Administration user was failed! Case: ' . $result->case->name);
+        try {
+            $result = $this->handler->handle(
+                new Command(
+                    email: $inputContract->email,
+                    plainPassword: $inputContract->password,
+                    role: User::ROLE_ADMIN,
+                )
+            );
+        } catch (DomainException $domainException) {
+        } finally {
+            $result ??= null;
+            $domainException ??= null;
         }
 
-        return self::SUCCESS;
+        if (null !== $result) {
+            $this->io->success('Administration user was created!');
+
+            return self::SUCCESS;
+        }
+        if ($domainException instanceof UserEmailAlreadyTakenException) {
+            $this->io->error('Email already taken');
+
+            return self::FAILURE;
+        }
+
+        $this->io->error('Unexpected error');
+
+        return self::FAILURE;
     }
 }

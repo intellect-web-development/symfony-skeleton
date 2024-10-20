@@ -3,3 +3,8 @@ framework:
         prefix_seed: '%env(CACHE_PREFIX_SEED)%'
         app: cache.adapter.redis
         default_redis_provider: '%env(REDIS_DSN)%'
+
+        pools:
+          filesystem_cache_pool:
+            adapter: cache.adapter.filesystem
+            default_lifetime: 86400
