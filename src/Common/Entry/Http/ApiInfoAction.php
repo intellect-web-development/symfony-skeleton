@@ -16,7 +16,7 @@ class ApiInfoAction extends AbstractController
 {
     public const NAME = 'api_info';
 
-    private RouterInterface $router;
+    private readonly RouterInterface $router;
 
     public function __construct(RouterInterface $router)
     {
