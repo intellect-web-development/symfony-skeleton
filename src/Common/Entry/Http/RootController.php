@@ -13,6 +13,6 @@ class RootController
     #[Route(path: '', methods: ['GET'])]
     public function getRoot(UrlGeneratorInterface $urlGenerator): Response
     {
-        return new Response();
+        return new Response('');
     }
 }
