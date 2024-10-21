@@ -16,7 +16,8 @@ framework:
                     - doctrine_ping_connection
 
         # reset services after consuming messages
-        reset_on_message: true
+#        todo: это было удалено в symfony 7.0, поискать на замену что-то
+#        reset_on_message: true
 
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         failure_transport: failed
