@@ -41,6 +41,7 @@ docker-compose.override.yml
 /.deploy/.env
 /config/jwt/
 **/.DS_Store
-###> qossmic/deptrac-shim ###
+
+###> qossmic/deptrac ###
 /.deptrac.cache
-###< qossmic/deptrac-shim ###
+###< qossmic/deptrac ###

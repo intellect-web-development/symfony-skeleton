@@ -4,10 +4,10 @@ parameters:
     - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
 
   layers:
-    - {name: Domain, collectors: [{type: directory, regex: '/src/(?:\w+/)+Domain/.*'}]}
-    - {name: Application, collectors: [{type: directory, regex: '/src/(?:\w+/)+Application/.*'}]}
-    - {name: Entry, collectors: [{type: directory, regex: '/src/(?:\w+/)+Entry/.*'}]}
-    - {name: Infrastructure, collectors: [{type: directory, regex: '/src/(?:\w+/)+Infrastructure/.*'}]}
+    - {name: Domain, collectors: [{type: directory, value: '/src/(?:\w+/)+Domain/.*'}]}
+    - {name: Application, collectors: [{type: directory, value: '/src/(?:\w+/)+Application/.*'}]}
+    - {name: Entry, collectors: [{type: directory, value: '/src/(?:\w+/)+Entry/.*'}]}
+    - {name: Infrastructure, collectors: [{type: directory, value: '/src/(?:\w+/)+Infrastructure/.*'}]}
 
   ruleset:
     Domain: null

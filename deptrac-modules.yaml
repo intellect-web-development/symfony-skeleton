@@ -5,8 +5,8 @@ parameters:
     - '#.*\/src\/.*\/MessageBus\/Message\/.*#'
 
   layers:
-    - {name: Common, collectors: [{type: directory, regex: '/src/Common/.*'}]}
-    - {name: Auth, collectors: [{type: directory, regex: '/src/Auth/.*'}]}
+    - {name: Common, collectors: [{type: directory, value: '/src/Common/.*'}]}
+    - {name: Auth, collectors: [{type: directory, value: '/src/Auth/.*'}]}
 
   ruleset:
     Common: null

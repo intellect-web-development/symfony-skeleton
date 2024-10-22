@@ -20,7 +20,7 @@ class Action
     #[OA\Tag(name: 'Auth.User')]
     #[OA\Post(
         requestBody: new OA\RequestBody(
-            description: "Create command for User",
+            description: 'Create command for User',
             required: true,
             content: new OA\MediaType(
                 mediaType: 'application/json',
@@ -55,7 +55,7 @@ class Action
                     items: new OA\Items(
                         type: 'string',
                     )
-                )
+                ),
             ],
             type: 'object'
         )
