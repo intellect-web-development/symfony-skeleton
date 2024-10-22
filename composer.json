@@ -23,7 +23,7 @@
         "nelmio/api-doc-bundle": "^4.10",
         "nelmio/cors-bundle": "^2.3",
         "promphp/prometheus_client_php": "^2.6",
-        "psr/log": "^1.0",
+        "psr/log": "^3.0",
         "qossmic/deptrac": "^2.0",
         "sentry/sentry": "^3.19.1",
         "sentry/sentry-symfony": "^4.8",
