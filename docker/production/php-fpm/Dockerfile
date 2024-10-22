@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FROM --platform=linux/amd64 php:8.2-fpm-alpine as base
+FROM --platform=linux/amd64 php:8.3-fpm-alpine as base
 
 WORKDIR /app
 

@@ -195,7 +195,7 @@ readonly class HttpExceptionSubscriber
 
     protected function toApiFormat(Exception $exception, ?int $code = null): array
     {
-        $errors = $this->isValidJson($exception->getMessage())
+        $errors = json_validate($exception->getMessage())
             ? json_decode($exception->getMessage(), true, 512, JSON_THROW_ON_ERROR)
             : [$exception->getMessage()]
         ;
@@ -205,13 +205,5 @@ readonly class HttpExceptionSubscriber
             $code ?? $exception->getCode(),
             $errors
         );
-    }
-
-    /**
-     * @param string $string
-     */
-    protected function isValidJson($string): bool
-    {
-        return is_string($string) && (is_object(json_decode($string)) || is_array(json_decode($string)));
     }
 }
