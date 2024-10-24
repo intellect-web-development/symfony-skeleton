@@ -8,12 +8,3 @@ services:
 
     App\Auth\Infrastructure\Security\JwtTokenizer:
         public: true
-
-    App\Auth\Application\User\UseCase\Edit\Handler:
-        public: true
-
-    App\Auth\Application\User\UseCase\Delete\Handler:
-        public: true
-
-    App\Auth\Application\User\UseCase\ChangePassword\Handler:
-        public: true

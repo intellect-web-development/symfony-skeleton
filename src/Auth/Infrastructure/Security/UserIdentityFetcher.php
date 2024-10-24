@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use App\Auth\Domain\User\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 readonly class UserIdentityFetcher
 {
     public function __construct(
         private Security $security,
-        private UserProviderInterface $userProvider,
         private JwtTokenizer $jwtTokenizer,
     ) {
     }
@@ -33,9 +30,6 @@ readonly class UserIdentityFetcher
         $userIdentity = null;
 
         if (($user = $this->security->getUser()) !== null) {
-            if ($user instanceof User) {
-                $userIdentity = UserProvider::identityByUser($user);
-            }
             if ($user instanceof UserIdentity) {
                 $userIdentity = $user;
             }
@@ -60,10 +54,13 @@ readonly class UserIdentityFetcher
             throw new AccessDeniedException('Invalid authorization token');
         }
         [$type, $token] = explode(' ', $authorization);
+        $decodedToken = $this->jwtTokenizer->decode($token);
 
-        /** @var UserIdentity $userIdentity */
-        $userIdentity = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['id']);
-
-        return $userIdentity;
+        return new UserIdentity(
+            id: $decodedToken['id'],
+            username: $decodedToken['username'],
+            display: $decodedToken['username'],
+            role: $decodedToken['role'],
+        );
     }
 }

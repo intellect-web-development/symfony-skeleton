@@ -9,5 +9,5 @@ parameters:
     - {name: Auth, collectors: [{type: directory, value: '/src/Auth/.*'}]}
 
   ruleset:
-    Common: null
+    Common: ['Auth']
     Auth: ['Common']

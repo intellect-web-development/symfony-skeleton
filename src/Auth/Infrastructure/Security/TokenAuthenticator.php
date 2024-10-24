@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
@@ -23,7 +22,6 @@ class TokenAuthenticator extends AbstractAuthenticator
     public function __construct(
         private readonly JwtTokenizer $jwtTokenizer,
         private readonly SerializerInterface $serializer,
-        private readonly UserProviderInterface $userProvider
     ) {
     }
 
@@ -39,12 +37,11 @@ class TokenAuthenticator extends AbstractAuthenticator
         try {
             if (str_starts_with($authorization, 'Bearer ') && strlen($authorization) > 7) {
                 [$type, $token] = explode(' ', $authorization);
-                /** @var UserIdentity $user */
-                $user = $this->userProvider->loadUserByIdentifier($this->jwtTokenizer->decode($token)['id']);
+                $userID = $this->jwtTokenizer->decode($token)['id'];
 
                 return new SelfValidatingPassport(
                     new UserBadge(
-                        $user->getUserIdentifier()
+                        $userID
                     )
                 );
             }

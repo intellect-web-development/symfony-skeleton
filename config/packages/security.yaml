@@ -4,10 +4,6 @@ security:
         App\Auth\Domain\User\User:
             algorithm: auto
     providers:
-        app_user_provider:
-            entity:
-                class: App\Auth\Domain\User\User
-                property: email
         api:
             id: App\Auth\Infrastructure\Security\UserProvider
     firewalls:
@@ -15,33 +11,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        token_invalidate_all_refresh:
-            security: true
-            pattern: ^/api/token/invalidate-all-refresh-tokens
-            stateless: true
-            provider: api
-            user_checker: App\Auth\Infrastructure\Security\ClientChecker
-            custom_authenticators:
-                - App\Auth\Infrastructure\Security\TokenAuthenticator
-
         api_info:
             security: false
             pattern: ^/api/info
             stateless: true
-
-        token:
-            security: false
-            pattern: ^/api/token
-            stateless: true
-
-        client:
-            security: true
-            pattern: ^/api/client
-            provider: api
-            stateless: true
-            user_checker: App\Auth\Infrastructure\Security\ClientChecker
-            custom_authenticators:
-                - App\Auth\Infrastructure\Security\TokenAuthenticator
 
         admin:
             security: true

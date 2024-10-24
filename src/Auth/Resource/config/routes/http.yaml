@@ -1,3 +1,0 @@
-auth_http:
-    resource: ../../../../../src/Auth/Entry/Http/
-    type: attribute

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\ValueObject\UserId;
+use App\Auth\Infrastructure\Dictionary\User;
 use App\Auth\Infrastructure\Security\JwtTokenizer;
 use App\Auth\Infrastructure\Security\UserIdentity;
 use App\Tests\Tools\AssertsTrait;
@@ -18,7 +17,6 @@ use JsonException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class FunctionalTestCase extends WebTestCase
 {
@@ -27,9 +25,8 @@ class FunctionalTestCase extends WebTestCase
     protected static Generator $faker;
 
     private static KernelBrowser $clientBlank;
-    private static User $user;
-    private static UserIdentity $userIdentity;
-    private static JwtTokenizer $jwtTokenizer;
+    protected static UserIdentity $userIdentity;
+    protected static JwtTokenizer $jwtTokenizer;
 
     protected EntityManagerInterface $entityManager;
     protected KernelBrowser $client;
@@ -55,26 +52,14 @@ class FunctionalTestCase extends WebTestCase
         $this->client = clone self::$clientBlank;
         $this->client->disableReboot();
 
-        /** @var PasswordHasherInterface $passwordHasher */
-        $passwordHasher = self::get(PasswordHasherInterface::class);
-        self::$user = User::create(
-            id: new UserId('99999999'),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
-            email: ((new DateTimeImmutable())->getTimestamp()) . '-admin@dev.com',
-            roles: [User::ROLE_ADMIN],
-        );
-        self::$user->changePassword($passwordHasher->hash('12345'));
+        $userEmail = (new DateTimeImmutable())->getTimestamp() . '-admin@dev.com';
         self::$userIdentity = new UserIdentity(
-            id: self::$user->getId()->getValue(),
-            username: self::$user->getUsername(),
-            password: self::$user->getPassword(),
-            display: self::$user->getUsername(),
-            role: self::$user->getRole(),
+            id: '99999999',
+            username: $userEmail,
+            display: $userEmail,
+            role: User::ROLE_ADMIN,
         );
-        $this->entityManager->persist(self::$user);
-        $this->entityManager->flush();
-        $this->client->loginUser(self::$user);
+        $this->client->loginUser(self::$userIdentity);
 
         foreach (static::withFixtures() as $fixtureClass) {
             /** @var TestFixture $fixture */

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use App\Auth\Domain\User\User;
+use App\Auth\Infrastructure\Dictionary\User;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

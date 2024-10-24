@@ -6,7 +6,7 @@ namespace App\Common\Dictionary;
 
 class EnvDictionary
 {
-    public const DEV = 'dev';
-    public const TEST = 'test';
-    public const PROD = 'prod';
+    public const string DEV = 'dev';
+    public const string TEST = 'test';
+    public const string PROD = 'prod';
 }

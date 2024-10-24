@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserIdentity implements UserInterface, EquatableInterface
+class UserIdentity implements UserInterface
 {
     public function __construct(
         public string $id,
         public string $username,
-        public string $password,
         public string $display,
         public string $role,
     ) {
@@ -30,17 +28,5 @@ class UserIdentity implements UserInterface, EquatableInterface
 
     public function eraseCredentials(): void
     {
-    }
-
-    public function isEqualTo(UserInterface $user): bool
-    {
-        if (!$user instanceof self) {
-            return false;
-        }
-
-        return
-            $this->id === $user->id
-            && $this->password === $user->password
-            && $this->role === $user->role;
     }
 }

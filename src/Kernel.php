@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Auth\Infrastructure\CompillerPass\RateLimitingPass;
+use App\Common\Container\CompillerPass\RateLimitingPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

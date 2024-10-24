@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Security;
 
-use App\Auth\Domain\User\User;
-use App\Auth\Domain\User\UserRepository;
-use App\Auth\Domain\User\ValueObject\UserId;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,7 +13,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 readonly class UserProvider implements UserProviderInterface
 {
     public function __construct(
-        private UserRepository $userRepository
+        private UserIdentityFetcher $userIdentityFetcher,
+        private RequestStack $requestStack,
     ) {
     }
 
@@ -25,16 +24,22 @@ readonly class UserProvider implements UserProviderInterface
             throw new UnsupportedUserException('Invalid user class ' . $user::class);
         }
 
-        return self::identityByUser(
-            $this->loadUser(new UserId($user->getUserIdentifier()))
-        );
+        return $user;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->loadUser(new UserId($identifier));
+        $request = $this->requestStack->getMainRequest();
+        if (null === $request) {
+            throw new UserNotFoundException();
+        }
 
-        return self::identityByUser($user);
+        $userIdentity = $this->userIdentityFetcher->tryFetch($request);
+        if (null === $userIdentity) {
+            throw new UserNotFoundException();
+        }
+
+        return $userIdentity;
     }
 
     /**
@@ -45,25 +50,5 @@ readonly class UserProvider implements UserProviderInterface
     public function supportsClass(string $class): bool
     {
         return UserIdentity::class === $class;
-    }
-
-    private function loadUser(UserId $userId): User
-    {
-        if (($user = $this->userRepository->findById($userId)) !== null) {
-            return $user;
-        }
-
-        throw new UserNotFoundException();
-    }
-
-    public static function identityByUser(User $user): UserIdentity
-    {
-        return new UserIdentity(
-            id: $user->getId()->getValue(),
-            username: $user->getEmail(),
-            password: $user->getPasswordHash(),
-            display: $user->getEmail(),
-            role: $user->getRole(),
-        );
     }
 }
