@@ -13,55 +13,53 @@ use IWD\SymfonyEntryContract\Service\Presenter;
 use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Bus;
 use IWD\SymfonyDoctrineSearch\Service\QueryBus\Aggregate\Query;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class Action
 {
-    public const NAME = 'api_client_app_auth_identity-user';
+    public const string NAME = 'api_client_app_auth_identity-user';
 
-    /**
-     * @OA\Tag(name="Auth.User")
-     * @OA\Response(
-     *     response=200,
-     *     description="Get identity User",
-     *     @OA\JsonContent(
-     *         allOf={
-     *             @OA\Schema(ref=@Model(type=ApiFormatter::class)),
-     *             @OA\Schema(
-     *                 type="object",
-     *                 @OA\Property(
-     *                     property="data",
-     *                     ref=@Model(type=CommonOutputContract::class)
-     *                 ),
-     *                 @OA\Property(
-     *                     property="status",
-     *                     example="200"
-     *                 )
-     *             )
-     *         }
-     *     )
-     *  )
-     * @OA\Response(
-     *     response=400,
-     *     description="Bad Request"
-     * ),
-     * @OA\Response(
-     *     response=401,
-     *     description="Unauthenticated",
-     * ),
-     * @OA\Response(
-     *     response=403,
-     *     description="Forbidden"
-     * ),
-     * @OA\Response(
-     *     response=404,
-     *     description="Resource Not Found"
-     * )
-     * @Security(name="Bearer")
-     */
+    #[OA\Tag(name: 'Auth.User')]
+    #[OA\Response(
+        response: 200,
+        description: 'Get identity User',
+        content: new OA\JsonContent(
+            properties: [
+                new OA\Property(
+                    property: 'status',
+                    type: 'integer',
+                    example: 201
+                ),
+                new OA\Property(
+                    property: 'ok',
+                    type: 'boolean',
+                    example: true
+                ),
+                new OA\Property(
+                    property: 'data',
+                    ref: new Model(type: CommonOutputContract::class)
+                ),
+                new OA\Property(
+                    property: 'messages',
+                    type: 'array',
+                    items: new OA\Items(
+                        type: 'string',
+                    )
+                ),
+            ],
+            type: 'object'
+        )
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Bad Request',
+    )]
+    #[OA\Response(
+        response: 401,
+        description: 'Unauthorized',
+    )]
     #[Route(
         path: '/api/client/auth/identity-user.{_format}',
         name: self::NAME,

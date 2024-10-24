@@ -14,7 +14,7 @@ use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use IWD\SymfonyEntryContract\Service\Presenter;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -24,40 +24,55 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Action extends AbstractController
 {
-    public const NAME = 'token.authentication';
+    public const string NAME = 'token.authentication';
 
-    /**
-     * @OA\Tag(name="Auth.Token")
-     * @OA\Post(
-     *     @OA\RequestBody(
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 ref=@Model(type=InputContract::class)
-     *             )
-     *         )
-     *     )
-     * )
-     * @OA\Response(
-     *     response=200,
-     *     description="Authentication",
-     *     @OA\JsonContent(
-     *          allOf={
-     *              @OA\Schema(ref=@Model(type=ApiFormatter::class)),
-     *              @OA\Schema(type="object",
-     *                  @OA\Property(
-     *                      property="data",
-     *                      ref=@Model(type=TokenOutputContract::class)
-     *                  ),
-     *                  @OA\Property(
-     *                      property="status",
-     *                      example="200"
-     *                 )
-     *             )
-     *         }
-     *     )
-     * )
-     */
+    #[OA\Tag(name: 'Auth.Token')]
+    #[OA\Post(
+        requestBody: new OA\RequestBody(
+            description: 'Authentication',
+            required: true,
+            content: new OA\MediaType(
+                mediaType: 'application/json',
+                schema: new OA\Schema(
+                    ref: new Model(type: InputContract::class),
+                ),
+            )
+        )
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Success authentication',
+        content: new OA\JsonContent(
+            properties: [
+                new OA\Property(
+                    property: 'status',
+                    type: 'integer',
+                    example: 200,
+                ),
+                new OA\Property(
+                    property: 'ok',
+                    type: 'boolean',
+                    example: true
+                ),
+                new OA\Property(
+                    property: 'data',
+                    ref: new Model(type: TokenOutputContract::class)
+                ),
+                new OA\Property(
+                    property: 'messages',
+                    type: 'array',
+                    items: new OA\Items(
+                        type: 'string',
+                    )
+                ),
+            ],
+            type: 'object'
+        )
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Bad Request',
+    )]
     #[RateLimiting(limiter: 'auth_token_authentication')]
     #[Route(path: '/api/token/authentication', name: self::NAME, methods: ['POST'])]
     public function authentication(

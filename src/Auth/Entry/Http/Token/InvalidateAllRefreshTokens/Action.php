@@ -9,38 +9,57 @@ use App\Auth\Infrastructure\Security\UserIdentity;
 use IWD\SymfonyEntryContract\Dto\Input\OutputFormat;
 use IWD\SymfonyEntryContract\Dto\Output\ApiFormatter;
 use IWD\SymfonyEntryContract\Service\Presenter;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class Action extends AbstractController
 {
-    /**
-     * @OA\Tag(name="Auth.Token")
-     * @OA\Response(
-     *     response=200,
-     *     description="Refresh token",
-     *     @OA\JsonContent(
-     *          allOf={
-     *              @OA\Schema(ref=@Model(type=ApiFormatter::class)),
-     *              @OA\Schema(type="object",
-     *                  @OA\Property(
-     *                      property="data",
-     *                      type="object",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="status",
-     *                      example="200"
-     *                 )
-     *             )
-     *         }
-     *     )
-     * )
-     * @Security(name="Bearer")
-     */
+    #[OA\Tag(name: 'Auth.Token')]
+    #[OA\Post(
+        requestBody: new OA\RequestBody(
+            description: 'Invalidate all JWT-Tokens',
+            required: true,
+        )
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Tokens success invalidated',
+        content: new OA\JsonContent(
+            properties: [
+                new OA\Property(
+                    property: 'status',
+                    type: 'integer',
+                    example: 200,
+                ),
+                new OA\Property(
+                    property: 'ok',
+                    type: 'boolean',
+                    example: true
+                ),
+                new OA\Property(
+                    property: 'data',
+                    type: 'array',
+                    items: new OA\Items(
+                        type: 'string',
+                    )
+                ),
+                new OA\Property(
+                    property: 'messages',
+                    type: 'array',
+                    items: new OA\Items(
+                        type: 'string',
+                    )
+                ),
+            ],
+            type: 'object'
+        )
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Bad Request',
+    )]
     #[Route(
         path: '/api/token/invalidate-all-refresh-tokens',
         name: 'token.invalidateAllRefreshTokens',

@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class Action
 {
-    public const NAME = 'api_admin_app_auth_user_create';
+    public const string NAME = 'api_admin_app_auth_user_create';
 
     #[OA\Tag(name: 'Auth.User')]
     #[OA\Post(
         requestBody: new OA\RequestBody(
-            description: 'Create command for User',
+            description: 'Create User',
             required: true,
             content: new OA\MediaType(
                 mediaType: 'application/json',
